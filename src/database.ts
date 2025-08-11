@@ -4,13 +4,15 @@ class DatabaseService {
   private apiBaseUrl: string;
 
   constructor() {
-    // In development, use the backend API
-    this.apiBaseUrl = 'http://localhost:3001/api';
+    // Use the current origin for API calls in browser
+    this.apiBaseUrl = typeof window !== 'undefined'
+      ? `${window.location.protocol}//${window.location.hostname}:3001`
+      : 'http://localhost:3001';
   }
 
-  async initializeDatabase() {
+  async initializeDatabase(): Promise<boolean> {
     try {
-      const response = await fetch(`${this.apiBaseUrl}/init-db`, {
+      const response = await fetch(`${this.apiBaseUrl}/api/init-db`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -22,10 +24,11 @@ class DatabaseService {
       }
 
       const result = await response.json();
-      console.log('Database initialized successfully:', result.message);
+      console.log('Database initialized successfully:', result);
+      return true;
     } catch (error) {
       console.error('Error initializing database:', error);
-      // For now, just log the error and continue
+      return false;
     }
   }
 

@@ -1,4 +1,3 @@
-
 import express from 'express';
 import pg from 'pg';
 import cors from 'cors';
@@ -29,11 +28,11 @@ app.post('/api/init-db', async (req, res) => {
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    
+
     await client.query(`
       CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)
     `);
-    
+
     res.json({ success: true, message: 'Database initialized' });
   } catch (error) {
     res.status(500).json({ error: error.message });
