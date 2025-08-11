@@ -2,8 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { googleCalendarService, CalendarEvent } from './googleCalendar';
+import WelcomePage from './WelcomePage';
 
 export default function App() {
+  const [currentPage, setCurrentPage] = useState<'dashboard' | 'welcome'>('dashboard');
   const [selectedDate, setSelectedDate] = useState(18);
   const [isGoogleConnected, setIsGoogleConnected] = useState(false);
   const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([]);
@@ -85,6 +87,10 @@ export default function App() {
 
     return days;
   };
+
+  if (currentPage === 'welcome') {
+    return <WelcomePage />;
+  }
 
   return (
     <div className="app">
@@ -178,6 +184,10 @@ export default function App() {
             <div className="nav-item">
               <span className="nav-icon">❓</span>
               Help Desk
+            </div>
+            <div className="nav-item" onClick={() => setCurrentPage('welcome')}>
+              <span className="nav-icon">👋</span>
+              Welcome Page
             </div>
             <div className="nav-item">
               <span className="nav-icon">🚪</span>
