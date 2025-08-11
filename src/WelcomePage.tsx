@@ -59,11 +59,11 @@ export default function WelcomePage({ onNavigateToLogin }: WelcomePageProps) {
 
           <div className="social-buttons">
             <button className="social-btn google-btn" onClick={handleGoogleSignUp}>
-              <span className="social-icon">G</span>
+              <span className="social-icon google-icon"></span>
               Sign Up With Google
             </button>
             <button className="social-btn apple-btn" onClick={handleAppleSignUp}>
-              <span className="social-icon">🍎</span>
+              <span className="social-icon apple-icon"></span>
               Sign Up With Apple
             </button>
           </div>
