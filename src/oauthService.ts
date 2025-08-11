@@ -1,4 +1,4 @@
-import { databaseService, User } from './database';
+import { User } from './types';
 
 export interface OAuthUser {
   id: string;
@@ -46,22 +46,11 @@ export class OAuthService {
 
       const userData = await userResponse.json();
 
-      const mockGoogleUser = {
+      const oauthUser: OAuthUser = {
+        id: userData.id,
         email: userData.email,
         name: userData.name,
         picture: userData.picture,
-        provider: 'google' as const,
-        provider_id: userData.id
-      };
-
-      // Save or update user in database
-      const dbUser = await databaseService.createUser(mockGoogleUser);
-
-      const oauthUser: OAuthUser = {
-        id: dbUser.id.toString(),
-        email: dbUser.email,
-        name: dbUser.name,
-        picture: dbUser.picture,
         provider: 'google'
       };
 

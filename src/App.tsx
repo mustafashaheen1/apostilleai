@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import { googleCalendarService, CalendarEvent } from './googleCalendar';
 import { OAuthService, OAuthUser } from './oauthService';
-import { databaseService } from './database';
+// Database service removed
 import WelcomePage from './WelcomePage';
 import LoginPage from './LoginPage';
 
@@ -74,8 +74,7 @@ export default function App() {
     };
 
     const checkSignInStatus = async () => {
-      // Initialize database
-      await databaseService.initializeDatabase();
+      // Database initialization removed
 
       // Check for existing OAuth session
       const existingUser = OAuthService.getUserSession();
