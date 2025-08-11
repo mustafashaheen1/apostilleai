@@ -1,4 +1,4 @@
-import { User } from './types'; // Assuming User type is in a separate types file or defined elsewhere
+import { User } from './types';
 
 class DatabaseService {
   private apiBaseUrl: string;
