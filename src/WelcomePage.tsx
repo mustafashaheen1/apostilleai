@@ -201,28 +201,75 @@ export default function WelcomePage({ onNavigateToLogin }: WelcomePageProps) {
 
             <div className="preview-main">
               <div className="world-map">
-                <div className="map-placeholder">🗺️ World Map View</div>
+                <div className="map-header">
+                  <h3>Map</h3>
+                  <span className="map-date">May 2023</span>
+                </div>
+                <div className="world-map-svg">
+                  <svg viewBox="0 0 400 200" className="map-svg">
+                    {/* World Map Simplified Paths */}
+                    <path d="M50 80 Q60 70 80 75 L120 70 Q140 65 160 70 L200 75 Q220 80 240 75 L280 80 Q300 85 320 80 L360 85 Q380 90 390 85" 
+                          fill="#5a67d8" opacity="0.8"/>
+                    <path d="M60 90 Q80 85 100 90 L140 95 Q160 90 180 95 L220 100 Q240 95 260 100 L300 105 Q320 100 340 105" 
+                          fill="#5a67d8" opacity="0.9"/>
+                    <path d="M40 120 Q60 115 80 120 L120 125 Q140 120 160 125 L200 130 Q220 125 240 130 L280 135 Q300 130 320 135 L360 140" 
+                          fill="#5a67d8" opacity="0.7"/>
+                    <path d="M70 140 Q90 135 110 140 L150 145 Q170 140 190 145 L230 150 Q250 145 270 150 L310 155 Q330 150 350 155" 
+                          fill="#5a67d8" opacity="0.6"/>
+                    {/* Additional map elements */}
+                    <circle cx="100" cy="90" r="2" fill="#ffffff" opacity="0.8"/>
+                    <circle cx="200" cy="110" r="2" fill="#ffffff" opacity="0.8"/>
+                    <circle cx="300" cy="130" r="2" fill="#ffffff" opacity="0.8"/>
+                  </svg>
+                </div>
               </div>
               
-              <div className="jobs-preview">
+              <div className="calendar-section">
+                <div className="calendar-header">
+                  <span>May 2023</span>
+                </div>
+                <div className="mini-calendar">
+                  <div className="calendar-grid">
+                    <div className="calendar-day">17</div>
+                    <div className="calendar-day selected">18</div>
+                    <div className="calendar-day">19</div>
+                    <div className="calendar-day">20</div>
+                    <div className="calendar-day">21</div>
+                    <div className="calendar-day">22</div>
+                    <div className="calendar-day">23</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div className="jobs-tracker-preview">
+              <div className="jobs-header">
                 <h3>Jobs Tracker</h3>
+              </div>
+              <div className="jobs-table">
+                <div className="table-header">
+                  <span>JOB #</span>
+                  <span>DOCUMENT RETRIEVED</span>
+                  <span>DOCUMENT NOTARIZED</span>
+                  <span>STATUS</span>
+                </div>
                 <div className="job-row">
                   <span className="job-id">#167962</span>
-                  <span>Completed</span>
-                  <span>Completed</span>
-                  <span>Completed</span>
+                  <span className="status">Completed</span>
+                  <span className="status">Completed</span>
+                  <span className="status">Completed</span>
                 </div>
                 <div className="job-row">
                   <span className="job-id">#315061</span>
-                  <span>Completed</span>
-                  <span>Completed</span>
-                  <span>Completed</span>
+                  <span className="status">Completed</span>
+                  <span className="status">Completed</span>
+                  <span className="status">Completed</span>
                 </div>
                 <div className="job-row">
                   <span className="job-id">#565740</span>
-                  <span>Completed</span>
-                  <span>Completed</span>
-                  <span>Completed</span>
+                  <span className="status">Completed</span>
+                  <span className="status">Completed</span>
+                  <span className="status">Completed</span>
                 </div>
               </div>
             </div>
