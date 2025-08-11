@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { googleCalendarService, CalendarEvent } from './googleCalendar';
+import { OAuthService, OAuthUser } from './oauthService';
 import WelcomePage from './WelcomePage';
 import LoginPage from './LoginPage';
 
@@ -11,6 +12,8 @@ export default function App() {
   const [isGoogleConnected, setIsGoogleConnected] = useState(false);
   const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([]);
   const [isConnecting, setIsConnecting] = useState(false);
+  const [oauthUser, setOauthUser] = useState<OAuthUser | null>(null);
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
   
   const handleGoogleConnect = async () => {
     if (isGoogleConnected) {
@@ -37,10 +40,48 @@ export default function App() {
     }
   };
 
-  // Check if user is already signed in on component mount
+  // Check if user is already signed in on component mount and handle OAuth callbacks
   useEffect(() => {
+    const handleOAuthCallback = async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('code');
+      const state = urlParams.get('state');
+      const idToken = urlParams.get('id_token');
+      
+      if (code) {
+        setIsAuthenticating(true);
+        
+        if (window.location.pathname.includes('/auth/google/callback')) {
+          const user = await OAuthService.handleGoogleCallback(code);
+          if (user) {
+            OAuthService.saveUserSession(user);
+            setOauthUser(user);
+            setCurrentPage('dashboard');
+          }
+        } else if (window.location.pathname.includes('/auth/apple/callback')) {
+          const user = await OAuthService.handleAppleCallback(code, idToken || undefined);
+          if (user) {
+            OAuthService.saveUserSession(user);
+            setOauthUser(user);
+            setCurrentPage('dashboard');
+          }
+        }
+        
+        // Clear URL parameters
+        window.history.replaceState({}, document.title, window.location.pathname);
+        setIsAuthenticating(false);
+      }
+    };
+
     const checkSignInStatus = async () => {
       try {
+        // Check for existing OAuth session
+        const existingUser = OAuthService.getUserSession();
+        if (existingUser) {
+          setOauthUser(existingUser);
+          setCurrentPage('dashboard');
+        }
+
         await googleCalendarService.initializeGapi();
         const isSignedIn = googleCalendarService.isUserSignedIn();
         if (isSignedIn) {
@@ -53,6 +94,7 @@ export default function App() {
       }
     };
 
+    handleOAuthCallback();
     checkSignInStatus();
   }, []);
 
@@ -108,9 +150,15 @@ export default function App() {
         </div>
         
         <div className="user-info">
-          <div className="avatar">JD</div>
+          <div className="avatar">
+            {oauthUser?.picture ? (
+              <img src={oauthUser.picture} alt="Profile" style={{width: '40px', height: '40px', borderRadius: '50%'}} />
+            ) : (
+              <div>{oauthUser?.name?.charAt(0) || 'JD'}</div>
+            )}
+          </div>
           <div className="user-details">
-            <div className="welcome">Welcome, Jane Doe of XYZ Company</div>
+            <div className="welcome">Welcome, {oauthUser?.name || 'Jane Doe of XYZ Company'}</div>
             <div className="date">Thursday, May 18, 2023</div>
           </div>
         </div>
@@ -198,7 +246,13 @@ export default function App() {
               <span className="nav-icon">🔐</span>
               Login Page
             </div>
-            <div className="nav-item">
+            <div className="nav-item" onClick={() => {
+              OAuthService.clearUserSession();
+              setOauthUser(null);
+              setCurrentPage('welcome');
+              setIsGoogleConnected(false);
+              setCalendarEvents([]);
+            }}>
               <span className="nav-icon">🚪</span>
               Logout
             </div>

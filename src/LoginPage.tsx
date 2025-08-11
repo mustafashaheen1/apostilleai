@@ -26,12 +26,47 @@ export default function LoginPage({ onNavigateToWelcome }: LoginPageProps) {
     console.log('Login form submitted:', formData);
   };
 
-  const handleGoogleLogin = () => {
-    console.log('Google login clicked');
+  const handleGoogleLogin = async () => {
+    try {
+      // Google OAuth 2.0 flow
+      const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID || 'YOUR_GOOGLE_CLIENT_ID';
+      const redirectUri = `${window.location.origin}/auth/google/callback`;
+      
+      const params = new URLSearchParams({
+        client_id: clientId,
+        redirect_uri: redirectUri,
+        response_type: 'code',
+        scope: 'openid email profile',
+        access_type: 'offline',
+        prompt: 'consent'
+      });
+      
+      window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
+    } catch (error) {
+      console.error('Google OAuth error:', error);
+      alert('Failed to initiate Google login. Please try again.');
+    }
   };
 
-  const handleAppleLogin = () => {
-    console.log('Apple login clicked');
+  const handleAppleLogin = async () => {
+    try {
+      // Apple Sign In flow
+      const clientId = process.env.REACT_APP_APPLE_CLIENT_ID || 'YOUR_APPLE_CLIENT_ID';
+      const redirectUri = `${window.location.origin}/auth/apple/callback`;
+      
+      const params = new URLSearchParams({
+        client_id: clientId,
+        redirect_uri: redirectUri,
+        response_type: 'code',
+        scope: 'name email',
+        response_mode: 'form_post'
+      });
+      
+      window.location.href = `https://appleid.apple.com/auth/authorize?${params.toString()}`;
+    } catch (error) {
+      console.error('Apple OAuth error:', error);
+      alert('Failed to initiate Apple login. Please try again.');
+    }
   };
 
   return (
