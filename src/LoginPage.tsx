@@ -1,4 +1,6 @@
+` tags.
 
+<replit_final_file>
 import React, { useState } from 'react';
 import './LoginPage.css';
 
@@ -31,7 +33,7 @@ export default function LoginPage({ onNavigateToWelcome }: LoginPageProps) {
       // Google OAuth 2.0 flow
       const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID || 'YOUR_GOOGLE_CLIENT_ID';
       const redirectUri = `${window.location.origin}/auth/google/callback`;
-      
+
       const params = new URLSearchParams({
         client_id: clientId,
         redirect_uri: redirectUri,
@@ -40,7 +42,7 @@ export default function LoginPage({ onNavigateToWelcome }: LoginPageProps) {
         access_type: 'offline',
         prompt: 'consent'
       });
-      
+
       window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
     } catch (error) {
       console.error('Google OAuth error:', error);
@@ -53,7 +55,7 @@ export default function LoginPage({ onNavigateToWelcome }: LoginPageProps) {
       // Apple Sign In flow
       const clientId = process.env.REACT_APP_APPLE_CLIENT_ID || 'YOUR_APPLE_CLIENT_ID';
       const redirectUri = `${window.location.origin}/auth/apple/callback`;
-      
+
       const params = new URLSearchParams({
         client_id: clientId,
         redirect_uri: redirectUri,
@@ -61,7 +63,7 @@ export default function LoginPage({ onNavigateToWelcome }: LoginPageProps) {
         scope: 'name email',
         response_mode: 'form_post'
       });
-      
+
       window.location.href = `https://appleid.apple.com/auth/authorize?${params.toString()}`;
     } catch (error) {
       console.error('Apple OAuth error:', error);
@@ -145,73 +147,6 @@ export default function LoginPage({ onNavigateToWelcome }: LoginPageProps) {
               Login
             </button>
           </form>
-        </div>
-      </div>
-
-      <div className="login-right">
-        <div className="promo-content">
-          <h2>Apostille AI is the best way to suspendisse eu sed euismod nibh lectus pellentesque velit leo condimentum.</h2>
-          
-          <div className="dashboard-preview">
-            <div className="preview-header">
-              <div className="preview-logo">
-                <div className="logo-icon">A</div>
-                <span>Apostille.AI</span>
-                <span className="beta">BETA</span>
-              </div>
-              <div className="preview-user">Welcome, Jane Doe of XYZ Company</div>
-            </div>
-            
-            <div className="preview-sidebar">
-              <div className="sidebar-item">🔔 Notifications <span className="notification-badge">4</span></div>
-              <div className="sidebar-section">MENU</div>
-              <div className="sidebar-item active">📊 Dashboard</div>
-              <div className="sidebar-item">📄 UCC3 Termination</div>
-              <div className="sidebar-item">🏷️ Generate Shipping Label</div>
-              <div className="sidebar-item">📁 Vital Records Retrieval</div>
-              <div className="sidebar-item">📋 Court Document Retrieval</div>
-              <div className="sidebar-item">📚 Library</div>
-              <div className="sidebar-item">✅ Initialize Notarization</div>
-              <div className="sidebar-item">🏛️ Embassy Legalization</div>
-              <div className="sidebar-item">🔐 USCIS Authentication</div>
-              <div className="sidebar-item">🤖 Ask AI (BETA)</div>
-              <div className="sidebar-item">👆 Fingerprints (Coming Soon)</div>
-              <div className="sidebar-section">OTHERS</div>
-              <div className="sidebar-item">⚙️ Settings</div>
-              <div className="sidebar-item">💳 Billing</div>
-              <div className="sidebar-item">📖 Guide & Resources</div>
-              <div className="sidebar-item">❓ Help Desk</div>
-              <div className="sidebar-item">🚪 Logout</div>
-            </div>
-
-            <div className="preview-main">
-              <div className="world-map">
-                <div className="map-placeholder">🗺️ World Map View</div>
-              </div>
-              
-              <div className="jobs-preview">
-                <h3>Jobs Tracker</h3>
-                <div className="job-row">
-                  <span className="job-id">#167962</span>
-                  <span>Completed</span>
-                  <span>Completed</span>
-                  <span>Completed</span>
-                </div>
-                <div className="job-row">
-                  <span className="job-id">#315061</span>
-                  <span>Completed</span>
-                  <span>Completed</span>
-                  <span>Completed</span>
-                </div>
-                <div className="job-row">
-                  <span className="job-id">#565740</span>
-                  <span>Completed</span>
-                  <span>Completed</span>
-                  <span>Completed</span>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </div>
