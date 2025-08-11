@@ -1,6 +1,3 @@
-` tags.
-
-<replit_final_file>
 import React, { useState } from 'react';
 import './LoginPage.css';
 
