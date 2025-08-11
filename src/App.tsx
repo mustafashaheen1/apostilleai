@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import { googleCalendarService, CalendarEvent } from './googleCalendar';
 import { OAuthService, OAuthUser } from './oauthService';
-// Database service removed
 import WelcomePage from './WelcomePage';
 import LoginPage from './LoginPage';
 
@@ -17,7 +16,6 @@ export default function App() {
 
   const handleGoogleConnect = async () => {
     if (isGoogleConnected) {
-      // Sign out
       await googleCalendarService.signOut();
       setIsGoogleConnected(false);
       setCalendarEvents([]);
@@ -29,7 +27,6 @@ export default function App() {
       const success = await googleCalendarService.signIn();
       if (success) {
         setIsGoogleConnected(true);
-        // Fetch calendar events
         const events = await googleCalendarService.getEvents();
         setCalendarEvents(events);
       }
@@ -40,12 +37,10 @@ export default function App() {
     }
   };
 
-  // Check if user is already signed in on component mount and handle OAuth callbacks
   useEffect(() => {
     const handleOAuthCallback = async () => {
       const urlParams = new URLSearchParams(window.location.search);
       const code = urlParams.get('code');
-      const state = urlParams.get('state');
       const idToken = urlParams.get('id_token');
 
       if (code) {
@@ -67,16 +62,12 @@ export default function App() {
           }
         }
 
-        // Clear URL parameters
         window.history.replaceState({}, document.title, window.location.pathname);
         setIsAuthenticating(false);
       }
     };
 
     const checkSignInStatus = async () => {
-      // Database initialization removed
-
-      // Check for existing OAuth session
       const existingUser = OAuthService.getUserSession();
       if (existingUser) {
         setOauthUser(existingUser);
@@ -96,17 +87,16 @@ export default function App() {
     checkSignInStatus();
   }, []);
 
-  // Sample job data
   const jobs = [
-    { id: '#167962', retrieved: 'Completed', notarized: 'Completed', translated: 'Completed', status: 'Shipped' },
+    { id: '#167952', retrieved: 'Completed', notarized: 'Completed', translated: 'Completed', status: 'Shipped' },
     { id: '#315061', retrieved: 'Completed', notarized: 'Completed', translated: 'Completed', status: 'Certified' },
-    { id: '#565740', retrieved: 'Completed', notarized: 'Completed', translated: 'Completed', status: 'Delivered' },
+    { id: '#495740', retrieved: 'Completed', notarized: 'Completed', translated: 'Completed', status: 'Delivered' },
   ];
 
   const renderCalendar = () => {
     const days = [];
     const daysInMonth = 31;
-    const startDay = 1; // Monday start
+    const startDay = 0; // Sunday start for May 2023
 
     // Empty cells for days before month starts
     for (let i = 0; i < startDay; i++) {
@@ -149,20 +139,7 @@ export default function App() {
           <span>Apostille.AI</span>
           <span className="beta">BETA</span>
         </div>
-
-        <div className="user-info">
-          <div className="avatar">
-            {oauthUser?.picture ? (
-              <img src={oauthUser.picture} alt="Profile" style={{width: '40px', height: '40px', borderRadius: '50%'}} />
-            ) : (
-              <div>{oauthUser?.name?.charAt(0) || 'JD'}</div>
-            )}
-          </div>
-          <div className="user-details">
-            <div className="welcome">Welcome, {oauthUser?.name || 'Jane Doe of XYZ Company'}</div>
-            <div className="date">Thursday, May 18, 2023</div>
-          </div>
-        </div>
+        <div className="powered-by">Powered by Apostille Developers LLC</div>
 
         <nav className="nav-menu">
           <div className="nav-section">
@@ -180,8 +157,8 @@ export default function App() {
               Dashboard
             </div>
             <div className="nav-item">
-              <span className="nav-icon">📄</span>
-              UCC3 Termination
+              <span className="nav-icon">🔄</span>
+              USCIS Translation
             </div>
             <div className="nav-item">
               <span className="nav-icon">🏷️</span>
@@ -201,15 +178,15 @@ export default function App() {
             </div>
             <div className="nav-item">
               <span className="nav-icon">✅</span>
-              Initialize Notarization
+              Initialise Notarisation
             </div>
             <div className="nav-item">
               <span className="nav-icon">🏛️</span>
-              Embassy Legalization
+              Embassy Legalisation
             </div>
             <div className="nav-item">
               <span className="nav-icon">🔐</span>
-              USCIS Authentication
+              USDOS Authentication
             </div>
             <div className="nav-item">
               <span className="nav-icon">🤖</span>
@@ -229,7 +206,7 @@ export default function App() {
             </div>
             <div className="nav-item">
               <span className="nav-icon">💳</span>
-              Billing
+              Billings
             </div>
             <div className="nav-item">
               <span className="nav-icon">📖</span>
@@ -238,14 +215,6 @@ export default function App() {
             <div className="nav-item">
               <span className="nav-icon">❓</span>
               Help Desk
-            </div>
-            <div className="nav-item" onClick={() => setCurrentPage('welcome')}>
-              <span className="nav-icon">👋</span>
-              Welcome Page
-            </div>
-            <div className="nav-item" onClick={() => setCurrentPage('login')}>
-              <span className="nav-icon">🔐</span>
-              Login Page
             </div>
             <div className="nav-item" onClick={() => {
               OAuthService.clearUserSession();
@@ -264,10 +233,19 @@ export default function App() {
       {/* Main Content */}
       <div className="main-content">
         <div className="header">
-          <div className="search-bar">
-            <input type="text" placeholder="Search..." />
+          <div className="header-left">
+            <div className="user-avatar">JD</div>
+            <div className="header-info">
+              <div className="date">Thursday, May 18, 2023</div>
+              <div className="welcome">Welcome, Jane Doe of XYZ Company</div>
+            </div>
           </div>
-          <button className="create-job-btn">+ Create Job</button>
+          <div className="header-right">
+            <div className="search-bar">
+              <input type="text" placeholder="Search" />
+            </div>
+            <button className="create-job-btn">+ Create Job</button>
+          </div>
         </div>
 
         <div className="content-grid">
@@ -307,31 +285,6 @@ export default function App() {
                 {renderCalendar()}
               </div>
             </div>
-
-            {isGoogleConnected && (
-              <div className="calendar-events">
-                <h3>Upcoming Events</h3>
-                {calendarEvents.length > 0 ? (
-                  <div className="events-list">
-                    {calendarEvents.slice(0, 5).map((event) => (
-                      <div key={event.id} className="event-item">
-                        <div className="event-title">{event.summary || 'No title'}</div>
-                        <div className="event-time">
-                          {event.start?.dateTime 
-                            ? new Date(event.start.dateTime).toLocaleString()
-                            : event.start?.date 
-                              ? new Date(event.start.date).toLocaleDateString()
-                              : 'No time'
-                          }
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="no-events">No upcoming events found</div>
-                )}
-              </div>
-            )}
           </div>
 
           {/* Quick Stats */}
@@ -347,7 +300,7 @@ export default function App() {
             </div>
             <div className="stat-item">
               <span>Pending Review</span>
-              <span className="stat-value">1</span>
+              <span className="stat-value">3</span>
             </div>
           </div>
         </div>
@@ -392,7 +345,8 @@ export default function App() {
             <div className="premium-feature">Premium feature</div>
           </div>
           <button className="action-btn hire-courier">
-            🚗 Hire An On-Demand Apostille Courier Same-day service where available
+            🚗 Hire An On-Demand Apostille Courier
+            <div className="courier-subtitle">Same-day service where available</div>
           </button>
         </div>
       </div>

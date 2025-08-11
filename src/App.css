@@ -31,7 +31,15 @@ body {
   display: flex;
   align-items: center;
   padding: 20px;
-  border-bottom: 1px solid #34495e;
+  flex-direction: column;
+  text-align: left;
+}
+
+.logo-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 8px;
 }
 
 .logo-icon {
@@ -55,8 +63,66 @@ body {
   margin-left: 8px;
 }
 
-.user-info {
+.powered-by {
+  font-size: 11px;
+  color: #7f8c8d;
+  align-self: flex-start;
+  margin-left: 0;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  background: white;
   padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #3498db;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: white;
+}
+
+.header-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.date {
+  font-size: 12px;
+  color: #7f8c8d;
+  margin-bottom: 2px;
+}
+
+.welcome {
+  font-weight: 500;
+  color: #2c3e50;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.user-info {
+  padding: 0 20px 20px 20px;
   border-bottom: 1px solid #34495e;
   display: flex;
   align-items: center;
@@ -77,11 +143,6 @@ body {
 .welcome {
   font-weight: 500;
   margin-bottom: 4px;
-}
-
-.date {
-  font-size: 12px;
-  color: #bdc3c7;
 }
 
 .nav-menu {
@@ -133,23 +194,11 @@ body {
   margin-left: auto;
 }
 
-/* Main Content Styles */
 .main-content {
   margin-left: 280px;
   flex: 1;
   padding: 20px;
   background-color: #ecf0f1;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .search-bar input {
@@ -168,6 +217,11 @@ body {
   border-radius: 6px;
   cursor: pointer;
   font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.create-job-btn:hover {
+  background-color: #3367d6;
 }
 
 .content-grid {
@@ -470,6 +524,20 @@ body {
   padding: 15px 20px;
   color: #856404;
   position: relative;
+  text-align: center;
+}
+
+.hire-courier {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.courier-subtitle {
+  font-size: 12px;
+  margin-top: 5px;
+  opacity: 0.8;
 }
 
 .premium-feature {
