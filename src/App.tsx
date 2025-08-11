@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { googleCalendarService, CalendarEvent } from './googleCalendar';
@@ -15,7 +14,7 @@ export default function App() {
   const [isConnecting, setIsConnecting] = useState(false);
   const [oauthUser, setOauthUser] = useState<OAuthUser | null>(null);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
-  
+
   const handleGoogleConnect = async () => {
     if (isGoogleConnected) {
       // Sign out
@@ -48,10 +47,10 @@ export default function App() {
       const code = urlParams.get('code');
       const state = urlParams.get('state');
       const idToken = urlParams.get('id_token');
-      
+
       if (code) {
         setIsAuthenticating(true);
-        
+
         if (window.location.pathname.includes('/auth/google/callback')) {
           const user = await OAuthService.handleGoogleCallback(code);
           if (user) {
@@ -67,7 +66,7 @@ export default function App() {
             setCurrentPage('dashboard');
           }
         }
-        
+
         // Clear URL parameters
         window.history.replaceState({}, document.title, window.location.pathname);
         setIsAuthenticating(false);
@@ -75,26 +74,22 @@ export default function App() {
     };
 
     const checkSignInStatus = async () => {
-      try {
-        // Initialize database
-        await databaseService.initializeDatabase();
-        
-        // Check for existing OAuth session
-        const existingUser = OAuthService.getUserSession();
-        if (existingUser) {
-          setOauthUser(existingUser);
-          setCurrentPage('dashboard');
-        }
+      // Initialize database
+      await databaseService.initializeDatabase();
 
-        await googleCalendarService.initializeGapi();
-        const isSignedIn = googleCalendarService.isUserSignedIn();
-        if (isSignedIn) {
-          setIsGoogleConnected(true);
-          const events = await googleCalendarService.getEvents();
-          setCalendarEvents(events);
-        }
-      } catch (error) {
-        console.error('Error checking sign-in status:', error);
+      // Check for existing OAuth session
+      const existingUser = OAuthService.getUserSession();
+      if (existingUser) {
+        setOauthUser(existingUser);
+        setCurrentPage('dashboard');
+      }
+
+      await googleCalendarService.initializeGapi();
+      const isSignedIn = googleCalendarService.isUserSignedIn();
+      if (isSignedIn) {
+        setIsGoogleConnected(true);
+        const events = await googleCalendarService.getEvents();
+        setCalendarEvents(events);
       }
     };
 
@@ -152,7 +147,7 @@ export default function App() {
           <span>Apostille.AI</span>
           <span className="beta">BETA</span>
         </div>
-        
+
         <div className="user-info">
           <div className="avatar">
             {oauthUser?.picture ? (
@@ -310,7 +305,7 @@ export default function App() {
                 {renderCalendar()}
               </div>
             </div>
-            
+
             {isGoogleConnected && (
               <div className="calendar-events">
                 <h3>Upcoming Events</h3>
@@ -361,7 +356,7 @@ export default function App() {
             <h2>Jobs Tracker</h2>
             <button className="create-new-job-btn">+ Create New Job</button>
           </div>
-          
+
           <div className="jobs-table">
             <div className="table-header">
               <div>JOB #</div>
@@ -370,7 +365,7 @@ export default function App() {
               <div>DOCUMENT TRANSLATED</div>
               <div>STATUS</div>
             </div>
-            
+
             {jobs.map((job, index) => (
               <div key={index} className="table-row">
                 <div className="job-id">{job.id}</div>

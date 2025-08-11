@@ -7,6 +7,14 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+console.log('DATABASE_URL exists:', !!process.env.DATABASE_URL);
+console.log('DATABASE_URL starts with:', process.env.DATABASE_URL?.substring(0, 20));
+
+if (!process.env.DATABASE_URL) {
+  console.error('ERROR: DATABASE_URL environment variable is not set!');
+  console.error('Please create a PostgreSQL database in the Replit Database tab.');
+}
+
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   max: 10
