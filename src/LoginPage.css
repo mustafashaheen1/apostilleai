@@ -207,6 +207,12 @@
 
 .password-input {
   position: relative;
+  width: 100%;
+}
+
+.password-input input {
+  width: 100%;
+  padding-right: 45px;
 }
 
 .password-toggle {
@@ -219,6 +225,7 @@
   cursor: pointer;
   font-size: 16px;
   color: #7f8c8d;
+  z-index: 2;
 }
 
 .login-btn {
