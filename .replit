@@ -19,9 +19,19 @@ localPort = 5173
 externalPort = 80
 
 [workflows]
+runButton = "Run"
 
 [[workflows.workflow]]
 name = "Start Backend API"
+author = 44498628
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "node server/api.js"
+
+[[workflows.workflow]]
+name = "Run"
 author = 44498628
 mode = "sequential"
 
