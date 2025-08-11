@@ -11,7 +11,7 @@
   padding: 40px 60px;
   display: flex;
   flex-direction: column;
-  max-width: 500px;
+  width: 50%;
 }
 
 .welcome-header {
@@ -252,6 +252,7 @@
   align-items: center;
   position: relative;
   overflow: hidden;
+  width: 50%;
 }
 
 .promo-content h2 {
