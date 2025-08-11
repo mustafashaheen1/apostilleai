@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import { googleCalendarService, CalendarEvent } from './googleCalendar';
 import { OAuthService, OAuthUser } from './oauthService';
+import { databaseService } from './database';
 import WelcomePage from './WelcomePage';
 import LoginPage from './LoginPage';
 
@@ -75,6 +76,9 @@ export default function App() {
 
     const checkSignInStatus = async () => {
       try {
+        // Initialize database
+        await databaseService.initializeDatabase();
+        
         // Check for existing OAuth session
         const existingUser = OAuthService.getUserSession();
         if (existingUser) {

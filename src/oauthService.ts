@@ -1,3 +1,4 @@
+import { databaseService, User } from './database';
 
 export interface OAuthUser {
   id: string;
@@ -8,7 +9,7 @@ export interface OAuthUser {
 }
 
 export class OAuthService {
-  
+
   static async handleGoogleCallback(code: string): Promise<OAuthUser | null> {
     try {
       const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
@@ -31,7 +32,7 @@ export class OAuthService {
       });
 
       const tokenData = await tokenResponse.json();
-      
+
       if (!tokenData.access_token) {
         throw new Error('Failed to get access token');
       }
@@ -45,13 +46,26 @@ export class OAuthService {
 
       const userData = await userResponse.json();
 
-      return {
-        id: userData.id,
+      const mockGoogleUser = {
         email: userData.email,
         name: userData.name,
         picture: userData.picture,
+        provider: 'google' as const,
+        provider_id: userData.id
+      };
+
+      // Save or update user in database
+      const dbUser = await databaseService.createUser(mockGoogleUser);
+
+      const oauthUser: OAuthUser = {
+        id: dbUser.id.toString(),
+        email: dbUser.email,
+        name: dbUser.name,
+        picture: dbUser.picture,
         provider: 'google'
       };
+
+      return oauthUser;
     } catch (error) {
       console.error('Google OAuth callback error:', error);
       return null;
@@ -84,13 +98,26 @@ export class OAuthService {
       if (idToken) {
         // Decode the ID token to get user information
         const payload = JSON.parse(atob(idToken.split('.')[1]));
-        
-        return {
-          id: payload.sub,
+
+        const mockAppleUser = {
           email: payload.email,
           name: payload.name || payload.email,
+          provider: 'apple' as const,
+          provider_id: payload.sub
+        };
+
+        // Save or update user in database
+        const dbUser = await databaseService.createUser(mockAppleUser);
+
+        const oauthUser: OAuthUser = {
+          id: dbUser.id.toString(),
+          email: dbUser.email,
+          name: dbUser.name,
+          picture: dbUser.picture,
           provider: 'apple'
         };
+
+        return oauthUser;
       }
 
       return null;
