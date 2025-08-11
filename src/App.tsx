@@ -1,10 +1,58 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
+import { googleCalendarService, CalendarEvent } from './googleCalendar';
 
 export default function App() {
   const [selectedDate, setSelectedDate] = useState(18);
+  const [isGoogleConnected, setIsGoogleConnected] = useState(false);
+  const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([]);
+  const [isConnecting, setIsConnecting] = useState(false);
   
+  const handleGoogleConnect = async () => {
+    if (isGoogleConnected) {
+      // Sign out
+      await googleCalendarService.signOut();
+      setIsGoogleConnected(false);
+      setCalendarEvents([]);
+      return;
+    }
+
+    setIsConnecting(true);
+    try {
+      const success = await googleCalendarService.signIn();
+      if (success) {
+        setIsGoogleConnected(true);
+        // Fetch calendar events
+        const events = await googleCalendarService.getEvents();
+        setCalendarEvents(events);
+      }
+    } catch (error) {
+      console.error('Failed to connect to Google Calendar:', error);
+    } finally {
+      setIsConnecting(false);
+    }
+  };
+
+  // Check if user is already signed in on component mount
+  useEffect(() => {
+    const checkSignInStatus = async () => {
+      try {
+        await googleCalendarService.initializeGapi();
+        const isSignedIn = googleCalendarService.isUserSignedIn();
+        if (isSignedIn) {
+          setIsGoogleConnected(true);
+          const events = await googleCalendarService.getEvents();
+          setCalendarEvents(events);
+        }
+      } catch (error) {
+        console.error('Error checking sign-in status:', error);
+      }
+    };
+
+    checkSignInStatus();
+  }, []);
+
   // Sample job data
   const jobs = [
     { id: '#167962', retrieved: 'Completed', notarized: 'Completed', translated: 'Completed', status: 'Shipped' },
@@ -153,7 +201,18 @@ export default function App() {
           <div className="calendar-section">
             <div className="section-header">
               <h2>Calendar</h2>
-              <button className="connect-google-btn">Connect Google</button>
+              <button 
+                className="connect-google-btn" 
+                onClick={handleGoogleConnect}
+                disabled={isConnecting}
+              >
+                {isConnecting 
+                  ? 'Connecting...' 
+                  : isGoogleConnected 
+                    ? 'Disconnect Google' 
+                    : 'Connect Google'
+                }
+              </button>
             </div>
             <div className="calendar">
               <div className="calendar-header">
@@ -174,6 +233,31 @@ export default function App() {
                 {renderCalendar()}
               </div>
             </div>
+            
+            {isGoogleConnected && (
+              <div className="calendar-events">
+                <h3>Upcoming Events</h3>
+                {calendarEvents.length > 0 ? (
+                  <div className="events-list">
+                    {calendarEvents.slice(0, 5).map((event) => (
+                      <div key={event.id} className="event-item">
+                        <div className="event-title">{event.summary || 'No title'}</div>
+                        <div className="event-time">
+                          {event.start?.dateTime 
+                            ? new Date(event.start.dateTime).toLocaleString()
+                            : event.start?.date 
+                              ? new Date(event.start.date).toLocaleDateString()
+                              : 'No time'
+                          }
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="no-events">No upcoming events found</div>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Quick Stats */}
