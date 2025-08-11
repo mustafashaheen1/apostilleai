@@ -47,8 +47,8 @@ export class GoogleCalendarService {
       await this.initializeGapi();
       
       await this.gapi.client.init({
-        apiKey: 'YOUR_API_KEY', // Replace with your API key
-        clientId: 'YOUR_CLIENT_ID', // Replace with your client ID
+        apiKey: 'YOUR_GOOGLE_API_KEY', // Get from Google Cloud Console
+        clientId: 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com', // Get from Google Cloud Console
         discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
         scope: 'https://www.googleapis.com/auth/calendar.readonly'
       });
