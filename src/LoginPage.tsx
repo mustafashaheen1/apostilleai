@@ -2,7 +2,11 @@
 import React, { useState } from 'react';
 import './LoginPage.css';
 
-export default function LoginPage() {
+interface LoginPageProps {
+  onNavigateToWelcome: () => void;
+}
+
+export default function LoginPage({ onNavigateToWelcome }: LoginPageProps) {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -46,7 +50,7 @@ export default function LoginPage() {
           <h1>Login</h1>
           <p className="login-subtitle">Enter your details to Login up</p>
           <p className="signup-prompt">
-            If you already have an account <a href="#" className="signup-link">Sign Up</a>
+            If you don't have an account <button onClick={onNavigateToWelcome} className="signup-link">Sign Up</button>
           </p>
 
           <div className="social-buttons">

@@ -6,7 +6,7 @@ import WelcomePage from './WelcomePage';
 import LoginPage from './LoginPage';
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<'dashboard' | 'welcome' | 'login'>('dashboard');
+  const [currentPage, setCurrentPage] = useState<'dashboard' | 'welcome' | 'login'>('welcome');
   const [selectedDate, setSelectedDate] = useState(18);
   const [isGoogleConnected, setIsGoogleConnected] = useState(false);
   const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([]);
@@ -90,11 +90,11 @@ export default function App() {
   };
 
   if (currentPage === 'welcome') {
-    return <WelcomePage />;
+    return <WelcomePage onNavigateToLogin={() => setCurrentPage('login')} />;
   }
 
   if (currentPage === 'login') {
-    return <LoginPage />;
+    return <LoginPage onNavigateToWelcome={() => setCurrentPage('welcome')} />;
   }
 
   return (
