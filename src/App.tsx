@@ -134,7 +134,10 @@ export default function App() {
   }
 
   if (currentPage === 'login') {
-    return <LoginPage onNavigateToWelcome={() => setCurrentPage('welcome')} />;
+    return <LoginPage 
+      onNavigateToWelcome={() => setCurrentPage('welcome')} 
+      onLoginSuccess={() => setCurrentPage('dashboard')}
+    />;
   }
 
   return (

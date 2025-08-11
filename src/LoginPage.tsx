@@ -3,9 +3,10 @@ import './LoginPage.css';
 
 interface LoginPageProps {
   onNavigateToWelcome: () => void;
+  onLoginSuccess: () => void;
 }
 
-export default function LoginPage({ onNavigateToWelcome }: LoginPageProps) {
+export default function LoginPage({ onNavigateToWelcome, onLoginSuccess }: LoginPageProps) {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -23,6 +24,8 @@ export default function LoginPage({ onNavigateToWelcome }: LoginPageProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Login form submitted:', formData);
+    // Navigate to dashboard after successful login
+    onLoginSuccess();
   };
 
   const handleGoogleLogin = async () => {
