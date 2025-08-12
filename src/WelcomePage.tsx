@@ -381,3 +381,7 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
