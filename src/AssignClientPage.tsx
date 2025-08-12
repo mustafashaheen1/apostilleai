@@ -68,7 +68,8 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
   };
 
   const loadGooglePlacesScript = () => {
-    if (window.google) {
+    // Check if Google Maps API is already loaded or if script already exists
+    if (window.google || document.querySelector('script[src*="maps.googleapis.com"]')) {
       return;
     }
 
