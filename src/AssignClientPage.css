@@ -30,14 +30,14 @@
   align-items: center;
   justify-content: space-between;
   padding: 24px 32px;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #ecf0f1;
   background: white;
 }
 
 .page-title {
   font-size: 24px;
   font-weight: 600;
-  color: #1f2937;
+  color: #2c3e50;
   margin: 0;
 }
 
@@ -60,25 +60,25 @@
   border-radius: 20px;
   font-size: 14px;
   font-weight: 500;
-  color: #6b7280;
-  background-color: #f3f4f6;
+  color: #7f8c8d;
+  background-color: #ecf0f1;
   position: relative;
 }
 
 .step.active {
-  background-color: #4f46e5;
+  background-color: #4285f4;
   color: white;
 }
 
 .step-connector {
   width: 40px;
   height: 2px;
-  background-color: #e5e7eb;
+  background-color: #ecf0f1;
   margin: 0 8px;
 }
 
 .step.active + .step-connector {
-  background-color: #4f46e5;
+  background-color: #4285f4;
 }
 
 /* Header Actions */
@@ -90,9 +90,9 @@
 
 .back-btn {
   padding: 10px 20px;
-  border: 1px solid #d1d5db;
+  border: 1px solid #ddd;
   background: white;
-  color: #374151;
+  color: #2c3e50;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 500;
@@ -100,13 +100,13 @@
 }
 
 .back-btn:hover {
-  border-color: #9ca3af;
-  background-color: #f9fafb;
+  border-color: #4285f4;
+  color: #4285f4;
 }
 
 .continue-btn {
   padding: 10px 20px;
-  background-color: #4f46e5;
+  background-color: #4285f4;
   color: white;
   border: none;
   border-radius: 8px;
@@ -116,20 +116,20 @@
 }
 
 .continue-btn:hover:not(:disabled) {
-  background-color: #4338ca;
+  background-color: #3367d6;
 }
 
 .continue-btn:disabled {
-  background-color: #9ca3af;
+  background-color: #bdc3c7;
   cursor: not-allowed;
 }
 
 .close-btn {
   width: 40px;
   height: 40px;
-  border: 1px solid #d1d5db;
+  border: 1px solid #ddd;
   background: white;
-  color: #6b7280;
+  color: #7f8c8d;
   border-radius: 50%;
   cursor: pointer;
   display: flex;
@@ -158,7 +158,7 @@
 
 .create-client-btn {
   padding: 12px 24px;
-  background-color: #4f46e5;
+  background-color: #4285f4;
   color: white;
   border: none;
   border-radius: 8px;
@@ -169,7 +169,7 @@
 }
 
 .create-client-btn:hover {
-  background-color: #4338ca;
+  background-color: #3367d6;
 }
 
 /* Clients Table */
@@ -184,13 +184,13 @@
   grid-template-columns: 2fr 1.5fr 2fr 1.5fr 2fr;
   gap: 16px;
   padding: 16px 24px;
-  background-color: #f9fafb;
-  border-bottom: 1px solid #e5e7eb;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #ecf0f1;
 }
 
 .header-cell {
   font-weight: 600;
-  color: #374151;
+  color: #2c3e50;
   font-size: 14px;
 }
 
@@ -204,13 +204,13 @@
   grid-template-columns: 2fr 1.5fr 2fr 1.5fr 2fr;
   gap: 16px;
   padding: 20px 24px;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid #ecf0f1;
   align-items: center;
   transition: background-color 0.2s;
 }
 
 .table-row:hover {
-  background-color: #f9fafb;
+  background-color: #f8f9fa;
 }
 
 .table-row:last-child {
@@ -237,11 +237,11 @@
 
 .client-name {
   font-weight: 500;
-  color: #1f2937;
+  color: #2c3e50;
 }
 
 .cell {
-  color: #6b7280;
+  color: #7f8c8d;
   font-size: 14px;
 }
 
@@ -253,9 +253,9 @@
 
 .view-details-btn {
   padding: 8px 16px;
-  border: 1px solid #d1d5db;
+  border: 1px solid #ddd;
   background: white;
-  color: #374151;
+  color: #2c3e50;
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
@@ -264,13 +264,13 @@
 }
 
 .view-details-btn:hover {
-  border-color: #9ca3af;
-  background-color: #f9fafb;
+  border-color: #4285f4;
+  color: #4285f4;
 }
 
 .choose-btn {
   padding: 8px 16px;
-  background-color: #4f46e5;
+  background-color: #4285f4;
   color: white;
   border: none;
   border-radius: 6px;
@@ -281,15 +281,15 @@
 }
 
 .choose-btn:hover {
-  background-color: #4338ca;
+  background-color: #3367d6;
 }
 
 .choose-btn.selected {
-  background-color: #10b981;
+  background-color: #27ae60;
 }
 
 .choose-btn.selected:hover {
-  background-color: #059669;
+  background-color: #229954;
 }
 
 /* Other Steps Content */
@@ -308,13 +308,13 @@
 .job-creation-content h2 {
   font-size: 24px;
   font-weight: 600;
-  color: #1f2937;
+  color: #2c3e50;
   margin-bottom: 16px;
 }
 
 .location-content p,
 .job-creation-content p {
-  color: #6b7280;
+  color: #7f8c8d;
   font-size: 16px;
 }
 
