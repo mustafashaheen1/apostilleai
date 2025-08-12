@@ -13,6 +13,7 @@ export interface User {
   id: string;
   full_name: string;
   email: string;
+  company?: string;
   provider: 'email' | 'google' | 'apple';
   provider_id?: string;
   picture?: string;

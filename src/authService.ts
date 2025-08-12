@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 
 export interface SignUpData {
   fullName: string;
+  company: string;
   email: string;
   password: string;
 }
@@ -58,6 +59,7 @@ export class AuthService {
         .insert({
           id: authData.user.id,
           full_name: userData.fullName,
+          company: userData.company,
           email: userData.email,
           password_hash: passwordHash,
           provider: 'email'

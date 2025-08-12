@@ -190,11 +190,13 @@ export default function App() {
       {/* Sidebar */}
       <div className="sidebar">
         <div className="logo">
+          <div className="logo-row">
           <div className="logo-icon">A</div>
           <span>Apostille.AI</span>
           <span className="beta">BETA</span>
+          </div>
+          <p className="powered-by">Powered by Apostille Technologies LLC</p>
         </div>
-        <div className="powered-by">Powered by Apostille Developers LLC</div>
 
         <nav className="nav-menu">
           <div className="nav-section">
@@ -290,7 +292,7 @@ export default function App() {
             </div>
             <div className="header-info">
               <div className="date">{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</div>
-              <div className="welcome">Welcome, {currentUser?.full_name || 'Jane Doe'} of XYZ Company</div>
+              <div className="welcome">Welcome, {currentUser?.full_name || 'Jane Doe'} of {currentUser?.company || 'XYZ Company'}</div>
             </div>
           </div>
           <div className="header-right">

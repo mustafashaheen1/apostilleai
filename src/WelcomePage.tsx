@@ -11,6 +11,7 @@ interface WelcomePageProps {
 export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: WelcomePageProps) {
   const [formData, setFormData] = useState({
     fullName: '',
+    company: '',
     email: '',
     password: '',
     confirmPassword: ''
@@ -53,6 +54,7 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
     try {
       const { user, error } = await AuthService.signUp({
         fullName: formData.fullName,
+        company: formData.company,
         email: formData.email,
         password: formData.password
       });
@@ -63,6 +65,7 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
         // Clear form data on successful signup
         setFormData({
           fullName: '',
+          company: '',
           email: '',
           password: '',
           confirmPassword: ''
@@ -163,6 +166,19 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
                 name="fullName"
                 placeholder="Full Name"
                 value={formData.fullName}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="company">Company Name</label>
+              <input
+                type="text"
+                id="company"
+                name="company"
+                placeholder="Company Name"
+                value={formData.company}
                 onChange={handleInputChange}
                 required
               />
