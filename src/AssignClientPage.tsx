@@ -223,6 +223,8 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
       setError('An unexpected error occurred. Please try again.');
     } finally {
       setIsSubmitting(false);
+    }
+  };
 
   const getClientInitials = (fullName: string): string => {
     return fullName.split(' ').map(name => name.charAt(0)).join('').toUpperCase().slice(0, 2);
