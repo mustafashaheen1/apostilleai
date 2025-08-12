@@ -58,7 +58,17 @@ export default function App() {
       }
     };
 
+    const handleNavigateToApostilleForm = () => {
+      setCurrentPage('apostille-request');
+    };
+
+    window.addEventListener('navigateToApostilleForm', handleNavigateToApostilleForm);
+
     checkAuthStatus();
+
+    return () => {
+      window.removeEventListener('navigateToApostilleForm', handleNavigateToApostilleForm);
+    };
   }, []);
 
   const handleSignUpSuccess = () => {
