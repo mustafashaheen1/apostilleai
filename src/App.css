@@ -325,6 +325,7 @@ body {
   transition: all 0.2s;
   position: relative;
   color: #333;
+  margin-left: 10px;
 }
 
 .calendar-day:nth-child(7n) {
