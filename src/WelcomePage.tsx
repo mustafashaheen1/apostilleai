@@ -219,8 +219,58 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
                   </svg>
                 </button>
       </div>
+
+            <div className="form-group">
+              <label htmlFor="confirmPassword">Confirm Password</label>
+              <div className="password-input">
+                <input
+                  type={showConfirmPassword ? "text" : "password"}
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
+                  value={formData.confirmPassword}
+                  onChange={handleInputChange}
+                  required
+                />
+                <button
+                  type="button"
+                  className="password-toggle"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                >
+                  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div className="form-group checkbox-group">
+              <label className="checkbox-label">
+                <input
+                  type="checkbox"
+                  checked={agreeToTerms}
+                  onChange={(e) => setAgreeToTerms(e.target.checked)}
+                  required
+                />
+                <span className="checkmark"></span>
+                I agree to the Terms & Privacy Policy
+              </label>
+            </div>
+
+            {error && <div className="error-message">{error}</div>}
+
+            <button type="submit" className="signup-btn" disabled={isLoading}>
+              {isLoading ? 'Creating Account...' : 'Sign Up'}
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div className="welcome-right">
+        <div className="preview-content">
+          <h2>Apostille AI is the best way to suspendisse eu sed euismod nibh lectus pellentesque velit leo condimentum.</h2>
+        </div>
+      </div>
     </div>
   );
-}
-  )
 }
