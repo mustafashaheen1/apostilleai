@@ -282,21 +282,27 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
                 <span>Apostille.AI</span>
                 <span className="beta">BETA</span>
               </div>
-              <div className="preview-user">Welcome, Jane Doe of XYZ Company</div>
+              <div className="preview-user-section">
+                <div className="preview-date">Tuesday, August 12, 2025</div>
+                <div className="preview-user-info">
+                  <div className="preview-avatar">C</div>
+                  <div className="preview-welcome">Welcome, Chris Rock of Hollywood LLC</div>
+                </div>
+              </div>
             </div>
             
             <div className="preview-sidebar">
               <div className="sidebar-item">🔔 Notifications <span className="notification-badge">4</span></div>
               <div className="sidebar-section">MENU</div>
               <div className="sidebar-item active">📊 Dashboard</div>
-              <div className="sidebar-item">📄 UCC3 Termination</div>
+              <div className="sidebar-item">🔄 USCIS Translation</div>
               <div className="sidebar-item">🏷️ Generate Shipping Label</div>
               <div className="sidebar-item">📁 Vital Records Retrieval</div>
               <div className="sidebar-item">📋 Court Document Retrieval</div>
               <div className="sidebar-item">📚 Library</div>
-              <div className="sidebar-item">✅ Initialize Notarization</div>
-              <div className="sidebar-item">🏛️ Embassy Legalization</div>
-              <div className="sidebar-item">🔐 USCIS Authentication</div>
+              <div className="sidebar-item">✅ Initialise Notarisation</div>
+              <div className="sidebar-item">🏛️ Embassy Legalisation</div>
+              <div className="sidebar-item">🔐 USDOS Authentication</div>
               <div className="sidebar-item">🤖 Ask AI (BETA)</div>
               <div className="sidebar-item">👆 Fingerprints (Coming Soon)</div>
               <div className="sidebar-section">OTHERS</div>
@@ -307,44 +313,42 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
               <div className="sidebar-item">🚪 Logout</div>
             </div>
 
-            <div className="preview-main">
-              <div className="world-map">
-                <div className="map-header">
-                  <h3>Map</h3>
-                  <span className="map-date">May 2023</span>
+            <div className="preview-content">
+              <div className="calendar-preview">
+                <div className="calendar-preview-header">
+                  <h3>Calendar</h3>
+                  <button className="connect-google-preview">Connect Google</button>
                 </div>
-                <div className="world-map-svg">
-                  <svg viewBox="0 0 400 200" className="map-svg">
-                    {/* World Map Simplified Paths */}
-                    <path d="M50 80 Q60 70 80 75 L120 70 Q140 65 160 70 L200 75 Q220 80 240 75 L280 80 Q300 85 320 80 L360 85 Q380 90 390 85" 
-                          fill="#5a67d8" opacity="0.8"/>
-                    <path d="M60 90 Q80 85 100 90 L140 95 Q160 90 180 95 L220 100 Q240 95 260 100 L300 105 Q320 100 340 105" 
-                          fill="#5a67d8" opacity="0.9"/>
-                    <path d="M40 120 Q60 115 80 120 L120 125 Q140 120 160 125 L200 130 Q220 125 240 130 L280 135 Q300 130 320 135 L360 140" 
-                          fill="#5a67d8" opacity="0.7"/>
-                    <path d="M70 140 Q90 135 110 140 L150 145 Q170 140 190 145 L230 150 Q250 145 270 150 L310 155 Q330 150 350 155" 
-                          fill="#5a67d8" opacity="0.6"/>
-                    {/* Additional map elements */}
-                    <circle cx="100" cy="90" r="2" fill="#ffffff" opacity="0.8"/>
-                    <circle cx="200" cy="110" r="2" fill="#ffffff" opacity="0.8"/>
-                    <circle cx="300" cy="130" r="2" fill="#ffffff" opacity="0.8"/>
-                  </svg>
-                </div>
-              </div>
-              
-              <div className="calendar-section">
-                <div className="calendar-header">
-                  <span>May 2023</span>
-                </div>
-                <div className="mini-calendar">
-                  <div className="calendar-grid">
-                    <div className="calendar-day">17</div>
-                    <div className="calendar-day selected">18</div>
-                    <div className="calendar-day">19</div>
-                    <div className="calendar-day">20</div>
-                    <div className="calendar-day">21</div>
-                    <div className="calendar-day">22</div>
-                    <div className="calendar-day">23</div>
+                <div className="calendar-preview-body">
+                  <div className="calendar-nav">
+                    <button>‹</button>
+                    <span>August 2025</span>
+                    <button>›</button>
+                  </div>
+                  <div className="calendar-weekdays-preview">
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                    <div>Sun</div>
+                  </div>
+                  <div className="calendar-days-preview">
+                    <div className="calendar-day-preview">4</div>
+                    <div className="calendar-day-preview">5</div>
+                    <div className="calendar-day-preview">6</div>
+                    <div className="calendar-day-preview">7</div>
+                    <div className="calendar-day-preview">8</div>
+                    <div className="calendar-day-preview">9</div>
+                    <div className="calendar-day-preview">10</div>
+                    <div className="calendar-day-preview">11</div>
+                    <div className="calendar-day-preview selected">12</div>
+                    <div className="calendar-day-preview">13</div>
+                    <div className="calendar-day-preview">14</div>
+                    <div className="calendar-day-preview">15</div>
+                    <div className="calendar-day-preview">16</div>
+                    <div className="calendar-day-preview">17</div>
                   </div>
                 </div>
               </div>
@@ -369,12 +373,6 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
                 </div>
                 <div className="job-row">
                   <span className="job-id">#315061</span>
-                  <span className="status">Completed</span>
-                  <span className="status">Completed</span>
-                  <span className="status">Completed</span>
-                </div>
-                <div className="job-row">
-                  <span className="job-id">#565740</span>
                   <span className="status">Completed</span>
                   <span className="status">Completed</span>
                   <span className="status">Completed</span>
