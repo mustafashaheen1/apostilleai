@@ -5,9 +5,10 @@ import { AuthService } from './authService';
 import { User } from './supabase';
 import WelcomePage from './WelcomePage';
 import LoginPage from './LoginPage';
+import ApostilleRequestForm from './ApostilleRequestForm';
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<'dashboard' | 'welcome' | 'login'>('welcome');
+  const [currentPage, setCurrentPage] = useState<'dashboard' | 'welcome' | 'login' | 'apostille-request'>('welcome');
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date().getDate());
   const [isGoogleConnected, setIsGoogleConnected] = useState(false);
@@ -160,6 +161,12 @@ export default function App() {
     />;
   }
 
+  if (currentPage === 'apostille-request') {
+    return <ApostilleRequestForm 
+      onBack={() => setCurrentPage('dashboard')}
+    />;
+  }
+
   return (
     <div className="app">
       {/* Sidebar */}
@@ -188,7 +195,7 @@ export default function App() {
             </div>
             <div className="nav-item">
               <span className="nav-icon">🔄</span>
-              USCIS Translation
+              <span onClick={() => setCurrentPage('apostille-request')}>USCIS Translation</span>
             </div>
             <div className="nav-item">
               <span className="nav-icon">🏷️</span>
