@@ -19,6 +19,16 @@ interface AssignClientPageProps {
 export default function AssignClientPage({ onBack, onClose }: AssignClientPageProps) {
   const [selectedClient, setSelectedClient] = useState<string | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
+  const [showCreateClientModal, setShowCreateClientModal] = useState(false);
+  const [newClientData, setNewClientData] = useState({
+    fullName: '',
+    company: '',
+    website: '',
+    officeEmail: '',
+    officePhone: '',
+    mobilePhone: '',
+    address: ''
+  });
 
   const clients: Client[] = [
     {
@@ -95,6 +105,38 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
     }
   };
 
+  const handleCreateClientClick = () => {
+    setShowCreateClientModal(true);
+  };
+
+  const handleCloseCreateClientModal = () => {
+    setShowCreateClientModal(false);
+    setNewClientData({
+      fullName: '',
+      company: '',
+      website: '',
+      officeEmail: '',
+      officePhone: '',
+      mobilePhone: '',
+      address: ''
+    });
+  };
+
+  const handleNewClientInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setNewClientData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSaveNewClient = () => {
+    // Here you would typically save the client to your database
+    console.log('Saving new client:', newClientData);
+    handleCloseCreateClientModal();
+    // You could add the new client to the clients list here
+  };
+
   const getStepTitle = () => {
     switch (currentStep) {
       case 1:
@@ -160,7 +202,7 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
         {currentStep === 1 && (
           <div className="assign-client-content">
             <div className="create-client-section">
-              <button className="create-client-btn">
+              <button className="create-client-btn" onClick={handleCreateClientClick}>
                 + Create New Client
               </button>
             </div>
@@ -219,6 +261,109 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
           </div>
         )}
       </div>
+
+      {/* Create New Client Modal */}
+      {showCreateClientModal && (
+        <div className="create-client-modal-overlay">
+          <div className="create-client-modal">
+            <div className="modal-header">
+              <h2>Create New Client</h2>
+              <button className="modal-close-btn" onClick={handleCloseCreateClientModal}>
+                ✕
+              </button>
+            </div>
+
+            <div className="modal-content">
+              <div className="form-field">
+                <label>Full Name</label>
+                <input
+                  type="text"
+                  name="fullName"
+                  placeholder="Full Name"
+                  value={newClientData.fullName}
+                  onChange={handleNewClientInputChange}
+                />
+              </div>
+
+              <div className="form-field">
+                <label>Company</label>
+                <input
+                  type="text"
+                  name="company"
+                  placeholder="Company"
+                  value={newClientData.company}
+                  onChange={handleNewClientInputChange}
+                />
+              </div>
+
+              <div className="form-field">
+                <label>Website</label>
+                <input
+                  type="text"
+                  name="website"
+                  placeholder="Website"
+                  value={newClientData.website}
+                  onChange={handleNewClientInputChange}
+                />
+              </div>
+
+              <div className="form-field">
+                <label>Office Email</label>
+                <input
+                  type="email"
+                  name="officeEmail"
+                  placeholder="Office Email"
+                  value={newClientData.officeEmail}
+                  onChange={handleNewClientInputChange}
+                />
+              </div>
+
+              <div className="form-row">
+                <div className="form-field">
+                  <label>Office Phone</label>
+                  <input
+                    type="tel"
+                    name="officePhone"
+                    placeholder="Office Phone"
+                    value={newClientData.officePhone}
+                    onChange={handleNewClientInputChange}
+                  />
+                </div>
+                <div className="form-field">
+                  <label>Mobile Phone</label>
+                  <input
+                    type="tel"
+                    name="mobilePhone"
+                    placeholder="Mobile Phone"
+                    value={newClientData.mobilePhone}
+                    onChange={handleNewClientInputChange}
+                  />
+                </div>
+              </div>
+
+              <div className="form-field">
+                <label>Address 1</label>
+                <input
+                  type="text"
+                  name="address"
+                  placeholder="Address 1"
+                  value={newClientData.address}
+                  onChange={handleNewClientInputChange}
+                />
+              </div>
+            </div>
+
+            <div className="modal-actions">
+              <button className="cancel-btn" onClick={handleCloseCreateClientModal}>
+                Cancel
+              </button>
+              <button className="save-btn" onClick={handleSaveNewClient}>
+                Save
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
