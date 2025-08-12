@@ -234,9 +234,6 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
     const colors = ['#4ECDC4', '#A8A8FF', '#90EE90', '#F0E68C', '#FFB6C1', '#DDA0DD'];
     return colors[index % colors.length];
   };
-    handleCloseCreateClientModal();
-    // You could add the new client to the clients list here
-  };
 
   const getStepTitle = () => {
     switch (currentStep) {
