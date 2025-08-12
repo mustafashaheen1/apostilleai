@@ -243,6 +243,7 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
                 </button>
               </div>
             </div>
+            </div>
 
             <div className="form-group checkbox-group">
               <label className="checkbox-label">
