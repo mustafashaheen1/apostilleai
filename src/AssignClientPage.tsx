@@ -19,6 +19,7 @@ interface AssignClientPageProps {
 export default function AssignClientPage({ onBack, onClose }: AssignClientPageProps) {
   const [selectedClient, setSelectedClient] = useState<string | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [showCreateClientModal, setShowCreateClientModal] = useState(false);
   const [clients, setClients] = useState<Client[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -34,6 +35,21 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
     mobilePhone: '',
     address: ''
   });
+
+  const countries = [
+    { code: 'US', name: 'USA', flag: '🇺🇸' },
+    { code: 'CA', name: 'Canada', flag: '🇨🇦' },
+    { code: 'GB', name: 'United Kingdom', flag: '🇬🇧' },
+    { code: 'AU', name: 'Australia', flag: '🇦🇺' },
+    { code: 'NZ', name: 'New Zealand', flag: '🇳🇿' },
+    { code: 'JP', name: 'Japan', flag: '🇯🇵' },
+    { code: 'ES', name: 'Spain', flag: '🇪🇸' },
+    { code: 'FR', name: 'France', flag: '🇫🇷' },
+    { code: 'IL', name: 'Israel', flag: '🇮🇱' },
+    { code: 'ZA', name: 'South Africa', flag: '🇿🇦' },
+    { code: 'SE', name: 'Sweden', flag: '🇸🇪' },
+    { code: 'BR', name: 'Brazil', flag: '🇧🇷' }
+  ];
 
   useEffect(() => {
     loadClients();
@@ -138,8 +154,14 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
     setSelectedClient(clientId);
   };
 
+  const handleCountrySelect = (countryCode: string) => {
+    setSelectedCountry(countryCode);
+  };
+
   const handleContinue = () => {
-    if (selectedClient && currentStep < 3) {
+    if (currentStep === 1 && selectedClient) {
+      setCurrentStep(currentStep + 1);
+    } else if (currentStep === 2 && selectedCountry) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -286,7 +308,10 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
             <button 
               className="continue-btn" 
               onClick={handleContinue}
-              disabled={!selectedClient}
+              disabled={
+                (currentStep === 1 && !selectedClient) ||
+                (currentStep === 2 && !selectedCountry)
+              }
             >
               Continue →
             </button>
@@ -361,8 +386,133 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
 
         {currentStep === 2 && (
           <div className="location-content">
-            <h2>Choose a Location</h2>
-            <p>Location selection content will go here...</p>
+            <div className="location-layout">
+              <div className="countries-panel">
+                <div className="countries-grid">
+                  {countries.map((country) => (
+                    <div
+                      key={country.code}
+                      className={`country-card ${selectedCountry === country.code ? 'selected' : ''}`}
+                      onClick={() => handleCountrySelect(country.code)}
+                    >
+                      <div className="country-flag">
+                        <span className="flag-emoji">{country.flag}</span>
+                      </div>
+                      <div className="country-name">{country.name}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              
+              <div className="map-panel">
+                <div className="world-map-container">
+                  <svg viewBox="0 0 1000 500" className="world-map-svg">
+                    {/* World Map SVG Paths */}
+                    
+                    {/* United States */}
+                    <path
+                      d="M200 200 L300 180 L350 200 L380 220 L350 250 L300 260 L250 250 L200 230 Z"
+                      className={`country-path ${selectedCountry === 'US' ? 'highlighted' : ''}`}
+                      data-country="US"
+                    />
+                    
+                    {/* Canada */}
+                    <path
+                      d="M180 120 L400 100 L420 140 L380 180 L200 180 L160 150 Z"
+                      className={`country-path ${selectedCountry === 'CA' ? 'highlighted' : ''}`}
+                      data-country="CA"
+                    />
+                    
+                    {/* United Kingdom */}
+                    <path
+                      d="M480 180 L500 175 L510 185 L505 195 L485 200 L475 190 Z"
+                      className={`country-path ${selectedCountry === 'GB' ? 'highlighted' : ''}`}
+                      data-country="GB"
+                    />
+                    
+                    {/* France */}
+                    <path
+                      d="M470 210 L490 205 L500 220 L485 235 L465 230 L460 215 Z"
+                      className={`country-path ${selectedCountry === 'FR' ? 'highlighted' : ''}`}
+                      data-country="FR"
+                    />
+                    
+                    {/* Spain */}
+                    <path
+                      d="M440 240 L480 235 L485 250 L460 265 L430 260 L425 245 Z"
+                      className={`country-path ${selectedCountry === 'ES' ? 'highlighted' : ''}`}
+                      data-country="ES"
+                    />
+                    
+                    {/* Brazil */}
+                    <path
+                      d="M300 320 L380 310 L400 350 L380 400 L320 410 L280 380 L270 340 Z"
+                      className={`country-path ${selectedCountry === 'BR' ? 'highlighted' : ''}`}
+                      data-country="BR"
+                    />
+                    
+                    {/* Australia */}
+                    <path
+                      d="M750 380 L850 375 L870 400 L860 420 L780 425 L740 410 L735 390 Z"
+                      className={`country-path ${selectedCountry === 'AU' ? 'highlighted' : ''}`}
+                      data-country="AU"
+                    />
+                    
+                    {/* Japan */}
+                    <path
+                      d="M820 220 L840 215 L845 235 L835 250 L815 245 L810 230 Z"
+                      className={`country-path ${selectedCountry === 'JP' ? 'highlighted' : ''}`}
+                      data-country="JP"
+                    />
+                    
+                    {/* South Africa */}
+                    <path
+                      d="M520 380 L560 375 L570 400 L555 420 L525 415 L510 395 Z"
+                      className={`country-path ${selectedCountry === 'ZA' ? 'highlighted' : ''}`}
+                      data-country="ZA"
+                    />
+                    
+                    {/* Sweden */}
+                    <path
+                      d="M520 140 L535 135 L540 160 L530 175 L515 170 L510 150 Z"
+                      className={`country-path ${selectedCountry === 'SE' ? 'highlighted' : ''}`}
+                      data-country="SE"
+                    />
+                    
+                    {/* Israel */}
+                    <path
+                      d="M580 260 L590 255 L595 270 L585 280 L575 275 L570 265 Z"
+                      className={`country-path ${selectedCountry === 'IL' ? 'highlighted' : ''}`}
+                      data-country="IL"
+                    />
+                    
+                    {/* New Zealand */}
+                    <path
+                      d="M880 420 L900 415 L905 435 L895 445 L875 440 L870 425 Z"
+                      className={`country-path ${selectedCountry === 'NZ' ? 'highlighted' : ''}`}
+                      data-country="NZ"
+                    />
+                    
+                    {/* Background continents (non-interactive) */}
+                    <path
+                      d="M100 150 L450 120 L480 300 L400 350 L150 380 L80 250 Z"
+                      className="continent-path"
+                      fill="#e5e7eb"
+                    />
+                    <path
+                      d="M460 140 L650 130 L680 320 L550 350 L450 280 Z"
+                      className="continent-path"
+                      fill="#e5e7eb"
+                    />
+                    <path
+                      d="M700 200 L900 190 L920 400 L850 450 L720 430 Z"
+                      className="continent-path"
+                      fill="#e5e7eb"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
