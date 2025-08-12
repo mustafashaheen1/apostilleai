@@ -43,11 +43,15 @@ export default function App() {
 
   useEffect(() => {
     const checkAuthStatus = async () => {
+      setIsAuthenticating(true);
       const { user } = await AuthService.getCurrentUser();
       if (user) {
         setCurrentUser(user);
         setCurrentPage('dashboard');
+      } else {
+        setCurrentPage('welcome');
       }
+      setIsAuthenticating(false);
 
       await googleCalendarService.initializeGapi();
       const isSignedIn = googleCalendarService.isUserSignedIn();
@@ -72,10 +76,26 @@ export default function App() {
   }, []);
 
   const handleSignUpSuccess = () => {
+    // Reload user data after successful signup
+    const loadUser = async () => {
+      const { user } = await AuthService.getCurrentUser();
+      if (user) {
+        setCurrentUser(user);
+      }
+    };
+    loadUser();
     setCurrentPage('dashboard');
   };
 
   const handleLoginSuccess = () => {
+    // Reload user data after successful login
+    const loadUser = async () => {
+      const { user } = await AuthService.getCurrentUser();
+      if (user) {
+        setCurrentUser(user);
+      }
+    };
+    loadUser();
     setCurrentPage('dashboard');
   };
 
