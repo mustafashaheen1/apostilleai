@@ -28,7 +28,7 @@ export class AuthService {
         .from('users')
         .select('email')
         .eq('email', userData.email)
-        .single();
+        .maybeSingle();
 
       if (existingUser) {
         return { user: null, error: 'An account with this email already exists. Please login instead.' };
@@ -86,7 +86,7 @@ export class AuthService {
         .select('*')
         .eq('email', loginData.email)
         .eq('provider', 'email')
-        .single();
+        .maybeSingle();
 
       if (dbError || !dbUser) {
         return { user: null, error: 'No account found with this email address. Please sign up first.' };
@@ -128,7 +128,7 @@ export class AuthService {
         .from('users')
         .select('*')
         .eq('email', oauthUser.email)
-        .single();
+        .maybeSingle();
 
       if (existingUser) {
         // Update existing user with OAuth info if needed
@@ -187,7 +187,7 @@ export class AuthService {
         .from('users')
         .select('*')
         .eq('id', authData.user.id)
-        .single();
+        .maybeSingle();
 
       if (dbError) {
         return { user: null, error: 'Failed to load user profile' };
