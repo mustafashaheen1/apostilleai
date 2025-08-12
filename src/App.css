@@ -298,7 +298,7 @@ body {
 .calendar-header span {
   font-weight: 600;
   color: #333;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .calendar-weekdays {
@@ -326,10 +326,11 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 500;
   transition: all 0.2s;
   color: #333;
+  margin-left: 15px;
 }
 
 .calendar-day:hover {
