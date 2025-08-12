@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import { googleCalendarService, CalendarEvent } from './googleCalendar';
-import { OAuthService, OAuthUser } from './oauthService';
+import { AuthService } from './authService';
+import { User } from './supabase';
 import WelcomePage from './WelcomePage';
 import LoginPage from './LoginPage';
 
@@ -11,7 +12,7 @@ export default function App() {
   const [isGoogleConnected, setIsGoogleConnected] = useState(false);
   const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([]);
   const [isConnecting, setIsConnecting] = useState(false);
-  const [oauthUser, setOauthUser] = useState<OAuthUser | null>(null);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   const handleGoogleConnect = async () => {
@@ -38,39 +39,10 @@ export default function App() {
   };
 
   useEffect(() => {
-    const handleOAuthCallback = async () => {
-      const urlParams = new URLSearchParams(window.location.search);
-      const code = urlParams.get('code');
-      const idToken = urlParams.get('id_token');
-
-      if (code) {
-        setIsAuthenticating(true);
-
-        if (window.location.pathname.includes('/auth/google/callback')) {
-          const user = await OAuthService.handleGoogleCallback(code);
-          if (user) {
-            OAuthService.saveUserSession(user);
-            setOauthUser(user);
-            setCurrentPage('dashboard');
-          }
-        } else if (window.location.pathname.includes('/auth/apple/callback')) {
-          const user = await OAuthService.handleAppleCallback(code, idToken || undefined);
-          if (user) {
-            OAuthService.saveUserSession(user);
-            setOauthUser(user);
-            setCurrentPage('dashboard');
-          }
-        }
-
-        window.history.replaceState({}, document.title, window.location.pathname);
-        setIsAuthenticating(false);
-      }
-    };
-
-    const checkSignInStatus = async () => {
-      const existingUser = OAuthService.getUserSession();
-      if (existingUser) {
-        setOauthUser(existingUser);
+    const checkAuthStatus = async () => {
+      const { user } = await AuthService.getCurrentUser();
+      if (user) {
+        setCurrentUser(user);
         setCurrentPage('dashboard');
       }
 
@@ -83,9 +55,24 @@ export default function App() {
       }
     };
 
-    handleOAuthCallback();
-    checkSignInStatus();
+    checkAuthStatus();
   }, []);
+
+  const handleSignUpSuccess = () => {
+    setCurrentPage('dashboard');
+  };
+
+  const handleLoginSuccess = () => {
+    setCurrentPage('dashboard');
+  };
+
+  const handleLogout = async () => {
+    await AuthService.logout();
+    setCurrentUser(null);
+    setCurrentPage('welcome');
+    setIsGoogleConnected(false);
+    setCalendarEvents([]);
+  };
 
   const jobs = [
     { id: '#167952', retrieved: 'Completed', notarized: 'Completed', translated: 'Completed', status: 'Shipped' },
@@ -120,13 +107,16 @@ export default function App() {
   };
 
   if (currentPage === 'welcome') {
-    return <WelcomePage onNavigateToLogin={() => setCurrentPage('login')} />;
+    return <WelcomePage 
+      onNavigateToLogin={() => setCurrentPage('login')} 
+      onSignUpSuccess={handleSignUpSuccess}
+    />;
   }
 
   if (currentPage === 'login') {
     return <LoginPage 
       onNavigateToWelcome={() => setCurrentPage('welcome')} 
-      onLoginSuccess={() => setCurrentPage('dashboard')}
+      onLoginSuccess={handleLoginSuccess}
     />;
   }
 
@@ -217,11 +207,7 @@ export default function App() {
               Help Desk
             </div>
             <div className="nav-item" onClick={() => {
-              OAuthService.clearUserSession();
-              setOauthUser(null);
-              setCurrentPage('welcome');
-              setIsGoogleConnected(false);
-              setCalendarEvents([]);
+              handleLogout();
             }}>
               <span className="nav-icon">🚪</span>
               Logout
@@ -234,10 +220,12 @@ export default function App() {
       <div className="main-content">
         <div className="header">
           <div className="header-left">
-            <div className="user-avatar">JD</div>
+            <div className="user-avatar">
+              {currentUser?.full_name ? currentUser.full_name.charAt(0).toUpperCase() : 'JD'}
+            </div>
             <div className="header-info">
               <div className="date">Thursday, May 18, 2023</div>
-              <div className="welcome">Welcome, Jane Doe of XYZ Company</div>
+              <div className="welcome">Welcome, {currentUser?.full_name || 'Jane Doe'} of XYZ Company</div>
             </div>
           </div>
           <div className="header-right">
