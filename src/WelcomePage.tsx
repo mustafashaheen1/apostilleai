@@ -269,7 +269,14 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
 
       <div className="welcome-right">
         <div className="preview-content">
-          <h2>Apostille AI is the best way to suspendisse eu sed euismod nibh lectus pellentesque velit leo condimentum.</h2>
+          <h2 className="promo-heading">Apostille AI is the best way to suspendisse eu sed euismod nibh lectus pellentesque velit leo condimentum.</h2>
+          <div className="dashboard-image">
+            <img 
+              src="/attached_assets/Screenshot 2025-08-12 at 2.03.31 PM.png" 
+              alt="Apostille AI Dashboard Preview" 
+              className="dashboard-screenshot"
+            />
+          </div>
         </div>
       </div>
     </div>

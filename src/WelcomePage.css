@@ -309,6 +309,28 @@
   max-width: 500px;
 }
 
+.promo-heading {
+  text-align: center;
+  font-size: 40px !important;
+  margin-bottom: 30px !important;
+  max-width: none !important;
+}
+
+.dashboard-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.dashboard-screenshot {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
 .dashboard-preview {
   background: rgba(255, 255, 255, 0.15);
   border-radius: 12px;
