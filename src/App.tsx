@@ -6,9 +6,10 @@ import { User } from './supabase';
 import WelcomePage from './WelcomePage';
 import LoginPage from './LoginPage';
 import ApostilleRequestForm from './ApostilleRequestForm';
+import AssignClientPage from './AssignClientPage';
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<'dashboard' | 'welcome' | 'login' | 'apostille-request'>('welcome');
+  const [currentPage, setCurrentPage] = useState<'dashboard' | 'welcome' | 'login' | 'apostille-request' | 'assign-client'>('welcome');
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date().getDate());
   const [isGoogleConnected, setIsGoogleConnected] = useState(false);
@@ -167,6 +168,13 @@ export default function App() {
     />;
   }
 
+  if (currentPage === 'assign-client') {
+    return <AssignClientPage 
+      onBack={() => setCurrentPage('dashboard')}
+      onClose={() => setCurrentPage('dashboard')}
+    />;
+  }
+
   return (
     <div className="app">
       {/* Sidebar */}
@@ -279,7 +287,7 @@ export default function App() {
             <div className="search-bar">
               <input type="text" placeholder="Search" />
             </div>
-            <button className="create-job-btn">+ Create Job</button>
+            <button className="create-job-btn" onClick={() => setCurrentPage('assign-client')}>+ Create Job</button>
           </div>
         </div>
 
@@ -344,7 +352,7 @@ export default function App() {
         <div className="jobs-tracker">
           <div className="section-header">
             <h2>Jobs Tracker</h2>
-            <button className="create-new-job-btn">+ Create New Job</button>
+            <button className="create-new-job-btn" onClick={() => setCurrentPage('assign-client')}>+ Create New Job</button>
           </div>
 
           <div className="jobs-table">
