@@ -298,6 +298,7 @@ body {
 .calendar-header span {
   font-weight: 600;
   color: #333;
+  font-size: 18px;
 }
 
 .calendar-weekdays {
@@ -308,16 +309,10 @@ body {
 
 .calendar-weekdays div {
   text-align: center;
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 600;
   color: #7f8c8d;
   padding: 15px 8px;
-  border-right: 1px solid #e0e0e0;
-  border-bottom: 1px solid #e0e0e0;
-}
-
-.calendar-weekdays div:nth-child(7n) {
-  border-right: none;
 }
 
 .calendar-grid {
@@ -331,20 +326,10 @@ body {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border-right: 1px solid #e0e0e0;
-  border-bottom: 1px solid #e0e0e0;
-  font-size: 14px;
+  font-size: 18px;
   font-weight: 500;
   transition: all 0.2s;
   color: #333;
-}
-
-.calendar-day:nth-child(7n) {
-  border-right: none;
-}
-
-.calendar-day:nth-last-child(-n+7) {
-  border-bottom: none;
 }
 
 .calendar-day:hover {
