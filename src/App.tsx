@@ -95,8 +95,8 @@ export default function App() {
 
   const renderCalendar = () => {
     const days = [];
-    const daysInMonth = 31;
-    const startDay = 0; // Sunday start for May 2023
+    const daysInMonth = 31; // May 2023 has 31 days
+    const startDay = 1; // May 1, 2023 starts on Monday (1 = Monday, 0 = Sunday)
 
     // Empty cells for days before month starts
     for (let i = 0; i < startDay; i++) {
