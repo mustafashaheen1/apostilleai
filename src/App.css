@@ -289,8 +289,10 @@ body {
 .calendar-weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
-  margin-bottom: 10px;
+  border: 1px solid #e0e0e0;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
 }
 
 .calendar-weekdays div {
@@ -298,21 +300,27 @@ body {
   font-size: 12px;
   font-weight: 600;
   color: #7f8c8d;
-  padding: 8px;
+  padding: 12px 8px;
+  background-color: #f8f9fa;
+  border-right: 1px solid #e0e0e0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.calendar-weekdays div:last-child {
+  border-right: none;
 }
 
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 0;
-  width: 100%;
   border: 1px solid #e0e0e0;
-  border-radius: 8px;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
   overflow: hidden;
 }
 
 .calendar-day {
-  height: 50px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -323,16 +331,15 @@ body {
   font-weight: 500;
   background-color: white;
   transition: all 0.2s;
-  position: relative;
   color: #333;
-  margin-left: 25px;
+  position: relative;
 }
 
 .calendar-day:nth-child(7n) {
   border-right: none;
 }
 
-.calendar-day:nth-last-child(-n+7) {
+.calendar-day:nth-child(n+29) {
   border-bottom: none;
 }
 
