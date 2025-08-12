@@ -82,15 +82,11 @@ export default function App() {
 
   const renderCalendar = () => {
     const days = [];
-    const daysInMonth = 31; // May 2023 has 31 days
-    const startDay = 1; // May 1, 2023 starts on Monday (1 = Monday, 0 = Sunday)
+    const daysInMonth = 31;
+    const startDay = 1; // May 1, 2023 starts on Monday
+    const nextMonthDays = 4; // Show first 4 days of next month
 
-    // Empty cells for days before month starts
-    for (let i = 0; i < startDay; i++) {
-      days.push(<div key={`empty-${i}`} className="calendar-day empty"></div>);
-    }
-
-    // Days of the month
+    // Days of the current month
     for (let day = 1; day <= daysInMonth; day++) {
       days.push(
         <div 
@@ -98,6 +94,15 @@ export default function App() {
           className={`calendar-day ${day === selectedDate ? 'selected' : ''}`}
           onClick={() => setSelectedDate(day)}
         >
+          {day}
+        </div>
+      );
+    }
+
+    // Add next month's days to fill the grid
+    for (let day = 1; day <= nextMonthDays; day++) {
+      days.push(
+        <div key={`next-${day}`} className="calendar-day next-month">
           {day}
         </div>
       );
