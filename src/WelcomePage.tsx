@@ -297,6 +297,9 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
               <div className="sidebar-item active">📊 Dashboard</div>
               <div className="sidebar-item">🔄 USCIS Translation</div>
               <div className="sidebar-item">🏷️ Generate Shipping Label</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
