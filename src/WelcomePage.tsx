@@ -1,12 +1,14 @@
 
 import React, { useState } from 'react';
 import './WelcomePage.css';
+import { AuthService } from './authService';
 
 interface WelcomePageProps {
   onNavigateToLogin: () => void;
+  onSignUpSuccess: () => void;
 }
 
-export default function WelcomePage({ onNavigateToLogin }: WelcomePageProps) {
+export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: WelcomePageProps) {
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -16,6 +18,8 @@ export default function WelcomePage({ onNavigateToLogin }: WelcomePageProps) {
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -25,9 +29,39 @@ export default function WelcomePage({ onNavigateToLogin }: WelcomePageProps) {
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    setError(null);
+    
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      setError('Password must be at least 6 characters long');
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const { user, error } = await AuthService.signUp({
+        fullName: formData.fullName,
+        email: formData.email,
+        password: formData.password
+      });
+
+      if (error) {
+        setError(error);
+      } else if (user) {
+        onSignUpSuccess();
+      }
+    } catch (err) {
+      setError('An unexpected error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleGoogleSignUp = async () => {
@@ -195,8 +229,14 @@ export default function WelcomePage({ onNavigateToLogin }: WelcomePageProps) {
               </label>
             </div>
 
-            <button type="submit" className="signup-btn" disabled={!agreeToTerms}>
-              Sign Up
+            {error && (
+              <div style={{ color: '#e74c3c', fontSize: '14px', marginBottom: '10px' }}>
+                {error}
+              </div>
+            )}
+
+            <button type="submit" className="signup-btn" disabled={!agreeToTerms || isLoading}>
+              {isLoading ? 'Creating Account...' : 'Sign Up'}
             </button>
           </form>
         </div>

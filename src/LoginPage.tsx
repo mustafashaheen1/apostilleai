@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './LoginPage.css';
+import { AuthService } from './authService';
 
 interface LoginPageProps {
   onNavigateToWelcome: () => void;
@@ -12,6 +13,8 @@ export default function LoginPage({ onNavigateToWelcome, onLoginSuccess }: Login
     password: ''
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -21,11 +24,27 @@ export default function LoginPage({ onNavigateToWelcome, onLoginSuccess }: Login
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Login form submitted:', formData);
-    // Navigate to dashboard after successful login
-    onLoginSuccess();
+    setError(null);
+    setIsLoading(true);
+
+    try {
+      const { user, error } = await AuthService.login({
+        email: formData.email,
+        password: formData.password
+      });
+
+      if (error) {
+        setError(error);
+      } else if (user) {
+        onLoginSuccess();
+      }
+    } catch (err) {
+      setError('An unexpected error occurred. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleGoogleLogin = async () => {
@@ -143,8 +162,14 @@ export default function LoginPage({ onNavigateToWelcome, onLoginSuccess }: Login
               </div>
             </div>
 
-            <button type="submit" className="login-btn">
-              Login
+            {error && (
+              <div style={{ color: '#e74c3c', fontSize: '14px', marginBottom: '10px' }}>
+                {error}
+              </div>
+            )}
+
+            <button type="submit" className="login-btn" disabled={isLoading}>
+              {isLoading ? 'Logging in...' : 'Login'}
             </button>
           </form>
         </div>
