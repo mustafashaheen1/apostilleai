@@ -93,11 +93,11 @@ export default function LoginPage({ onNavigateToWelcome, onLoginSuccess }: Login
           <div className="social-buttons">
             <button className="social-btn google-btn" onClick={handleGoogleLogin}>
               <span className="social-icon google-icon"></span>
-              Login With Google
+              Login with Google
             </button>
             <button className="social-btn apple-btn" onClick={handleAppleLogin}>
               <span className="social-icon apple-icon"></span>
-              Login With Apple
+              Login with Apple
             </button>
           </div>
 
