@@ -1,4 +1,5 @@
 import { User } from './types';
+import { databaseService } from './database';
 
 export interface OAuthUser {
   id: string;
