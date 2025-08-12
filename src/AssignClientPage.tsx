@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import './AssignClientPage.css';
+import { ClientService, Client, CreateClientData } from './clientService';
 
-interface Client {
-  id: string;
-  name: string;
-  company: string;
-  website: string;
-  phone: string;
-  initials: string;
-  color: string;
+// Google Places API types
+declare global {
+  interface Window {
+    google: any;
+    initAutocomplete: () => void;
+  }
 }
 
 interface AssignClientPageProps {
@@ -20,6 +20,11 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
   const [selectedClient, setSelectedClient] = useState<string | null>(null);
   const [currentStep, setCurrentStep] = useState(1);
   const [showCreateClientModal, setShowCreateClientModal] = useState(false);
+  const [clients, setClients] = useState<Client[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formErrors, setFormErrors] = useState<{[key: string]: string}>({});
   const [newClientData, setNewClientData] = useState({
     fullName: '',
     company: '',
@@ -30,62 +35,104 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
     address: ''
   });
 
-  const clients: Client[] = [
-    {
-      id: '1',
-      name: 'Randy Dias',
-      company: 'Louis Vuitton',
-      website: 'investor.thyrocare.com',
-      phone: '(217) 555-0113',
-      initials: 'RD',
-      color: '#4ECDC4'
-    },
-    {
-      id: '2',
-      name: 'Emerson Korsgaard',
-      company: 'Gillette',
-      website: 'Charbi.com',
-      phone: '(270) 555-0117',
-      initials: 'EK',
-      color: '#A8A8FF'
-    },
-    {
-      id: '3',
-      name: 'Paityn Rhiel Madsen',
-      company: 'IBM',
-      website: 'Staff.thyrocare.cloud',
-      phone: '(704) 555-0127',
-      initials: 'PM',
-      color: '#90EE90'
-    },
-    {
-      id: '4',
-      name: 'Chance Vaccaro',
-      company: 'Johnson & Johnson',
-      website: 'vitamind.thyrocare.com',
-      phone: '(225) 555-0118',
-      initials: 'CV',
-      color: '#F0E68C'
-    },
-    {
-      id: '5',
-      name: 'Desirae Press',
-      company: "McDonald's",
-      website: 'Blog.thyrocare.com',
-      phone: '(671) 555-0110',
-      initials: 'DP',
-      color: '#4ECDC4'
-    },
-    {
-      id: '6',
-      name: 'Emery Mango',
-      company: 'The Walt Disney Company',
-      website: 'Covid.thyrocare.com',
-      phone: '(303) 555-0105',
-      initials: 'EM',
-      color: '#A8A8FF'
+  useEffect(() => {
+    loadClients();
+    loadGooglePlacesScript();
+  }, []);
+
+  const loadClients = async () => {
+    setIsLoading(true);
+    const { clients: fetchedClients, error } = await ClientService.getClients();
+    if (error) {
+      setError(error);
+    } else {
+      setClients(fetchedClients);
     }
-  ];
+    setIsLoading(false);
+  };
+
+  const loadGooglePlacesScript = () => {
+    if (window.google) {
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_PLACES_API_KEY&libraries=places&callback=initAutocomplete`;
+    script.async = true;
+    script.defer = true;
+    
+    window.initAutocomplete = () => {
+      // This will be called when the script loads
+    };
+    
+    document.head.appendChild(script);
+  };
+
+  const initializeAutocomplete = () => {
+    if (!window.google) return;
+
+    const addressInput = document.getElementById('address-input') as HTMLInputElement;
+    if (!addressInput) return;
+
+    const autocomplete = new window.google.maps.places.Autocomplete(addressInput, {
+      types: ['address'],
+      componentRestrictions: { country: 'us' }
+    });
+
+    autocomplete.addListener('place_changed', () => {
+      const place = autocomplete.getPlace();
+      if (place.formatted_address) {
+        setNewClientData(prev => ({
+          ...prev,
+          address: place.formatted_address
+        }));
+      }
+    });
+  };
+
+  const validateForm = (): boolean => {
+    const errors: {[key: string]: string} = {};
+
+    // Validate website
+    if (newClientData.website && newClientData.website.trim()) {
+      const websiteRegex = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+      if (!websiteRegex.test(newClientData.website.trim())) {
+        errors.website = 'Please enter a valid website URL';
+      }
+    }
+
+    // Validate email
+    if (newClientData.officeEmail && newClientData.officeEmail.trim()) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(newClientData.officeEmail.trim())) {
+        errors.officeEmail = 'Please enter a valid email address';
+      }
+    }
+
+    // Validate office phone
+    if (newClientData.officePhone && newClientData.officePhone.trim()) {
+      const phoneRegex = /^[\d\s\-\(\)\+]+$/;
+      if (!phoneRegex.test(newClientData.officePhone.trim())) {
+        errors.officePhone = 'Phone number should contain only digits, spaces, hyphens, parentheses, and plus signs';
+      }
+    }
+
+    // Validate mobile phone
+    if (newClientData.mobilePhone && newClientData.mobilePhone.trim()) {
+      const phoneRegex = /^[\d\s\-\(\)\+]+$/;
+      if (!phoneRegex.test(newClientData.mobilePhone.trim())) {
+        errors.mobilePhone = 'Phone number should contain only digits, spaces, hyphens, parentheses, and plus signs';
+      }
+    }
+
+    // Required field validation
+    if (!newClientData.fullName.trim()) {
+      errors.fullName = 'Full name is required';
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleClientSelect = (clientId: string) => {
     setSelectedClient(clientId);
@@ -107,10 +154,15 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
 
   const handleCreateClientClick = () => {
     setShowCreateClientModal(true);
+    // Initialize autocomplete after modal opens
+    setTimeout(() => {
+      initializeAutocomplete();
+    }, 100);
   };
 
   const handleCloseCreateClientModal = () => {
     setShowCreateClientModal(false);
+    setFormErrors({});
     setNewClientData({
       fullName: '',
       company: '',
@@ -124,15 +176,64 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
 
   const handleNewClientInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+    
+    // Clear error for this field when user starts typing
+    if (formErrors[name]) {
+      setFormErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
+    
     setNewClientData(prev => ({
       ...prev,
       [name]: value
     }));
   };
 
-  const handleSaveNewClient = () => {
-    // Here you would typically save the client to your database
-    console.log('Saving new client:', newClientData);
+  const handleSaveNewClient = async () => {
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setError(null);
+
+    try {
+      const clientData: CreateClientData = {
+        full_name: newClientData.fullName.trim(),
+        company: newClientData.company.trim() || undefined,
+        website: newClientData.website.trim() || undefined,
+        office_email: newClientData.officeEmail.trim() || undefined,
+        office_phone: newClientData.officePhone.trim() || undefined,
+        mobile_phone: newClientData.mobilePhone.trim() || undefined,
+        address: newClientData.address.trim() || undefined
+      };
+
+      const { client, error } = await ClientService.createClient(clientData);
+
+      if (error) {
+        setError(error);
+      } else if (client) {
+        // Refresh the clients list
+        await loadClients();
+        handleCloseCreateClientModal();
+      }
+    } catch (err) {
+      setError('An unexpected error occurred. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const getClientInitials = (fullName: string): string => {
+    return fullName.split(' ').map(name => name.charAt(0)).join('').toUpperCase().slice(0, 2);
+  };
+
+  const getClientColor = (index: number): string => {
+    const colors = ['#4ECDC4', '#A8A8FF', '#90EE90', '#F0E68C', '#FFB6C1', '#DDA0DD'];
+    return colors[index % colors.length];
+  };
     handleCloseCreateClientModal();
     // You could add the new client to the clients list here
   };
@@ -201,6 +302,12 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
         {/* Content */}
         {currentStep === 1 && (
           <div className="assign-client-content">
+            {error && (
+              <div className="error-message">
+                {error}
+              </div>
+            )}
+            
             <div className="create-client-section">
               <button className="create-client-btn" onClick={handleCreateClientClick}>
                 + Create New Client
@@ -208,6 +315,12 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
             </div>
 
             <div className="clients-table">
+              {isLoading ? (
+                <div className="loading-message">Loading clients...</div>
+              ) : clients.length === 0 ? (
+                <div className="no-clients-message">No clients found. Create your first client to get started.</div>
+              ) : (
+                <>
               <div className="table-header">
                 <div className="header-cell">Name</div>
                 <div className="header-cell">Company</div>
@@ -222,15 +335,15 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
                     <div className="name-cell">
                       <div 
                         className="client-avatar" 
-                        style={{ backgroundColor: client.color }}
+                        style={{ backgroundColor: getClientColor(clients.indexOf(client)) }}
                       >
-                        {client.initials}
+                        {getClientInitials(client.full_name)}
                       </div>
-                      <span className="client-name">{client.name}</span>
+                      <span className="client-name">{client.full_name}</span>
                     </div>
                     <div className="cell">{client.company}</div>
                     <div className="cell">{client.website}</div>
-                    <div className="cell">{client.phone}</div>
+                    <div className="cell">{client.office_phone}</div>
                     <div className="actions-cell">
                       <button className="view-details-btn">View Details</button>
                       <button 
@@ -243,6 +356,8 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
                   </div>
                 ))}
               </div>
+                </>
+              )}
             </div>
           </div>
         )}
@@ -282,7 +397,9 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
                   placeholder="Full Name"
                   value={newClientData.fullName}
                   onChange={handleNewClientInputChange}
+                  className={formErrors.fullName ? 'error' : ''}
                 />
+                {formErrors.fullName && <span className="error-text">{formErrors.fullName}</span>}
               </div>
 
               <div className="form-field">
@@ -304,7 +421,9 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
                   placeholder="Website"
                   value={newClientData.website}
                   onChange={handleNewClientInputChange}
+                  className={formErrors.website ? 'error' : ''}
                 />
+                {formErrors.website && <span className="error-text">{formErrors.website}</span>}
               </div>
 
               <div className="form-field">
@@ -315,7 +434,9 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
                   placeholder="Office Email"
                   value={newClientData.officeEmail}
                   onChange={handleNewClientInputChange}
+                  className={formErrors.officeEmail ? 'error' : ''}
                 />
+                {formErrors.officeEmail && <span className="error-text">{formErrors.officeEmail}</span>}
               </div>
 
               <div className="form-row">
@@ -327,7 +448,9 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
                     placeholder="Office Phone"
                     value={newClientData.officePhone}
                     onChange={handleNewClientInputChange}
+                    className={formErrors.officePhone ? 'error' : ''}
                   />
+                  {formErrors.officePhone && <span className="error-text">{formErrors.officePhone}</span>}
                 </div>
                 <div className="form-field">
                   <label>Mobile Phone</label>
@@ -337,13 +460,16 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
                     placeholder="Mobile Phone"
                     value={newClientData.mobilePhone}
                     onChange={handleNewClientInputChange}
+                    className={formErrors.mobilePhone ? 'error' : ''}
                   />
+                  {formErrors.mobilePhone && <span className="error-text">{formErrors.mobilePhone}</span>}
                 </div>
               </div>
 
               <div className="form-field">
                 <label>Address 1</label>
                 <input
+                  id="address-input"
                   type="text"
                   name="address"
                   placeholder="Address 1"
@@ -357,8 +483,8 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
               <button className="cancel-btn" onClick={handleCloseCreateClientModal}>
                 Cancel
               </button>
-              <button className="save-btn" onClick={handleSaveNewClient}>
-                Save
+              <button className="save-btn" onClick={handleSaveNewClient} disabled={isSubmitting}>
+                {isSubmitting ? 'Saving...' : 'Save'}
               </button>
             </div>
           </div>
