@@ -82,11 +82,18 @@ export default function App() {
 
   const renderCalendar = () => {
     const days = [];
-    const daysInMonth = 31;
-    const startDay = 1; // May 1, 2023 starts on Monday
-    const nextMonthDays = 4; // Show first 4 days of next month
+    
+    // May 1, 2023 was a Monday, so we need to start from the first column
+    // Add empty cells for days before the 1st if needed
+    const firstDayOfWeek = 1; // Monday = 1, Tuesday = 2, etc.
+    
+    // Add empty cells for days before May 1st (none needed since May 1st is Monday)
+    for (let i = 0; i < firstDayOfWeek - 1; i++) {
+      days.push(<div key={`empty-${i}`} className="calendar-day empty"></div>);
+    }
 
-    // Days of the current month
+    // Days of the current month (May 2023: 31 days)
+    const daysInMonth = 31;
     for (let day = 1; day <= daysInMonth; day++) {
       days.push(
         <div 
@@ -99,7 +106,8 @@ export default function App() {
       );
     }
 
-    // Add next month's days to fill the grid
+    // Add next month's days to fill the remaining cells (need 4 more to complete 35 cells)
+    const nextMonthDays = 4;
     for (let day = 1; day <= nextMonthDays; day++) {
       days.push(
         <div key={`next-${day}`} className="calendar-day next-month">
