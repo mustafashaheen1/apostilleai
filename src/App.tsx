@@ -301,13 +301,13 @@ export default function App() {
                 <button onClick={() => navigateMonth('next')}>›</button>
               </div>
               <div className="calendar-weekdays">
-                <div>Mo</div>
-                <div>Tu</div>
-                <div>We</div>
-                <div>Th</div>
-                <div>Fr</div>
-                <div>Sa</div>
-                <div>Su</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+                <div>Sun</div>
               </div>
               <div className="calendar-grid">
                 {renderCalendar()}
