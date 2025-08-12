@@ -8,7 +8,8 @@ import LoginPage from './LoginPage';
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<'dashboard' | 'welcome' | 'login'>('welcome');
-  const [selectedDate, setSelectedDate] = useState(18);
+  const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date().getDate());
   const [isGoogleConnected, setIsGoogleConnected] = useState(false);
   const [calendarEvents, setCalendarEvents] = useState<CalendarEvent[]>([]);
   const [isConnecting, setIsConnecting] = useState(false);
@@ -82,12 +83,27 @@ export default function App() {
 
   const renderCalendar = () => {
     const days = [];
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
     
-    // May 1, 2023 was a Monday (index 0 in our grid)
-    // No empty cells needed since May 1st aligns with Monday
+    // Get first day of the month and number of days in the month
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    const daysInMonth = lastDay.getDate();
+    const startingDayOfWeek = firstDay.getDay();
     
-    // Days of the current month (May 2023: 31 days)
-    const daysInMonth = 31;
+    // Adjust for Monday start (0 = Sunday, 1 = Monday, etc.)
+    const mondayStartOffset = startingDayOfWeek === 0 ? 6 : startingDayOfWeek - 1;
+    
+    // Add empty cells for days before the first day of the month
+    for (let i = 0; i < mondayStartOffset; i++) {
+      days.push(
+        <div key={`empty-${i}`} className="calendar-day empty">
+        </div>
+      );
+    }
+    
+    // Days of the current month
     for (let day = 1; day <= daysInMonth; day++) {
       days.push(
         <div 
@@ -100,8 +116,9 @@ export default function App() {
       );
     }
 
-    // Add next month's days to fill the remaining cells (need 4 more to complete 35 cells: 31 + 4 = 35)
-    const nextMonthDays = 4;
+    // Add next month's days to fill the remaining cells to complete 35 cells (5 rows × 7 columns)
+    const totalCells = 35;
+    const nextMonthDays = totalCells - mondayStartOffset - daysInMonth;
     for (let day = 1; day <= nextMonthDays; day++) {
       days.push(
         <div key={`next-${day}`} className="calendar-day next-month">
@@ -111,6 +128,22 @@ export default function App() {
     }
 
     return days;
+  };
+
+  const getMonthName = (date: Date) => {
+    return date.toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  };
+
+  const navigateMonth = (direction: 'prev' | 'next') => {
+    const newDate = new Date(currentDate);
+    if (direction === 'prev') {
+      newDate.setMonth(currentDate.getMonth() - 1);
+    } else {
+      newDate.setMonth(currentDate.getMonth() + 1);
+    }
+    setCurrentDate(newDate);
+    // Reset selected date when changing months
+    setSelectedDate(1);
   };
 
   if (currentPage === 'welcome') {
@@ -231,7 +264,7 @@ export default function App() {
               {currentUser?.full_name ? currentUser.full_name.charAt(0).toUpperCase() : 'JD'}
             </div>
             <div className="header-info">
-              <div className="date">Thursday, May 18, 2023</div>
+              <div className="date">{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</div>
               <div className="welcome">Welcome, {currentUser?.full_name || 'Jane Doe'} of XYZ Company</div>
             </div>
           </div>
@@ -263,9 +296,9 @@ export default function App() {
             </div>
             <div className="calendar">
               <div className="calendar-header">
-                <button>‹</button>
-                <span>May 2023</span>
-                <button>›</button>
+                <button onClick={() => navigateMonth('prev')}>‹</button>
+                <span>{getMonthName(currentDate)}</span>
+                <button onClick={() => navigateMonth('next')}>›</button>
               </div>
               <div className="calendar-weekdays">
                 <div>Mo</div>
