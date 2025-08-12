@@ -304,11 +304,12 @@ body {
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
+  gap: 2px;
 }
 
 .calendar-day {
-  aspect-ratio: 1;
+  width: 100%;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -316,6 +317,7 @@ body {
   border-radius: 4px;
   font-size: 14px;
   transition: background-color 0.2s;
+  text-align: center;
 }
 
 .calendar-day:hover {
