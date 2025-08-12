@@ -27,6 +27,12 @@ export default function LoginPage({ onNavigateToWelcome, onLoginSuccess }: Login
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+
+    if (!formData.email || !formData.password) {
+      setError('Please enter both email and password');
+      return;
+    }
+
     setIsLoading(true);
 
     try {
@@ -38,6 +44,11 @@ export default function LoginPage({ onNavigateToWelcome, onLoginSuccess }: Login
       if (error) {
         setError(error);
       } else if (user) {
+        // Clear form data on successful login
+        setFormData({
+          email: '',
+          password: ''
+        });
         onLoginSuccess();
       }
     } catch (err) {

@@ -21,10 +21,9 @@ export interface OAuthUser {
 }
 
 export class AuthService {
-  // Sign up with email and password
   static async signUp(userData: SignUpData): Promise<{ user: User | null; error: string | null }> {
     try {
-      // Check if user already exists
+      // First check if user already exists in our database
       const { data: existingUser } = await supabase
         .from('users')
         .select('email')
@@ -32,14 +31,14 @@ export class AuthService {
         .single();
 
       if (existingUser) {
-        return { user: null, error: 'User with this email already exists' };
+        return { user: null, error: 'An account with this email already exists. Please login instead.' };
       }
 
-      // Hash password
+      // Hash the password before storing
       const saltRounds = 12;
       const passwordHash = await bcrypt.hash(userData.password, saltRounds);
 
-      // Sign up with Supabase Auth
+      // Create user in Supabase Auth first
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: userData.email,
         password: userData.password,
@@ -53,7 +52,7 @@ export class AuthService {
         return { user: null, error: 'Failed to create user account' };
       }
 
-      // Create user record in our users table
+      // Store user information in our database
       const { data: user, error: dbError } = await supabase
         .from('users')
         .insert({
@@ -67,9 +66,9 @@ export class AuthService {
         .single();
 
       if (dbError) {
-        // Clean up auth user if database insert fails
+        // If database insert fails, clean up the auth user
         await supabase.auth.admin.deleteUser(authData.user.id);
-        return { user: null, error: 'Failed to create user profile' };
+        return { user: null, error: 'Failed to create user account. Please try again.' };
       }
 
       return { user, error: null };
@@ -79,35 +78,42 @@ export class AuthService {
     }
   }
 
-  // Login with email and password
   static async login(loginData: LoginData): Promise<{ user: User | null; error: string | null }> {
     try {
-      // Sign in with Supabase Auth
+      // First check if user exists in our database
+      const { data: dbUser, error: dbError } = await supabase
+        .from('users')
+        .select('*')
+        .eq('email', loginData.email)
+        .eq('provider', 'email')
+        .single();
+
+      if (dbError || !dbUser) {
+        return { user: null, error: 'No account found with this email address. Please sign up first.' };
+      }
+
+      // Verify password against stored hash
+      if (!dbUser.password_hash) {
+        return { user: null, error: 'Invalid account configuration. Please contact support.' };
+      }
+
+      const passwordMatch = await bcrypt.compare(loginData.password, dbUser.password_hash);
+      if (!passwordMatch) {
+        return { user: null, error: 'Invalid password. Please check your credentials and try again.' };
+      }
+
+      // Now sign in with Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
         email: loginData.email,
         password: loginData.password,
       });
 
       if (authError) {
-        return { user: null, error: authError.message };
+        return { user: null, error: 'Login failed. Please try again.' };
       }
 
-      if (!authData.user) {
-        return { user: null, error: 'Login failed' };
-      }
-
-      // Get user profile from our users table
-      const { data: user, error: dbError } = await supabase
-        .from('users')
-        .select('*')
-        .eq('id', authData.user.id)
-        .single();
-
-      if (dbError || !user) {
-        return { user: null, error: 'Failed to load user profile' };
-      }
-
-      return { user, error: null };
+      // Return the user data from our database
+      return { user: dbUser, error: null };
     } catch (error) {
       console.error('Login error:', error);
       return { user: null, error: 'An unexpected error occurred during login' };

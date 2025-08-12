@@ -38,8 +38,13 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
       return;
     }
 
-    if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters long');
+    if (formData.password.length < 8) {
+      setError('Password must be at least 8 characters long');
+      return;
+    }
+
+    if (!agreeToTerms) {
+      setError('Please agree to the Terms & Privacy Policy');
       return;
     }
 
@@ -55,6 +60,14 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
       if (error) {
         setError(error);
       } else if (user) {
+        // Clear form data on successful signup
+        setFormData({
+          fullName: '',
+          email: '',
+          password: '',
+          confirmPassword: ''
+        });
+        setAgreeToTerms(false);
         onSignUpSuccess();
       }
     } catch (err) {
