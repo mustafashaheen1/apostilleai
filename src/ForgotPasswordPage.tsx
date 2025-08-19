@@ -32,23 +32,7 @@ export default function ForgotPasswordPage({ onNavigateToLogin }: ForgotPassword
     setIsLoading(true);
 
     try {
-      // First check if user exists in our database
-      const { data: existingUser } = await supabase
-        .from('users')
-        .select('email')
-        .eq('email', email.toLowerCase().trim())
-        .maybeSingle();
-
-      if (!existingUser) {
-        setMessage({ 
-          type: 'error', 
-          text: 'No account found with this email address. Please check your email or sign up for a new account.' 
-        });
-        setIsLoading(false);
-        return;
-      }
-
-      // If user exists, proceed with password reset
+      // Send password reset email directly - Supabase will handle user existence check
       const { error } = await supabase.auth.resetPasswordForEmail(email.toLowerCase().trim(), {
         redirectTo: `https://password-reset-page-o7h7.bolt.host/`
       });
@@ -59,6 +43,11 @@ export default function ForgotPasswordPage({ onNavigateToLogin }: ForgotPassword
           setMessage({ 
             type: 'error', 
             text: 'Too many reset attempts. Please wait a few minutes before trying again.' 
+          });
+        } else if (error.message.includes('User not found')) {
+          setMessage({ 
+            type: 'error', 
+            text: 'No account found with this email address. Please check your email or sign up for a new account.' 
           });
         } else {
           setMessage({ type: 'error', text: error.message });
