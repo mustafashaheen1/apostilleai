@@ -12,35 +12,6 @@ import ForgotPasswordPage from './ForgotPasswordPage';
 import ResetPasswordPage from './ResetPasswordPage';
 
 function AppContent() {
-  // Handle redirect from localhost to deployed site for password reset
-  useEffect(() => {
-    const currentUrl = window.location.href;
-    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-    const hasResetTokens = currentUrl.includes('access_token=') && currentUrl.includes('type=recovery');
-    
-    if (isLocalhost && hasResetTokens) {
-      // Extract the hash part and redirect to deployed site
-      const hashPart = window.location.hash;
-      const deployedUrl = 'https://animated-beignet-b6ffd1.netlify.app/reset-password' + hashPart;
-      window.location.replace(deployedUrl);
-      return;
-    }
-
-    // Handle password reset tokens in URL (for when user visits deployed site directly)
-    const urlHash = window.location.hash;
-    const urlParams = new URLSearchParams(window.location.search);
-    const hashParams = new URLSearchParams(urlHash.substring(1));
-    
-    const accessToken = urlParams.get('access_token') || hashParams.get('access_token');
-    const type = urlParams.get('type') || hashParams.get('type');
-    
-    if (type === 'recovery' && accessToken && window.location.pathname !== '/reset-password') {
-      // Redirect to reset password page with tokens
-      navigate('/reset-password' + window.location.hash);
-      return;
-    }
-  }, []);
-
   const navigate = useNavigate();
   const location = useLocation();
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -75,6 +46,20 @@ function AppContent() {
   };
 
   useEffect(() => {
+    // Handle password reset tokens in URL (for when user visits deployed site directly)
+    const urlHash = window.location.hash;
+    const urlParams = new URLSearchParams(window.location.search);
+    const hashParams = new URLSearchParams(urlHash.substring(1));
+    
+    const accessToken = urlParams.get('access_token') || hashParams.get('access_token');
+    const type = urlParams.get('type') || hashParams.get('type');
+    
+    if (type === 'recovery' && accessToken && window.location.pathname !== '/reset-password') {
+      // Redirect to reset password page with tokens
+      navigate('/reset-password' + window.location.hash);
+      return;
+    }
+
     const checkAuthStatus = async () => {
       setIsAuthenticating(true);
       const { user } = await AuthService.getCurrentUser();
