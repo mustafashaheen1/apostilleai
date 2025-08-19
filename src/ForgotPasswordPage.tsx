@@ -34,7 +34,7 @@ export default function ForgotPasswordPage({ onNavigateToLogin }: ForgotPassword
     try {
       // Send password reset email directly - Supabase will handle user existence check
       const { error } = await supabase.auth.resetPasswordForEmail(email.toLowerCase().trim(), {
-        redirectTo: `https://password-reset-page-o7h7.bolt.host/`
+        redirectTo: `${window.location.origin}/reset-password`
       });
 
       if (error) {

@@ -20,15 +20,18 @@ export default function ResetPasswordPage({ onNavigateToLogin }: ResetPasswordPa
   useEffect(() => {
     // Check if we have the necessary tokens in the URL
     const urlParams = new URLSearchParams(window.location.search);
-    const accessToken = urlParams.get('access_token');
-    const refreshToken = urlParams.get('refresh_token');
-    const type = urlParams.get('type');
+    const urlHash = new URLSearchParams(window.location.hash.substring(1));
+    
+    // Check both URL params and hash for tokens (Supabase can use either)
+    const accessToken = urlParams.get('access_token') || urlHash.get('access_token');
+    const refreshToken = urlParams.get('refresh_token') || urlHash.get('refresh_token');
+    const type = urlParams.get('type') || urlHash.get('type');
 
-    if (type === 'recovery' && accessToken && refreshToken) {
+    if (type === 'recovery' && accessToken) {
       // Set the session with the tokens from the URL
       supabase.auth.setSession({
         access_token: accessToken,
-        refresh_token: refreshToken
+        refresh_token: refreshToken || ''
       }).then(({ error }) => {
         if (error) {
           setMessage({ type: 'error', text: 'Invalid or expired reset link. Please request a new password reset.' });
