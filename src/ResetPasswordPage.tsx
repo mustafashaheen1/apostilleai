@@ -20,12 +20,28 @@ export default function ResetPasswordPage({ onNavigateToLogin }: ResetPasswordPa
   useEffect(() => {
     // Check if we have the necessary tokens in the URL
     const handlePasswordReset = async () => {
+      // Get the full URL including hash
+      const fullUrl = window.location.href;
+      console.log('Full URL:', fullUrl);
+      
+      // Extract hash part
+      const hashPart = window.location.hash.substring(1); // Remove the #
+      console.log('Hash part:', hashPart);
+      
+      if (!hashPart) {
+        setMessage({ type: 'error', text: 'No reset token found in URL. Please use the link from your email.' });
+        setIsTokenValid(false);
+        return;
+      }
+      
       const urlParams = new URLSearchParams(window.location.search);
-      const urlHash = new URLSearchParams(window.location.hash.substring(1));
+      const urlHash = new URLSearchParams(hashPart);
       
       // Check for error in URL first
       const error = urlParams.get('error') || urlHash.get('error');
       const errorDescription = urlParams.get('error_description') || urlHash.get('error_description');
+      
+      console.log('Error:', error, 'Error Description:', errorDescription);
       
       if (error) {
         if (error === 'access_denied' && errorDescription?.includes('expired')) {
@@ -41,9 +57,14 @@ export default function ResetPasswordPage({ onNavigateToLogin }: ResetPasswordPa
       const accessToken = urlParams.get('access_token') || urlHash.get('access_token');
       const refreshToken = urlParams.get('refresh_token') || urlHash.get('refresh_token');
       const type = urlParams.get('type') || urlHash.get('type');
+      
+      console.log('Access Token:', accessToken ? 'Present' : 'Missing');
+      console.log('Refresh Token:', refreshToken ? 'Present' : 'Missing');
+      console.log('Type:', type);
 
       if (type === 'recovery' && accessToken) {
         try {
+          console.log('Setting session with tokens...');
           // Set the session with the tokens from the URL
           const { error } = await supabase.auth.setSession({
             access_token: accessToken,
@@ -51,16 +72,20 @@ export default function ResetPasswordPage({ onNavigateToLogin }: ResetPasswordPa
           });
           
           if (error) {
+            console.error('Session error:', error);
             setMessage({ type: 'error', text: 'Invalid or expired reset link. Please request a new password reset.' });
             setIsTokenValid(false);
           } else {
+            console.log('Session set successfully');
             setIsTokenValid(true);
           }
         } catch (err) {
+          console.error('Session setting error:', err);
           setMessage({ type: 'error', text: 'Invalid or expired reset link. Please request a new password reset.' });
           setIsTokenValid(false);
         }
       } else {
+        console.log('Missing required parameters - type:', type, 'accessToken:', !!accessToken);
         setMessage({ type: 'error', text: 'Invalid reset link. Please request a new password reset.' });
         setIsTokenValid(false);
       }
