@@ -34,7 +34,7 @@ export default function ForgotPasswordPage({ onNavigateToLogin }: ForgotPassword
     try {
       // Send password reset email directly - Supabase will handle user existence check
       const { error } = await supabase.auth.resetPasswordForEmail(email.toLowerCase().trim(), {
-        redirectTo: `${window.location.origin}/reset-password`
+        redirectTo: `https://animated-beignet-b6ffd1.netlify.app/reset-password`
       });
 
       if (error) {
