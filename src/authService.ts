@@ -28,7 +28,7 @@ export class AuthService {
       const { data: existingUser } = await supabase
         .from('users')
         .select('email')
-        .eq('email', userData.email)
+        .eq('email', userData.email.toLowerCase().trim())
         .maybeSingle();
 
       if (existingUser) {
@@ -41,7 +41,7 @@ export class AuthService {
 
       // Create user in Supabase Auth first
       const { data: authData, error: authError } = await supabase.auth.signUp({
-        email: userData.email,
+        email: userData.email.toLowerCase().trim(),
         password: userData.password,
       });
 
@@ -55,7 +55,7 @@ export class AuthService {
 
       // Automatically sign in the user after successful signup
       const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-        email: userData.email,
+        email: userData.email.toLowerCase().trim(),
         password: userData.password,
       });
 
@@ -71,7 +71,7 @@ export class AuthService {
           id: authData.user.id,
           full_name: userData.fullName,
           company: userData.company,
-          email: userData.email,
+          email: userData.email.toLowerCase().trim(),
           password_hash: passwordHash,
           provider: 'email'
         })
@@ -97,8 +97,7 @@ export class AuthService {
       const { data: dbUser, error: dbError } = await supabase
         .from('users')
         .select('*')
-        .eq('email', loginData.email)
-        .eq('provider', 'email')
+        .eq('email', loginData.email.toLowerCase().trim())
         .maybeSingle();
 
       if (dbError || !dbUser) {
@@ -117,7 +116,7 @@ export class AuthService {
 
       // Now sign in with Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-        email: loginData.email,
+        email: loginData.email.toLowerCase().trim(),
         password: loginData.password,
       });
 

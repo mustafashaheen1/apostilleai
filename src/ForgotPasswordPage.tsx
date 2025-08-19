@@ -36,7 +36,7 @@ export default function ForgotPasswordPage({ onNavigateToLogin }: ForgotPassword
       const { data: existingUser } = await supabase
         .from('users')
         .select('email')
-        .eq('email', email.trim())
+        .eq('email', email.toLowerCase().trim())
         .maybeSingle();
 
       if (!existingUser) {
@@ -49,7 +49,7 @@ export default function ForgotPasswordPage({ onNavigateToLogin }: ForgotPassword
       }
 
       // If user exists, proceed with password reset
-      const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+      const { error } = await supabase.auth.resetPasswordForEmail(email.toLowerCase().trim(), {
         redirectTo: `https://password-reset-page-o7h7.bolt.host/`
       });
 
