@@ -83,10 +83,10 @@ function AppContent() {
       const { user } = await AuthService.getCurrentUser();
       if (user) {
         setCurrentUser(user);
+        navigate('/dashboard');
       }
     };
     loadUser();
-    navigate('/dashboard');
   };
 
   const handleLoginSuccess = () => {
