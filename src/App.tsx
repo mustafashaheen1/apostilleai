@@ -12,6 +12,21 @@ import ForgotPasswordPage from './ForgotPasswordPage';
 import ResetPasswordPage from './ResetPasswordPage';
 
 function AppContent() {
+  // Handle redirect from localhost to deployed site for password reset
+  useEffect(() => {
+    const currentUrl = window.location.href;
+    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const hasResetTokens = currentUrl.includes('access_token=') && currentUrl.includes('type=recovery');
+    
+    if (isLocalhost && hasResetTokens) {
+      // Extract the hash part and redirect to deployed site
+      const hashPart = window.location.hash;
+      const deployedUrl = 'https://animated-beignet-b6ffd1.netlify.app/reset-password' + hashPart;
+      window.location.replace(deployedUrl);
+      return;
+    }
+  }, []);
+
   const navigate = useNavigate();
   const location = useLocation();
   const [currentDate, setCurrentDate] = useState(new Date());
