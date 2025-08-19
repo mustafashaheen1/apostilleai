@@ -179,6 +179,27 @@ export default function LoginPage({ onNavigateToWelcome, onLoginSuccess }: Login
               </div>
             )}
 
+            <div style={{ textAlign: 'right', marginBottom: '10px' }}>
+              <button
+                type="button"
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#4285f4',
+                  fontSize: '14px',
+                  cursor: 'pointer',
+                  textDecoration: 'underline',
+                  padding: '0'
+                }}
+                onClick={() => {
+                  // TODO: Navigate to forgot password page
+                  alert('Forgot password functionality will be implemented soon');
+                }}
+              >
+                Forgot Password?
+              </button>
+            </div>
+
             <button type="submit" className="login-btn" disabled={isLoading}>
               {isLoading ? 'Logging in...' : 'Login'}
             </button>
