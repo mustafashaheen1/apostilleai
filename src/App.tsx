@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import './App.css';
 import { googleCalendarService, CalendarEvent } from './googleCalendar';
 import { AuthService } from './authService';
@@ -8,9 +9,11 @@ import LoginPage from './LoginPage';
 import ApostilleRequestForm from './ApostilleRequestForm';
 import AssignClientPage from './AssignClientPage';
 import ForgotPasswordPage from './ForgotPasswordPage';
+import ResetPasswordPage from './ResetPasswordPage';
 
-export default function App() {
-  const [currentPage, setCurrentPage] = useState<'dashboard' | 'welcome' | 'login' | 'forgot-password' | 'apostille-request' | 'assign-client'>('welcome');
+function AppContent() {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date().getDate());
   const [isGoogleConnected, setIsGoogleConnected] = useState(false);
@@ -48,9 +51,16 @@ export default function App() {
       const { user } = await AuthService.getCurrentUser();
       if (user) {
         setCurrentUser(user);
-        setCurrentPage('dashboard');
+        // Only navigate to dashboard if we're on the root path
+        if (location.pathname === '/') {
+          navigate('/dashboard', { replace: true });
+        }
       } else {
-        setCurrentPage('welcome');
+        // Only navigate to welcome if we're on a protected route
+        const protectedRoutes = ['/dashboard', '/apostille-request', '/assign-client'];
+        if (protectedRoutes.includes(location.pathname)) {
+          navigate('/welcome', { replace: true });
+        }
       }
       setIsAuthenticating(false);
 
@@ -63,18 +73,9 @@ export default function App() {
       }
     };
 
-    const handleNavigateToApostilleForm = () => {
-      setCurrentPage('apostille-request');
-    };
-
-    window.addEventListener('navigateToApostilleForm', handleNavigateToApostilleForm);
-
     checkAuthStatus();
 
-    return () => {
-      window.removeEventListener('navigateToApostilleForm', handleNavigateToApostilleForm);
-    };
-  }, []);
+  }, [navigate, location.pathname]);
 
   const handleSignUpSuccess = () => {
     // Reload user data after successful signup
@@ -85,7 +86,7 @@ export default function App() {
       }
     };
     loadUser();
-    setCurrentPage('dashboard');
+    navigate('/dashboard');
   };
 
   const handleLoginSuccess = () => {
@@ -97,13 +98,13 @@ export default function App() {
       }
     };
     loadUser();
-    setCurrentPage('dashboard');
+    navigate('/dashboard');
   };
 
   const handleLogout = async () => {
     await AuthService.logout();
     setCurrentUser(null);
-    setCurrentPage('welcome');
+    navigate('/welcome');
     setIsGoogleConnected(false);
     setCalendarEvents([]);
   };
@@ -179,39 +180,143 @@ export default function App() {
     setSelectedDate(1);
   };
 
-  if (currentPage === 'welcome') {
-    return <WelcomePage 
-      onNavigateToLogin={() => setCurrentPage('login')} 
-      onSignUpSuccess={handleSignUpSuccess}
-    />;
+  // Show loading screen while authenticating
+  if (isAuthenticating) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center', 
+        minHeight: '100vh',
+        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif'
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ 
+            width: '40px', 
+            height: '40px', 
+            border: '4px solid #f3f3f3',
+            borderTop: '4px solid #4285f4',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite',
+            margin: '0 auto 20px'
+          }}></div>
+          <p style={{ color: '#7f8c8d' }}>Loading...</p>
+        </div>
+      </div>
+    );
   }
 
-  if (currentPage === 'login') {
-    return <LoginPage 
-      onNavigateToWelcome={() => setCurrentPage('welcome')} 
-      onNavigateToForgotPassword={() => setCurrentPage('forgot-password')}
-      onLoginSuccess={handleLoginSuccess}
-    />;
-  }
+  return (
+    <Routes>
+      <Route path="/" element={
+        currentUser ? <Navigate to="/dashboard" replace /> : <Navigate to="/welcome" replace />
+      } />
+      
+      <Route path="/welcome" element={
+        <WelcomePage 
+          onNavigateToLogin={() => navigate('/login')} 
+          onSignUpSuccess={handleSignUpSuccess}
+        />
+      } />
+      
+      <Route path="/login" element={
+        <LoginPage 
+          onNavigateToWelcome={() => navigate('/welcome')} 
+          onNavigateToForgotPassword={() => navigate('/forgot-password')}
+          onLoginSuccess={handleLoginSuccess}
+        />
+      } />
+      
+      <Route path="/forgot-password" element={
+        <ForgotPasswordPage 
+          onNavigateToLogin={() => navigate('/login')}
+        />
+      } />
+      
+      <Route path="/reset-password" element={
+        <ResetPasswordPage 
+          onNavigateToLogin={() => navigate('/login')}
+        />
+      } />
+      
+      <Route path="/apostille-request" element={
+        currentUser ? (
+          <ApostilleRequestForm 
+            onBack={() => navigate('/dashboard')}
+          />
+        ) : (
+          <Navigate to="/login" replace />
+        )
+      } />
+      
+      <Route path="/assign-client" element={
+        currentUser ? (
+          <AssignClientPage 
+            onBack={() => navigate('/dashboard')}
+            onClose={() => navigate('/dashboard')}
+          />
+        ) : (
+          <Navigate to="/login" replace />
+        )
+      } />
+      
+      <Route path="/dashboard" element={
+        currentUser ? (
+          <DashboardContent 
+            currentUser={currentUser}
+            currentDate={currentDate}
+            selectedDate={selectedDate}
+            isGoogleConnected={isGoogleConnected}
+            calendarEvents={calendarEvents}
+            isConnecting={isConnecting}
+            handleGoogleConnect={handleGoogleConnect}
+            renderCalendar={renderCalendar}
+            getMonthName={getMonthName}
+            navigateMonth={navigateMonth}
+            handleLogout={handleLogout}
+            navigate={navigate}
+          />
+        ) : (
+          <Navigate to="/login" replace />
+        )
+      } />
+    </Routes>
+  );
+}
 
-  if (currentPage === 'forgot-password') {
-    return <ForgotPasswordPage 
-      onNavigateToLogin={() => setCurrentPage('login')}
-    />;
-  }
-
-  if (currentPage === 'apostille-request') {
-    return <ApostilleRequestForm 
-      onBack={() => setCurrentPage('dashboard')}
-    />;
-  }
-
-  if (currentPage === 'assign-client') {
-    return <AssignClientPage 
-      onBack={() => setCurrentPage('dashboard')}
-      onClose={() => setCurrentPage('dashboard')}
-    />;
-  }
+// Separate dashboard component to keep the routing clean
+function DashboardContent({ 
+  currentUser, 
+  currentDate, 
+  selectedDate, 
+  isGoogleConnected, 
+  calendarEvents, 
+  isConnecting, 
+  handleGoogleConnect, 
+  renderCalendar, 
+  getMonthName, 
+  navigateMonth, 
+  handleLogout,
+  navigate 
+}: {
+  currentUser: User;
+  currentDate: Date;
+  selectedDate: number;
+  isGoogleConnected: boolean;
+  calendarEvents: CalendarEvent[];
+  isConnecting: boolean;
+  handleGoogleConnect: () => void;
+  renderCalendar: () => React.ReactNode[];
+  getMonthName: (date: Date) => string;
+  navigateMonth: (direction: 'prev' | 'next') => void;
+  handleLogout: () => void;
+  navigate: (path: string) => void;
+}) {
+  const jobs = [
+    { id: '#167952', retrieved: 'Completed', notarized: 'Completed', translated: 'Completed', status: 'Shipped' },
+    { id: '#315061', retrieved: 'Completed', notarized: 'Completed', translated: 'Completed', status: 'Certified' },
+    { id: '#495740', retrieved: 'Completed', notarized: 'Completed', translated: 'Completed', status: 'Delivered' },
+  ];
 
   return (
     <div className="app">
@@ -243,7 +348,7 @@ export default function App() {
             </div>
             <div className="nav-item">
               <span className="nav-icon">🔄</span>
-              <span onClick={() => setCurrentPage('apostille-request')}>USCIS Translation</span>
+              <span onClick={() => navigate('/apostille-request')}>USCIS Translation</span>
             </div>
             <div className="nav-item">
               <span className="nav-icon">🏷️</span>
@@ -327,7 +432,7 @@ export default function App() {
             <div className="search-bar">
               <input type="text" placeholder="Search" />
             </div>
-            <button className="create-job-btn" onClick={() => setCurrentPage('assign-client')}>+ Create Job</button>
+            <button className="create-job-btn" onClick={() => navigate('/assign-client')}>+ Create Job</button>
           </div>
         </div>
 
@@ -392,7 +497,7 @@ export default function App() {
         <div className="jobs-tracker">
           <div className="section-header">
             <h2>Jobs Tracker</h2>
-            <button className="create-new-job-btn" onClick={() => setCurrentPage('assign-client')}>+ Create New Job</button>
+            <button className="create-new-job-btn" onClick={() => navigate('/assign-client')}>+ Create New Job</button>
           </div>
 
           <div className="jobs-table">
@@ -434,5 +539,13 @@ export default function App() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
+    </BrowserRouter>
   );
 }

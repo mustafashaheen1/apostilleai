@@ -32,7 +32,7 @@ export default function ForgotPasswordPage({ onNavigateToLogin }: ForgotPassword
 
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-        redirectTo: `${window.location.origin}/reset-password`
+        redirectTo: `https://animated-beignet-b6ffd1.netlify.app/reset-password`
       });
 
       if (error) {

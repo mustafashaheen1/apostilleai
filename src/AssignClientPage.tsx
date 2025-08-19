@@ -163,10 +163,8 @@ export default function AssignClientPage({ onBack, onClose }: AssignClientPagePr
     if (currentStep === 1 && selectedClient) {
       setCurrentStep(currentStep + 1);
     } else if (currentStep === 2 && selectedCountry) {
-      // Navigate to ApostilleRequestForm page
-      onClose(); // Close the assign client modal
-      // The parent component (App.tsx) should handle navigation to apostille-request
-      window.dispatchEvent(new CustomEvent('navigateToApostilleForm'));
+      // For now, just close the modal - in a real app you'd create the job
+      onClose();
     }
   };
 
