@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './ForgotPasswordPage.css';
 import { supabase } from './supabase';
+import { AuthService } from './authService';
 
 interface ForgotPasswordPageProps {
   onNavigateToLogin: () => void;
@@ -31,20 +32,46 @@ export default function ForgotPasswordPage({ onNavigateToLogin }: ForgotPassword
     setIsLoading(true);
 
     try {
+      // First check if user exists in our database
+      const { data: existingUser } = await supabase
+        .from('users')
+        .select('email')
+        .eq('email', email.trim())
+        .maybeSingle();
+
+      if (!existingUser) {
+        setMessage({ 
+          type: 'error', 
+          text: 'No account found with this email address. Please check your email or sign up for a new account.' 
+        });
+        setIsLoading(false);
+        return;
+      }
+
+      // If user exists, proceed with password reset
       const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
         redirectTo: `https://password-reset-page-o7h7.bolt.host/`
       });
 
       if (error) {
-        setMessage({ type: 'error', text: error.message });
+        // Handle specific Supabase errors
+        if (error.message.includes('rate limit')) {
+          setMessage({ 
+            type: 'error', 
+            text: 'Too many reset attempts. Please wait a few minutes before trying again.' 
+          });
+        } else {
+          setMessage({ type: 'error', text: error.message });
+        }
       } else {
         setIsSubmitted(true);
         setMessage({ 
           type: 'success', 
-          text: 'Password reset email sent! Please check your inbox and follow the instructions.' 
+          text: 'Password reset email sent! Please check your inbox and follow the instructions to reset your password.' 
         });
       }
     } catch (err) {
+      console.error('Password reset error:', err);
       setMessage({ 
         type: 'error', 
         text: 'An unexpected error occurred. Please try again.' 
@@ -85,7 +112,7 @@ export default function ForgotPasswordPage({ onNavigateToLogin }: ForgotPassword
               Please check your inbox and follow the instructions to reset your password.
             </p>
             <p>
-              Didn't receive the email? Check your spam folder or try again with a different email address.
+              Didn't receive the email? Check your spam folder or wait a few minutes for the email to arrive.
             </p>
             <button 
               type="button" 
@@ -94,6 +121,18 @@ export default function ForgotPasswordPage({ onNavigateToLogin }: ForgotPassword
               aria-label="Return to login page"
             >
               Back to Login
+            </button>
+            <button 
+              type="button" 
+              onClick={() => {
+                setIsSubmitted(false);
+                setMessage(null);
+                setEmail('');
+              }} 
+              className="submit-btn"
+              style={{ marginTop: '10px' }}
+            >
+              Try Different Email
             </button>
           </div>
         </div>
