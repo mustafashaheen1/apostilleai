@@ -166,7 +166,6 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
                 placeholder="Full Name"
                 value={formData.fullName}
                 onChange={handleInputChange}
-                className={error && error.includes('name') ? 'error' : ''}
                 required
               />
             </div>
@@ -180,7 +179,6 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
                 placeholder="Company Name"
                 value={formData.company}
                 onChange={handleInputChange}
-                className={error && error.includes('company') ? 'error' : ''}
                 required
               />
             </div>
@@ -194,7 +192,6 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
                 placeholder="Email Address"
                 value={formData.email}
                 onChange={handleInputChange}
-                className={error && (error.includes('email') || error.includes('account')) ? 'error' : ''}
                 required
               />
             </div>
@@ -209,7 +206,6 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
                   placeholder="Password"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className={error && error.includes('password') ? 'error' : ''}
                   required
                 />
                 <button
@@ -234,7 +230,6 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
                   placeholder="Confirm Password"
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
-                  className={error && error.includes('password') ? 'error' : ''}
                   required
                 />
                 <button
