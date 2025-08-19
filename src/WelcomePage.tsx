@@ -166,6 +166,7 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
                 placeholder="Full Name"
                 value={formData.fullName}
                 onChange={handleInputChange}
+                className={error && error.includes('name') ? 'error' : ''}
                 required
               />
             </div>
@@ -179,6 +180,7 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
                 placeholder="Company Name"
                 value={formData.company}
                 onChange={handleInputChange}
+                className={error && error.includes('company') ? 'error' : ''}
                 required
               />
             </div>
@@ -192,6 +194,7 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
                 placeholder="Email Address"
                 value={formData.email}
                 onChange={handleInputChange}
+                className={error && (error.includes('email') || error.includes('account')) ? 'error' : ''}
                 required
               />
             </div>
@@ -206,6 +209,7 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
                   placeholder="Password"
                   value={formData.password}
                   onChange={handleInputChange}
+                  className={error && error.includes('password') ? 'error' : ''}
                   required
                 />
                 <button
@@ -230,6 +234,7 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
                   placeholder="Confirm Password"
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
+                  className={error && error.includes('password') ? 'error' : ''}
                   required
                 />
                 <button
@@ -253,24 +258,13 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
                   required
                 />
                 <span className="checkmark"></span>
-                I agree to the Terms & Privacy Policy
+                I agree to the <span className="terms-link">Terms & Privacy Policy</span>
               </label>
             </div>
 
             {error && <div className="error-message">{error}</div>}
 
             <div className="form-actions">
-              <button type="button" onClick={onNavigateToLogin} className="back-btn">
-                Back to Dashboard
-              </button>
-              <button 
-                type="button" 
-                onClick={() => window.location.href = '/reset-password#access_token=test_token&type=recovery&refresh_token=test_refresh'} 
-                className="submit-btn"
-                style={{ marginLeft: '10px' }}
-              >
-                Test Reset Password Page
-              </button>
               <button type="submit" className="signup-btn" disabled={isLoading}>
                 {isLoading ? 'Creating Account...' : 'Sign Up'}
               </button>
