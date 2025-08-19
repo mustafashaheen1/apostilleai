@@ -25,6 +25,20 @@ function AppContent() {
       window.location.replace(deployedUrl);
       return;
     }
+
+    // Handle password reset tokens in URL (for when user visits deployed site directly)
+    const urlHash = window.location.hash;
+    const urlParams = new URLSearchParams(window.location.search);
+    const hashParams = new URLSearchParams(urlHash.substring(1));
+    
+    const accessToken = urlParams.get('access_token') || hashParams.get('access_token');
+    const type = urlParams.get('type') || hashParams.get('type');
+    
+    if (type === 'recovery' && accessToken && window.location.pathname !== '/reset-password') {
+      // Redirect to reset password page with tokens
+      navigate('/reset-password' + window.location.hash);
+      return;
+    }
   }, []);
 
   const navigate = useNavigate();
