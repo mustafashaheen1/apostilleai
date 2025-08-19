@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import './WelcomePage.css';
 import { AuthService } from './authService';
@@ -260,9 +259,22 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
 
             {error && <div className="error-message">{error}</div>}
 
-            <button type="submit" className="signup-btn" disabled={isLoading}>
-              {isLoading ? 'Creating Account...' : 'Sign Up'}
-            </button>
+            <div className="form-actions">
+              <button type="button" onClick={onNavigateToLogin} className="back-btn">
+                Back to Dashboard
+              </button>
+              <button 
+                type="button" 
+                onClick={() => window.location.href = '/reset-password#access_token=test_token&type=recovery&refresh_token=test_refresh'} 
+                className="submit-btn"
+                style={{ marginLeft: '10px' }}
+              >
+                Test Reset Password Page
+              </button>
+              <button type="submit" className="signup-btn" disabled={isLoading}>
+                {isLoading ? 'Creating Account...' : 'Sign Up'}
+              </button>
+            </div>
           </form>
         </div>
       </div>
