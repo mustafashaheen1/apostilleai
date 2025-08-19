@@ -50,6 +50,7 @@ export default function LoginPage({ onNavigateToWelcome, onNavigateToForgotPassw
           email: '',
           password: ''
         });
+        // Call success callback which will handle navigation
         onLoginSuccess();
       }
     } catch (err) {

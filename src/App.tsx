@@ -90,15 +90,15 @@ function AppContent() {
   };
 
   const handleLoginSuccess = () => {
-    // Reload user data after successful login
+    // Reload user data after successful login and navigate
     const loadUser = async () => {
       const { user } = await AuthService.getCurrentUser();
       if (user) {
         setCurrentUser(user);
+        navigate('/dashboard');
       }
     };
     loadUser();
-    navigate('/dashboard');
   };
 
   const handleLogout = async () => {
