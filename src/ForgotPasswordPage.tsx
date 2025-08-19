@@ -111,18 +111,6 @@ export default function ForgotPasswordPage({ onNavigateToLogin }: ForgotPassword
             >
               Back to Login
             </button>
-            <button 
-              type="button" 
-              onClick={() => {
-                setIsSubmitted(false);
-                setMessage(null);
-                setEmail('');
-              }} 
-              className="submit-btn"
-              style={{ marginTop: '10px' }}
-            >
-              Try Different Email
-            </button>
           </div>
         </div>
       </div>
