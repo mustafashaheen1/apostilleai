@@ -24,21 +24,6 @@ export interface OAuthUser {
 export class AuthService {
   static async signUp(userData: SignUpData): Promise<{ user: User | null; error: string | null }> {
     try {
-      // First check if user already exists in our database
-      const { data: existingUser } = await supabase
-        .from('users')
-        .select('email')
-        .eq('email', userData.email.toLowerCase().trim())
-        .maybeSingle();
-
-      if (existingUser) {
-        return { user: null, error: 'An account with this email already exists. Please login instead.' };
-      }
-
-      // Hash the password before storing
-      const saltRounds = 12;
-      const passwordHash = await bcrypt.hash(userData.password, saltRounds);
-
       // Create user in Supabase Auth first
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: userData.email.toLowerCase().trim(),
@@ -46,12 +31,20 @@ export class AuthService {
       });
 
       if (authError) {
+        // Handle specific Supabase Auth errors
+        if (authError.message.includes('User already registered')) {
+          return { user: null, error: 'An account with this email already exists. Please login instead.' };
+        }
         return { user: null, error: authError.message };
       }
 
       if (!authData.user) {
         return { user: null, error: 'Failed to create user account' };
       }
+
+      // Hash the password before storing
+      const saltRounds = 12;
+      const passwordHash = await bcrypt.hash(userData.password, saltRounds);
 
       // Automatically sign in the user after successful signup
       const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
@@ -79,9 +72,12 @@ export class AuthService {
         .single();
 
       if (dbError) {
-        // If database insert fails, clean up the auth user
-        await supabase.auth.admin.deleteUser(authData.user.id);
-        return { user: null, error: 'Failed to create user account. Please try again.' };
+        console.error('Database insert error:', dbError);
+        // If it's a duplicate key error, the user already exists in our database
+        if (dbError.message.includes('duplicate key') || dbError.code === '23505') {
+          return { user: null, error: 'An account with this email already exists. Please login instead.' };
+        }
+        return { user: null, error: 'Failed to create user profile. Please try again.' };
       }
 
       return { user, error: null };
@@ -93,27 +89,6 @@ export class AuthService {
 
   static async login(loginData: LoginData): Promise<{ user: User | null; error: string | null }> {
     try {
-      // First check if user exists in our database
-      const { data: dbUser, error: dbError } = await supabase
-        .from('users')
-        .select('*')
-        .eq('email', loginData.email.toLowerCase().trim())
-        .maybeSingle();
-
-      if (dbError || !dbUser) {
-        return { user: null, error: 'No account found with this email address. Please sign up first.' };
-      }
-
-      // Verify password against stored hash
-      if (!dbUser.password_hash) {
-        return { user: null, error: 'Invalid account configuration. Please contact support.' };
-      }
-
-      const passwordMatch = await bcrypt.compare(loginData.password, dbUser.password_hash);
-      if (!passwordMatch) {
-        return { user: null, error: 'Invalid password. Please check your credentials and try again.' };
-      }
-
       // Now sign in with Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
         email: loginData.email.toLowerCase().trim(),
@@ -121,7 +96,36 @@ export class AuthService {
       });
 
       if (authError) {
+        // Handle specific Supabase Auth errors
+        if (authError.message.includes('Invalid login credentials')) {
+          return { user: null, error: 'Invalid email or password. Please check your credentials and try again.' };
+        }
+        if (authError.message.includes('Email not confirmed')) {
+          return { user: null, error: 'Please check your email and confirm your account before logging in.' };
+        }
+        return { user: null, error: authError.message };
+      }
+
+      if (!authData.user) {
         return { user: null, error: 'Login failed. Please try again.' };
+      }
+
+      // Get user data from our database
+      const { data: dbUser, error: dbError } = await supabase
+        .from('users')
+        .select('*')
+        .eq('id', authData.user.id)
+        .maybeSingle();
+
+      if (dbError) {
+        console.error('Database query error:', dbError);
+        return { user: null, error: 'Failed to load user profile. Please try again.' };
+      }
+
+      if (!dbUser) {
+        // User exists in Auth but not in our database - this shouldn't happen
+        console.error('User exists in Auth but not in database:', authData.user.id);
+        return { user: null, error: 'Account configuration error. Please contact support.' };
       }
 
       // Return the user data from our database
