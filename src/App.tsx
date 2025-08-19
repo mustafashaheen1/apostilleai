@@ -54,6 +54,13 @@ function AppContent() {
     const accessToken = urlParams.get('access_token') || hashParams.get('access_token');
     const type = urlParams.get('type') || hashParams.get('type');
     
+    // Handle localhost redirects for password reset
+    if (window.location.hostname === 'localhost' && type === 'recovery' && accessToken) {
+      const deployedUrl = 'https://animated-beignet-b6ffd1.netlify.app/reset-password' + window.location.hash;
+      window.location.replace(deployedUrl);
+      return;
+    }
+    
     if (type === 'recovery' && accessToken && window.location.pathname !== '/reset-password') {
       // Redirect to reset password page with tokens
       navigate('/reset-password' + window.location.hash);
