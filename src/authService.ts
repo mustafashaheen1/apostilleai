@@ -53,6 +53,17 @@ export class AuthService {
         return { user: null, error: 'Failed to create user account' };
       }
 
+      // Automatically sign in the user after successful signup
+      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+        email: userData.email,
+        password: userData.password,
+      });
+
+      if (signInError) {
+        console.error('Auto sign-in error after signup:', signInError);
+        // Don't return error here, user was created successfully
+      }
+
       // Store user information in our database
       const { data: user, error: dbError } = await supabase
         .from('users')
