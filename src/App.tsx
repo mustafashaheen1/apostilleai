@@ -7,9 +7,10 @@ import WelcomePage from './WelcomePage';
 import LoginPage from './LoginPage';
 import ApostilleRequestForm from './ApostilleRequestForm';
 import AssignClientPage from './AssignClientPage';
+import ForgotPasswordPage from './ForgotPasswordPage';
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState<'dashboard' | 'welcome' | 'login' | 'apostille-request' | 'assign-client'>('welcome');
+  const [currentPage, setCurrentPage] = useState<'dashboard' | 'welcome' | 'login' | 'forgot-password' | 'apostille-request' | 'assign-client'>('welcome');
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(new Date().getDate());
   const [isGoogleConnected, setIsGoogleConnected] = useState(false);
@@ -188,7 +189,14 @@ export default function App() {
   if (currentPage === 'login') {
     return <LoginPage 
       onNavigateToWelcome={() => setCurrentPage('welcome')} 
+      onNavigateToForgotPassword={() => setCurrentPage('forgot-password')}
       onLoginSuccess={handleLoginSuccess}
+    />;
+  }
+
+  if (currentPage === 'forgot-password') {
+    return <ForgotPasswordPage 
+      onNavigateToLogin={() => setCurrentPage('login')}
     />;
   }
 

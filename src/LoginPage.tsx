@@ -4,10 +4,11 @@ import { AuthService } from './authService';
 
 interface LoginPageProps {
   onNavigateToWelcome: () => void;
+  onNavigateToForgotPassword: () => void;
   onLoginSuccess: () => void;
 }
 
-export default function LoginPage({ onNavigateToWelcome, onLoginSuccess }: LoginPageProps) {
+export default function LoginPage({ onNavigateToWelcome, onNavigateToForgotPassword, onLoginSuccess }: LoginPageProps) {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -182,6 +183,7 @@ export default function LoginPage({ onNavigateToWelcome, onLoginSuccess }: Login
             <div style={{ textAlign: 'right', marginBottom: '10px' }}>
               <button
                 type="button"
+                onClick={onNavigateToForgotPassword}
                 style={{
                   background: 'none',
                   border: 'none',
@@ -190,10 +192,6 @@ export default function LoginPage({ onNavigateToWelcome, onLoginSuccess }: Login
                   cursor: 'pointer',
                   textDecoration: 'underline',
                   padding: '0'
-                }}
-                onClick={() => {
-                  // TODO: Navigate to forgot password page
-                  alert('Forgot password functionality will be implemented soon');
                 }}
               >
                 Forgot Password?
