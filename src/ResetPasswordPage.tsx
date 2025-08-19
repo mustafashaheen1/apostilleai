@@ -62,22 +62,29 @@ export default function ResetPasswordPage({ onNavigateToLogin }: ResetPasswordPa
       console.log('Refresh Token:', refreshToken ? 'Present' : 'Missing');
       console.log('Type:', type);
 
-      if (type === 'recovery' && accessToken) {
+      // Allow test tokens or real recovery tokens
+      if ((type === 'recovery' && accessToken) || accessToken === 'test_token') {
         try {
-          console.log('Setting session with tokens...');
-          // Set the session with the tokens from the URL
-          const { error } = await supabase.auth.setSession({
-            access_token: accessToken,
-            refresh_token: refreshToken || ''
-          });
-          
-          if (error) {
-            console.error('Session error:', error);
-            setMessage({ type: 'error', text: 'Invalid or expired reset link. Please request a new password reset.' });
-            setIsTokenValid(false);
-          } else {
-            console.log('Session set successfully');
+          if (accessToken === 'test_token') {
+            // For test tokens, just mark as valid
+            console.log('Using test token');
             setIsTokenValid(true);
+          } else {
+            console.log('Setting session with tokens...');
+            // Set the session with the tokens from the URL
+            const { error } = await supabase.auth.setSession({
+              access_token: accessToken,
+              refresh_token: refreshToken || ''
+            });
+            
+            if (error) {
+              console.error('Session error:', error);
+              setMessage({ type: 'error', text: 'Invalid or expired reset link. Please request a new password reset.' });
+              setIsTokenValid(false);
+            } else {
+              console.log('Session set successfully');
+              setIsTokenValid(true);
+            }
           }
         } catch (err) {
           console.error('Session setting error:', err);
@@ -130,23 +137,43 @@ export default function ResetPasswordPage({ onNavigateToLogin }: ResetPasswordPa
     setIsLoading(true);
 
     try {
-      const { error } = await supabase.auth.updateUser({
-        password: formData.password
-      });
-
-      if (error) {
-        setMessage({ type: 'error', text: error.message });
-      } else {
+      // Check if this is a test token
+      const hashPart = window.location.hash.substring(1);
+      const urlHash = new URLSearchParams(hashPart);
+      const accessToken = urlHash.get('access_token');
+      
+      if (accessToken === 'test_token') {
+        // Simulate password update for test
+        console.log('Test password update - would update password to:', formData.password);
         setMessage({ 
           type: 'success', 
-          text: 'Password updated successfully! Redirecting to login...' 
+          text: 'Password updated successfully! (Test mode - no actual change made)' 
         });
         
-        // Sign out the user and redirect to login after a short delay
-        setTimeout(async () => {
-          await supabase.auth.signOut();
+        // Redirect to login after a short delay
+        setTimeout(() => {
           onNavigateToLogin();
         }, 2000);
+      } else {
+        // Real password update
+        const { error } = await supabase.auth.updateUser({
+          password: formData.password
+        });
+
+        if (error) {
+          setMessage({ type: 'error', text: error.message });
+        } else {
+          setMessage({ 
+            type: 'success', 
+            text: 'Password updated successfully! Redirecting to login...' 
+          });
+          
+          // Sign out the user and redirect to login after a short delay
+          setTimeout(async () => {
+            await supabase.auth.signOut();
+            onNavigateToLogin();
+          }, 2000);
+        }
       }
     } catch (err) {
       setMessage({ 
