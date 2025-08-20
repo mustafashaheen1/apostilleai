@@ -177,7 +177,7 @@ body {
 }
 
 .nav-item.active {
-  background-color: #3498db;
+  background-color: #2562EB;
 }
 
 .nav-icon {
@@ -210,7 +210,7 @@ body {
 }
 
 .create-job-btn {
-  background-color: #4285f4;
+  background-color: #2562EB;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -221,7 +221,7 @@ body {
 }
 
 .create-job-btn:hover {
-  background-color: #3367d6;
+  background-color: #1e4fd6;
 }
 
 .content-grid {
@@ -252,7 +252,7 @@ body {
 }
 
 .connect-google-btn {
-  background-color: #4285f4;
+  background-color: #2562EB;
   color: white;
   border: none;
   padding: 8px 15px;
@@ -268,7 +268,7 @@ body {
 }
 
 .connect-google-btn:hover:not(:disabled) {
-  background-color: #3367d6;
+  background-color: #1e4fd6;
 }
 
 .calendar {
@@ -338,7 +338,7 @@ body {
 }
 
 .calendar-day.selected {
-  background-color: #dc3545;
+  background-color: #2562EB;
   color: white;
   font-weight: 600;
 }
@@ -384,7 +384,7 @@ body {
   padding: 12px;
   background-color: #f8f9fa;
   border-radius: 6px;
-  border-left: 3px solid #4285f4;
+  border-left: 3px solid #2562EB;
 }
 
 .event-title {
@@ -434,7 +434,7 @@ body {
 .stat-value {
   font-size: 18px;
   font-weight: 600;
-  color: #4285f4;
+  color: #2562EB;
 }
 
 /* Jobs Tracker Styles */
@@ -447,7 +447,7 @@ body {
 }
 
 .create-new-job-btn {
-  background-color: #4285f4;
+  background-color: #2562EB;
   color: white;
   border: none;
   padding: 8px 15px;
@@ -484,7 +484,7 @@ body {
 
 .job-id {
   font-weight: 500;
-  color: #4285f4;
+  color: #2562EB;
 }
 
 .status-cell {
@@ -536,12 +536,12 @@ body {
 }
 
 .virtual-assistant {
-  background-color: #3498db;
+  background-color: #2562EB;
   color: white;
 }
 
 .hire-courier {
-  background-color: #3498db;
+  background-color: #2562EB;
   color: white;
   font-size: 14px;
 }

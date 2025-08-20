@@ -364,13 +364,13 @@
 }
 
 .country-card:hover {
-  border-color: #4285f4;
+  border-color: #2562EB;
   box-shadow: 0 4px 12px rgba(66, 133, 244, 0.15);
   transform: translateY(-2px);
 }
 
 .country-card.selected {
-  border-color: #4285f4;
+  border-color: #2562EB;
   background-color: #f0f7ff;
   box-shadow: 0 4px 12px rgba(66, 133, 244, 0.2);
 }
@@ -380,7 +380,7 @@
   position: absolute;
   top: 8px;
   right: 8px;
-  background-color: #4285f4;
+  background-color: #2562EB;
   color: white;
   width: 20px;
   height: 20px;
@@ -448,12 +448,12 @@
 
 .country-path:hover {
   fill: #a7b3ff;
-  stroke: #4285f4;
+  stroke: #2562EB;
   stroke-width: 2;
 }
 
 .country-path.highlighted {
-  fill: #4285f4;
+  fill: #2562EB;
   stroke: #3367d6;
   stroke-width: 2;
   animation: pulse 2s infinite;
@@ -633,7 +633,7 @@
 .modal-header h2 {
   font-size: 24px;
   font-weight: 600;
-  color: #4285f4;
+  color: #2562EB;
   margin: 0;
 }
 
@@ -689,7 +689,7 @@
 
 .form-field input:focus {
   outline: none;
-  border-color: #4285f4;
+  border-color: #2562EB;
   background-color: white;
   box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
 }
@@ -725,13 +725,13 @@
 }
 
 .cancel-btn:hover {
-  border-color: #4285f4;
-  color: #4285f4;
+  border-color: #2562EB;
+  color: #2562EB;
 }
 
 .save-btn {
   padding: 12px 24px;
-  background-color: #4285f4;
+  background-color: #2562EB;
   color: white;
   border: none;
   border-radius: 8px;
@@ -742,7 +742,7 @@
 }
 
 .save-btn:hover {
-  background-color: #3367d6;
+  background-color: #1e4fd6;
 }
 
 /* Form Validation Styles */
