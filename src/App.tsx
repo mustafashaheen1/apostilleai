@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
-import { FileText, Bell } from 'lucide-react';
+import { FileText, Bell, LayoutDashboard, Users, Package, Library, Stamp, Building, Shield, Bot, Fingerprint } from 'lucide-react';
 import './App.css';
 import { googleCalendarService, CalendarEvent } from './googleCalendar';
 import { AuthService } from './authService';
@@ -374,50 +374,55 @@ function DashboardContent({
           </div>
 
           <div className="nav-section">
-            <div className="section-title">MENU</div>
-            <div className="nav-item active">
-              <span className="nav-icon">📊</span>
-              Dashboard
-            </div>
-            <div className="nav-item">
-              <span className="nav-icon">🔄</span>
-              <span onClick={() => navigate('/apostille-request')}>USCIS Translation</span>
-            </div>
-            <div className="nav-item">
-              <span className="nav-icon">🏷️</span>
-              Generate Shipping Label
-            </div>
-            <div className="nav-item">
-              <span className="nav-icon">📁</span>
-              Vital Records Retrieval
-            </div>
-            <div className="nav-item">
-              <span className="nav-icon">📋</span>
-              Court Document Retrieval
-            </div>
-            <div className="nav-item">
-              <span className="nav-icon">📚</span>
-              Library
-            </div>
-            <div className="nav-item">
-              <span className="nav-icon">✅</span>
-              Initialise Notarisation
-            </div>
-            <div className="nav-item">
-              <span className="nav-icon">🏛️</span>
-              Embassy Legalisation
-            </div>
-            <div className="nav-item">
-              <span className="nav-icon">🔐</span>
-              USDOS Authentication
-            </div>
-            <div className="nav-item">
-              <span className="nav-icon">🤖</span>
-              Ask AI (BETA)
-            </div>
-            <div className="nav-item">
-              <span className="nav-icon">👆</span>
-              Fingerprints (Coming Soon)
+            <h3 className="text-gray-400 text-xs uppercase tracking-wider mb-3 px-4">MENU</h3>
+            <div className="space-y-1">
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors bg-blue-600 text-white">
+                <LayoutDashboard className="h-4 w-4 mr-3" />
+                Dashboard
+              </button>
+              <button 
+                className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white"
+                onClick={() => navigate('/apostille-request')}
+              >
+                <Users className="h-4 w-4 mr-3" />
+                USCIS Translation
+              </button>
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white">
+                <Package className="h-4 w-4 mr-3" />
+                Generate Shipping Label
+              </button>
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white">
+                <FileText className="h-4 w-4 mr-3" />
+                Vital Records Retrieval
+              </button>
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white">
+                <FileText className="h-4 w-4 mr-3" />
+                Court Document Retrieval
+              </button>
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white">
+                <Library className="h-4 w-4 mr-3" />
+                Library
+              </button>
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white">
+                <Stamp className="h-4 w-4 mr-3" />
+                Initialise Notarisation
+              </button>
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white">
+                <Building className="h-4 w-4 mr-3" />
+                Embassy Legalisation
+              </button>
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white">
+                <Shield className="h-4 w-4 mr-3" />
+                USDOS Authentication
+              </button>
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white">
+                <Bot className="h-4 w-4 mr-3" />
+                Ask AI (BETA)
+              </button>
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white">
+                <Fingerprint className="h-4 w-4 mr-3" />
+                Fingerprints (Coming Soon)
+              </button>
             </div>
           </div>
 

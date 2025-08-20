@@ -200,37 +200,6 @@ body {
   margin-bottom: 30px;
 }
 
-.section-title {
-  font-size: 11px;
-  color: #7f8c8d;
-  font-weight: 600;
-  letter-spacing: 1px;
-  margin-bottom: 10px;
-  padding: 0 20px;
-}
-
-.nav-item {
-  display: flex;
-  align-items: center;
-  padding: 12px 20px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  position: relative;
-}
-
-.nav-item:hover {
-  background-color: #34495e;
-}
-
-.nav-item.active {
-  background-color: #2562EB;
-}
-
-.nav-icon {
-  margin-right: 12px;
-  font-size: 16px;
-}
-
 .badge {
   background-color: #e74c3c;
   color: white;
