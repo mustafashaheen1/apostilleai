@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
-import { FileText, Bell, LayoutDashboard, Users, Package, Library, Stamp, Building, Shield, Bot, Fingerprint } from 'lucide-react';
+import { FileText, Bell, LayoutDashboard, Users, Package, Library, Stamp, Building, Shield, Bot, Fingerprint, Settings, CreditCard, BookOpen, HelpCircle, LogOut } from 'lucide-react';
 import './App.css';
 import { googleCalendarService, CalendarEvent } from './googleCalendar';
 import { AuthService } from './authService';
@@ -423,26 +423,26 @@ function DashboardContent({
 
           <div className="nav-section">
             <div className="section-title others">OTHERS</div>
-            <div className="nav-item">
-              <span className="nav-icon">⚙️</span>
+            <div className="nav-item" onClick={() => {}}>
+              <Settings size={16} className="nav-icon" />
               Settings
             </div>
-            <div className="nav-item">
-              <span className="nav-icon">💳</span>
+            <div className="nav-item" onClick={() => {}}>
+              <CreditCard size={16} className="nav-icon" />
               Billings
             </div>
-            <div className="nav-item">
-              <span className="nav-icon">📖</span>
+            <div className="nav-item" onClick={() => {}}>
+              <BookOpen size={16} className="nav-icon" />
               Guide & Resources
             </div>
-            <div className="nav-item">
-              <span className="nav-icon">❓</span>
+            <div className="nav-item" onClick={() => {}}>
+              <HelpCircle size={16} className="nav-icon" />
               Help Desk
             </div>
             <div className="nav-item" onClick={() => {
               handleLogout();
             }}>
-              <span className="nav-icon">🚪</span>
+              <LogOut size={16} className="nav-icon" />
               Logout
             </div>
           </div>
