@@ -3,10 +3,11 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-// Check if Supabase is properly configured
+// Check if Supabase is properly configured (not missing and not placeholder values)
 const isSupabaseConfigured = supabaseUrl && 
   supabaseAnonKey && 
   supabaseUrl !== 'https://placeholder.supabase.co' &&
+  supabaseAnonKey !== 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsYWNlaG9sZGVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDUxOTI4MDAsImV4cCI6MTk2MDc2ODgwMH0.Kx8nfBwGSk9dGGGkBxQJwMz6N4Im-VLS5K5TH0T8AuE' &&
   !supabaseAnonKey.includes('placeholder');
 
 if (!isSupabaseConfigured) {
@@ -16,11 +17,11 @@ if (!isSupabaseConfigured) {
 }
 
 // Use placeholder values if environment variables are missing
-const finalUrl = supabaseUrl || 'https://placeholder.supabase.co';
-const finalKey = supabaseAnonKey || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsYWNlaG9sZGVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDUxOTI4MDAsImV4cCI6MTk2MDc2ODgwMH0.Kx8nfBwGSk9dGGGkBxQJwMz6N4Im-VLS5K5TH0T8AuE';
+const finalUrl = isSupabaseConfigured ? supabaseUrl : 'https://placeholder.supabase.co';
+const finalKey = isSupabaseConfigured ? supabaseAnonKey : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsYWNlaG9sZGVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDUxOTI4MDAsImV4cCI6MTk2MDc2ODgwMH0.Kx8nfBwGSk9dGGGkBxQJwMz6N4Im-VLS5K5TH0T8AuE';
 
-// Create a mock client that doesn't make network requests when not configured
-const createMockSupabaseClient = () => ({
+// Create the Supabase client or mock client
+export const supabase = isSupabaseConfigured ? createClient(finalUrl, finalKey) : {
   auth: {
     signInWithPassword: async () => ({ 
       data: { user: null, session: null }, 
@@ -84,9 +85,7 @@ const createMockSupabaseClient = () => ({
       }) 
     })
   })
-});
-
-export const supabase = isSupabaseConfigured ? createClient(finalUrl, finalKey) : createMockSupabaseClient();
+};
 export { isSupabaseConfigured };
 
 export interface User {
