@@ -585,23 +585,26 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* space-y-2 = 8px */
 }
 
 .footer-column li {
-  margin-bottom: 12px;
+  margin-bottom: 0;
 }
 
 .footer-column a {
-  color: #9ca3af;
+  color: #9ca3af; /* text-gray-400 */
   text-decoration: none;
   display: flex;
   align-items: center;
   gap: 8px;
-  transition: color 0.2s;
+  transition: color 0.2s; /* transition-colors */
 }
 
 .footer-column a:hover {
-  color: #2562EB;
+  color: #ffffff; /* hover:text-white */
 }
 
 .footer-bottom {
