@@ -509,15 +509,15 @@
 
 .footer-content {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 32px;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 48px;
   margin-bottom: 32px;
 }
 
 @media (min-width: 768px) {
   .footer-content {
-    grid-template-columns: repeat(4, 1fr);
-    gap: 32px;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 48px;
   }
 }
 
@@ -569,9 +569,7 @@
 }
 
 .footer-links {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 48px;
+  display: contents;
 }
 
 .footer-column h4 {

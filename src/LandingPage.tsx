@@ -323,35 +323,33 @@ export default function LandingPage({ onNavigateToSignUp, onNavigateToLogin }: L
               </div>
             </div>
             
-            <div className="footer-links">
-              <div className="footer-column">
-                <h4>Quick Links</h4>
-                <ul>
-                  <li><a href="#dashboard">Dashboard</a></li>
-                  <li><a href="#pricing">Pricing</a></li>
-                  <li><a href="#api">API Documentation</a></li>
-                  <li><a href="#support">Support Center</a></li>
-                  <li><a href="#status">System Status</a></li>
-                </ul>
-              </div>
-              
-              <div className="footer-column">
-                <h4>Contact</h4>
-                <ul>
-                  <li>
-                    <Mail size={16} />
-                    support@apostille.ai
-                  </li>
-                  <li>
-                    <Phone size={16} />
-                    +1 (555) 123-4567
-                  </li>
-                  <li>
-                    <MapPin size={16} />
-                    <span>123 Innovation Drive<br />San Francisco, CA 94105</span>
-                  </li>
-                </ul>
-              </div>
+            <div className="footer-column">
+              <h4>Quick Links</h4>
+              <ul>
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#api">API Documentation</a></li>
+                <li><a href="#support">Support Center</a></li>
+                <li><a href="#status">System Status</a></li>
+              </ul>
+            </div>
+            
+            <div className="footer-column">
+              <h4>Contact</h4>
+              <ul>
+                <li>
+                  <Mail size={16} />
+                  support@apostille.ai
+                </li>
+                <li>
+                  <Phone size={16} />
+                  +1 (555) 123-4567
+                </li>
+                <li>
+                  <MapPin size={16} />
+                  <span>123 Innovation Drive<br />San Francisco, CA 94105</span>
+                </li>
+              </ul>
             </div>
           </div>
           
