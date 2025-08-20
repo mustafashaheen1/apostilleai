@@ -84,8 +84,8 @@ export default function LandingPage({ onNavigateToSignUp, onNavigateToLogin }: L
 
       {/* Features Section */}
       <section className="features-section">
-        <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-8">
-          <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+        <div className="features-container">
+          <div className="feature-card">
             <div className="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4 mx-auto">
               <Zap className="h-6 w-6 text-blue-600" />
             </div>
@@ -93,7 +93,7 @@ export default function LandingPage({ onNavigateToSignUp, onNavigateToLogin }: L
             <p className="text-gray-600 text-center">Our advanced AI analyzes documents instantly, identifying requirements and ensuring compliance automatically.</p>
           </div>
           
-          <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+          <div className="feature-card">
             <div className="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4 mx-auto">
               <Shield className="h-6 w-6 text-blue-600" />
             </div>
@@ -101,7 +101,7 @@ export default function LandingPage({ onNavigateToSignUp, onNavigateToLogin }: L
             <p className="text-gray-600 text-center">Enterprise-grade security with full compliance to international apostille conventions and regulations.</p>
           </div>
           
-          <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+          <div className="feature-card">
             <div className="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4 mx-auto">
               <Globe className="h-6 w-6 text-blue-600" />
             </div>
