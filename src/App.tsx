@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
-import { FileText } from 'lucide-react';
+import { FileText, Bell } from 'lucide-react';
 import './App.css';
 import { googleCalendarService, CalendarEvent } from './googleCalendar';
 import { AuthService } from './authService';
