@@ -94,11 +94,11 @@ export default function LandingPage({ onNavigateToSignUp, onNavigateToLogin }: L
           </div>
           
           <div className="feature-card">
-            <div className="icon-container">
+            <div className="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4 mx-auto">
               <Shield className="h-6 w-6 text-blue-600" />
             </div>
-            <h3 className="card-heading">Secure & Compliant</h3>
-            <p className="card-description">Enterprise-grade security with full compliance to international apostille conventions and regulations.</p>
+            <h3 className="text-xl font-semibold text-gray-900 mb-3 text-center">Secure & Compliant</h3>
+            <p className="text-gray-600 text-center">Enterprise-grade security with full compliance to international apostille conventions and regulations.</p>
           </div>
           
           <div className="feature-card">
