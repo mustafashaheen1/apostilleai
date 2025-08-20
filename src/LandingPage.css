@@ -416,12 +416,12 @@
 }
 
 .card-button.secondary {
-  background: #f3f4f6;
+  background-color: #f3f4f6;
   color: #111827;
 }
 
 .card-button.secondary:hover {
-  background: #e5e7eb;
+  background-color: #e5e7eb;
 }
 
 .plans-include {
