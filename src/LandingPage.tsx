@@ -1,5 +1,5 @@
 import React from 'react';
-import { Zap, Shield, Globe } from 'lucide-react';
+import { Zap, Shield, Globe, CheckCircle } from 'lucide-react';
 import './LandingPage.css';
 
 interface LandingPageProps {
@@ -67,21 +67,15 @@ export default function LandingPage({ onNavigateToSignUp, onNavigateToLogin }: L
           
           <div className="hero-features">
             <div className="feature-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              <CheckCircle size={16} color="#10b981" />
               SOC 2 Compliant
             </div>
             <div className="feature-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              <Shield size={16} color="#10b981" />
               Bank-Level Security
             </div>
             <div className="feature-item">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              <Globe size={16} color="#10b981" />
               190+ Countries Supported
             </div>
           </div>
