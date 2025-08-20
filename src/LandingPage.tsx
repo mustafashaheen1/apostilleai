@@ -93,7 +93,7 @@ export default function LandingPage({ onNavigateToSignUp, onNavigateToLogin }: L
         <div className="features-container">
           <div className="feature-card">
             <div className="feature-icon">
-              <Zap size={32} color="#4f46e5" />
+              <Zap size={32} color="#2563eb" />
             </div>
             <h3>AI-Powered Processing</h3>
             <p>Our advanced AI analyzes documents instantly, identifying requirements and ensuring compliance automatically.</p>
@@ -101,7 +101,7 @@ export default function LandingPage({ onNavigateToSignUp, onNavigateToLogin }: L
           
           <div className="feature-card">
             <div className="feature-icon">
-              <Shield size={32} color="#4f46e5" />
+              <Shield size={32} color="#2563eb" />
             </div>
             <h3>Secure & Compliant</h3>
             <p>Enterprise-grade security with full compliance to international apostille conventions and regulations.</p>
@@ -109,7 +109,7 @@ export default function LandingPage({ onNavigateToSignUp, onNavigateToLogin }: L
           
           <div className="feature-card">
             <div className="feature-icon">
-              <Globe size={32} color="#4f46e5" />
+              <Globe size={32} color="#2563eb" />
             </div>
             <h3>Global Coverage</h3>
             <p>Process apostilles for documents from 190+ countries with local expertise and legal requirements.</p>
