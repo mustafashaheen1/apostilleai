@@ -24,6 +24,11 @@ export interface OAuthUser {
 export class AuthService {
   static async signUp(userData: SignUpData): Promise<{ user: User | null; error: string | null }> {
     try {
+      // Check if Supabase is properly configured
+      if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
+        return { user: null, error: 'Application configuration error. Please contact support.' };
+      }
+
       // Create user in Supabase Auth first
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: userData.email.toLowerCase().trim(),
@@ -89,6 +94,11 @@ export class AuthService {
 
   static async login(loginData: LoginData): Promise<{ user: User | null; error: string | null }> {
     try {
+      // Check if Supabase is properly configured
+      if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
+        return { user: null, error: 'Application configuration error. Please contact support.' };
+      }
+
       // Now sign in with Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
         email: loginData.email.toLowerCase().trim(),
@@ -97,11 +107,14 @@ export class AuthService {
 
       if (authError) {
         // Handle specific Supabase Auth errors
-        if (authError.message.includes('Invalid login credentials')) {
+        if (authError.message.includes('Invalid login credentials') || authError.message.includes('Invalid')) {
           return { user: null, error: 'Invalid email or password. Please check your credentials and try again.' };
         }
         if (authError.message.includes('Email not confirmed')) {
           return { user: null, error: 'Please check your email and confirm your account before logging in.' };
+        }
+        if (authError.message.includes('Failed to fetch') || authError.message.includes('fetch')) {
+          return { user: null, error: 'Unable to connect to authentication service. Please check your internet connection and try again.' };
         }
         return { user: null, error: authError.message };
       }
@@ -132,7 +145,10 @@ export class AuthService {
       return { user: dbUser, error: null };
     } catch (error) {
       console.error('Login error:', error);
-      return { user: null, error: 'An unexpected error occurred during login' };
+      if (error instanceof Error && error.message.includes('fetch')) {
+        return { user: null, error: 'Unable to connect to authentication service. Please check your internet connection and try again.' };
+      }
+      return { user: null, error: 'An unexpected error occurred during login. Please try again.' };
     }
   }
 
