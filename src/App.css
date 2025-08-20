@@ -356,9 +356,14 @@ body {
 
 .calendar-month-nav {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 4px;
   margin-bottom: 8px;
+}
+
+.calendar-nav-buttons {
+  display: flex;
+  gap: 4px;
 }
 
 .calendar-nav-button {
@@ -377,16 +382,10 @@ body {
   background-color: #f3f4f6;
 }
 
-.calendar-nav-buttons {
-  display: flex;
-  gap: 4px;
-}
-
 .calendar-month-display {
   font-weight: 500;
   color: #111827;
   font-size: 16px;
-  margin-bottom: 8px;
 }
 
 .calendar-weekdays {

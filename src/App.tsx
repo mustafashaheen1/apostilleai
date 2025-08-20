@@ -491,6 +491,7 @@ function DashboardContent({
             </div>
             <div className="calendar">
               <div className="calendar-header">
+                <span className="calendar-month-display">{getMonthName(currentDate)}</span>
                 <div className="calendar-month-nav">
                   <button className="calendar-nav-button" onClick={() => navigateMonth('prev')}>
                     <ChevronLeft size={16} />
@@ -499,7 +500,6 @@ function DashboardContent({
                     <ChevronRight size={16} />
                   </button>
                   <span className="calendar-month-display">{getMonthName(currentDate)}</span>
-                </div>
               </div>
               <div className="calendar-weekdays">
                 <div>Mo</div>
