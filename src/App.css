@@ -309,23 +309,24 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .section-header h2 {
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 600;
+  color: #111827;
 }
 
 .connect-google-btn {
-  background-color: #2562EB;
-  color: white;
+  background-color: #2563eb;
+  color: #ffffff;
   border: none;
-  padding: 8px 15px;
-  border-radius: 6px;
+  padding: 4px 12px;
+  border-radius: 4px;
   cursor: pointer;
-  font-size: 12px;
-  transition: opacity 0.2s;
+  font-size: 0.875rem;
+  transition: background-color 0.2s;
 }
 
 .connect-google-btn:disabled {
@@ -334,7 +335,7 @@ body {
 }
 
 .connect-google-btn:hover:not(:disabled) {
-  background-color: #1e4fd6;
+  background-color: #1d4ed8;
 }
 
 .calendar {
