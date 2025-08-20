@@ -188,7 +188,7 @@ export default function LoginPage({ onNavigateToWelcome, onNavigateToForgotPassw
                 style={{
                   background: 'none',
                   border: 'none',
-                  color: '#4285f4',
+                  color: '#2562EB',
                   fontSize: '14px',
                   cursor: 'pointer',
                   textDecoration: 'underline',

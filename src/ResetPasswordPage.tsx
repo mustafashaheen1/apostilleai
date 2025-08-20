@@ -207,7 +207,7 @@ export default function ResetPasswordPage({ onNavigateToLogin }: ResetPasswordPa
               width: '40px', 
               height: '40px', 
               border: '4px solid #f3f3f3',
-              borderTop: '4px solid #4285f4',
+              borderTop: '4px solid #2562EB',
               borderRadius: '50%',
               animation: 'spin 1s linear infinite',
               margin: '0 auto 20px'
