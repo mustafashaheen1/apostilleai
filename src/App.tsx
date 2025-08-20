@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { FileText } from 'lucide-react';
 import './App.css';
 import { googleCalendarService, CalendarEvent } from './googleCalendar';
 import { AuthService } from './authService';
@@ -344,18 +345,19 @@ function DashboardContent({
     <div className="app">
       {/* Sidebar */}
       <div className="sidebar">
-        <div className="logo">
-          <div className="logo-row">
-          <div className="logo-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="3" y="3" width="18" height="18" rx="3" fill="white"/>
-              <path d="M8 12h8M8 8h8M8 16h5" stroke="#2562EB" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
+        <div className="logo-section">
+          <div className="logo-container">
+            <div className="logo-icon-new">
+              <FileText size={24} color="white" />
+            </div>
+            <div className="logo-text">
+              <div className="logo-name-row">
+                <span className="company-name">Apostille.AI</span>
+                <span className="beta-badge">BETA</span>
+              </div>
+              <p className="powered-by-text">Powered by Apostille Developers LLC</p>
+            </div>
           </div>
-          <span>Apostille.ai™</span>
-          <span className="beta">BETA</span>
-          </div>
-          <p className="powered-by">Powered by Apostille Technologies LLC</p>
         </div>
 
         <nav className="nav-menu">

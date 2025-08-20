@@ -27,47 +27,59 @@ body {
   overflow-y: auto;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  padding: 20px;
-  flex-direction: column;
-  text-align: left;
+.logo-section {
+  padding: 24px;
+  border-bottom: 1px solid #4b5563;
 }
 
-.logo-row {
+.logo-container {
   display: flex;
   align-items: center;
-  width: 100%;
-  margin-bottom: 8px;
+  gap: 12px;
 }
 
-.logo-icon {
-  width: 32px;
-  height: 32px;
-  background-color: #3498db;
-  border-radius: 6px;
+.logo-icon-new {
+  background-color: #2563eb;
+  padding: 8px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
-  margin-right: 10px;
+  flex-shrink: 0;
 }
 
-.beta {
-  background-color: #e74c3c;
-  color: white;
-  font-size: 10px;
-  padding: 2px 6px;
-  border-radius: 10px;
-  margin-left: 8px;
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.powered-by {
-  font-size: 11px;
-  color: #7f8c8d;
-  align-self: flex-start;
-  margin-left: 0;
+.logo-name-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.company-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.beta-badge {
+  background-color: #1e3a8a;
+  color: #60a5fa;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-left: 4px;
+}
+
+.powered-by-text {
+  color: #9ca3af;
+  font-size: 12px;
+  margin: 0;
+  margin-top: 4px;
 }
 
 .header {
