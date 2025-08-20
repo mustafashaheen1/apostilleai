@@ -3,17 +3,28 @@ import { createClient } from '@supabase/supabase-js';
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
+// Debug logging to check what values are being loaded
+console.log('Environment variables loaded:', {
+  url: supabaseUrl,
+  key: supabaseAnonKey ? `${supabaseAnonKey.substring(0, 10)}...` : 'undefined'
+});
+
 // Check if Supabase is properly configured (not missing and not placeholder values)
 const isSupabaseConfigured = supabaseUrl && 
   supabaseAnonKey && 
   supabaseUrl !== 'https://placeholder.supabase.co' &&
+  supabaseUrl !== 'undefined' &&
   supabaseAnonKey !== 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsYWNlaG9sZGVyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDUxOTI4MDAsImV4cCI6MTk2MDc2ODgwMH0.Kx8nfBwGSk9dGGGkBxQJwMz6N4Im-VLS5K5TH0T8AuE' &&
-  !supabaseAnonKey.includes('placeholder');
+  supabaseAnonKey !== 'undefined' &&
+  !supabaseAnonKey.includes('placeholder') &&
+  supabaseUrl.startsWith('https://') &&
+  supabaseUrl.includes('.supabase.co');
 
 if (!isSupabaseConfigured) {
-  console.warn('Supabase is not properly configured. Using mock client for development.');
-  console.warn('To connect to a real Supabase instance, set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your .env file.');
-  console.warn('You can find these values in your Supabase project settings under API.');
+  console.error('Supabase is not properly configured. Using mock client for development.');
+  console.error('Current values:', { supabaseUrl, supabaseAnonKey: supabaseAnonKey ? 'present' : 'missing' });
+  console.error('To connect to a real Supabase instance, set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your .env file.');
+  console.error('You can find these values in your Supabase project settings under API.');
 }
 
 // Use placeholder values if environment variables are missing
