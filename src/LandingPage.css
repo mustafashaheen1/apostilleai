@@ -466,18 +466,20 @@
 }
 
 .pricing-faq p {
-  color: #6b7280;
+  color: #4b5563;
   font-size: 16px;
 }
 
 .pricing-faq a {
-  color: #2562EB;
+  color: #2563eb;
   text-decoration: none;
   font-weight: 500;
+  margin-left: 4px;
+  transition: color 0.2s;
 }
 
 .pricing-faq a:hover {
-  text-decoration: underline;
+  color: #1d4ed8;
 }
 
 /* Footer */
