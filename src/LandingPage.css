@@ -251,6 +251,42 @@
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
+/* Icon container styling */
+.feature-card .bg-blue-100 {
+  background-color: #dbeafe;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Icon styling */
+.feature-card .text-blue-600 {
+  color: #2563eb;
+  width: 24px;
+  height: 24px;
+}
+
+/* Heading styling */
+.feature-card h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+/* Description styling */
+.feature-card p {
+  color: #4b5563;
+  font-size: 16px;
+  text-align: center;
+}
 
 /* Pricing Section */
 .pricing-section {
