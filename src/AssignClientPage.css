@@ -106,7 +106,7 @@
 
 .continue-btn {
   padding: 10px 20px;
-  background-color: #4285f4;
+  background-color: #2562EB;
   color: white;
   border: none;
   border-radius: 8px;
@@ -116,7 +116,7 @@
 }
 
 .continue-btn:hover:not(:disabled) {
-  background-color: #3367d6;
+  background-color: #1e4fd6;
 }
 
 .continue-btn:disabled {
@@ -158,7 +158,7 @@
 
 .create-client-btn {
   padding: 12px 24px;
-  background-color: #4285f4;
+  background-color: #2562EB;
   color: white;
   border: none;
   border-radius: 8px;
@@ -169,7 +169,7 @@
 }
 
 .create-client-btn:hover {
-  background-color: #3367d6;
+  background-color: #1e4fd6;
 }
 
 /* Clients Table */
@@ -270,7 +270,7 @@
 
 .choose-btn {
   padding: 8px 16px;
-  background-color: #4285f4;
+  background-color: #2562EB;
   color: white;
   border: none;
   border-radius: 6px;
@@ -281,7 +281,7 @@
 }
 
 .choose-btn:hover {
-  background-color: #3367d6;
+  background-color: #1e4fd6;
 }
 
 .choose-btn.selected {
