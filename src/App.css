@@ -400,42 +400,45 @@ body {
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
 }
 
 .calendar-day {
-  height: 50px;
+  padding: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 20px;
-  font-weight: 600;
+  font-size: 0.875rem;
+  font-weight: normal;
   transition: all 0.2s;
-  color: #333;
-  margin-left: 15px;
+  color: #374151;
+  border-radius: 4px;
+  text-align: center;
 }
 
 .calendar-day:hover {
-  background-color: #f5f5f5;
+  background-color: #f3f4f6;
 }
 
 .calendar-day.selected {
-  background-color: #2562EB;
-  color: white;
+  background-color: #2563eb;
+  color: #ffffff;
   font-weight: 600;
 }
 
 .calendar-day.next-month {
-  color: #ccc;
+  color: #9ca3af;
 }
 
 .calendar-day.next-month:hover {
-  background-color: #f5f5f5;
+  background-color: #f3f4f6;
 }
 
 .calendar-day.empty {
   background-color: transparent;
   cursor: default;
+  padding: 8px;
 }
 
 .calendar-day.empty:hover {
