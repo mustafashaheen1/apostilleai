@@ -555,24 +555,17 @@
 
 .footer-social {
   display: flex;
-  gap: 16px;
+  gap: 16px; /* space-x-4 = 16px */
 }
 
-.footer-social a {
-  width: 40px;
-  height: 40px;
-  background: #374151;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #9ca3af;
-  transition: all 0.2s;
+.footer-social .social-icon {
+  color: #9ca3af; /* text-gray-400 */
+  transition: color 0.2s; /* transition-colors */
+  text-decoration: none;
 }
 
-.footer-social a:hover {
-  background: #2562EB;
-  color: white;
+.footer-social .social-icon:hover {
+  color: #ffffff; /* hover:text-white */
 }
 
 .footer-links {
