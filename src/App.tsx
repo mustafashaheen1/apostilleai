@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
-import { FileText, Bell, LayoutDashboard, Users, Package, Library, Stamp, Building, Shield, Bot, Fingerprint } from 'lucide-react';
+import { FileText, Bell, LayoutDashboard, Users, Package, Library, Stamp, Building, Shield, Bot, Fingerprint, Settings, CreditCard, BookOpen, HelpCircle, LogOut } from 'lucide-react';
 import './App.css';
 import { googleCalendarService, CalendarEvent } from './googleCalendar';
 import { AuthService } from './authService';
@@ -345,34 +345,32 @@ function DashboardContent({
     <div className="app">
       {/* Sidebar */}
       <div className="sidebar">
-        <div className="logo-section">
-          <div className="logo-container">
-            <div className="logo-icon-new">
+        {/* Logo Section */}
+        <div className="p-6 border-b border-gray-600">
+          <div className="flex items-center gap-3 mb-1">
+            <div className="bg-blue-600 p-2 rounded-lg">
               <FileText size={24} color="white" />
             </div>
-            <div className="logo-text">
-              <div className="logo-name-row">
-                <span className="company-name">Apostille.AI</span>
-                <span className="beta-badge">BETA</span>
-              </div>
-              <p className="powered-by-text">Powered by Apostille Developers LLC</p>
+            <span className="text-lg font-bold text-white">Apostille.AI</span>
+            <span className="bg-blue-900 text-blue-400 text-xs px-2 py-1 rounded ml-1">BETA</span>
+          </div>
+          <p className="text-gray-400 text-xs mt-1">Powered by Apostille Developers LLC</p>
+        </div>
+
+        {/* Notifications Section */}
+        <div className="p-4">
+          <div className="flex items-center justify-between text-white mb-2">
+            <div className="flex items-center">
+              <Bell size={16} className="mr-2" />
+              <span className="text-sm">Notifications</span>
             </div>
+            <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded-full">4</span>
           </div>
         </div>
 
+        {/* Navigation Menu */}
         <nav className="nav-menu">
-          <div className="nav-section">
-            <div className="notification-section">
-              <div className="notification-header">
-                <div className="notification-title">
-                  <Bell size={16} className="notification-bell-icon" />
-                  <span className="notification-text">Notifications</span>
-                </div>
-                <span className="notification-badge">4</span>
-              </div>
-            </div>
-          </div>
-
+          {/* MENU Section */}
           <div className="nav-section">
             <h3 className="text-gray-400 text-xs uppercase tracking-wider mb-3 px-4">MENU</h3>
             <div className="space-y-1">
@@ -426,25 +424,39 @@ function DashboardContent({
             </div>
           </div>
 
+          {/* OTHERS Section */}
           <div className="nav-section">
-            <div className="section-title">OTHERS</div>
-            <div className="nav-item">
-              <span className="nav-icon">⚙️</span>
-              Settings
+            <h3 className="text-gray-400 text-xs uppercase tracking-wider mb-3 px-4 mt-8">OTHERS</h3>
+            <div className="space-y-1">
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white">
+                <Settings className="h-4 w-4 mr-3" />
+                Settings
+              </button>
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white">
+                <CreditCard className="h-4 w-4 mr-3" />
+                Billings
+              </button>
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white">
+                <BookOpen className="h-4 w-4 mr-3" />
+                Guide & Resources
+              </button>
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white">
+                <HelpCircle className="h-4 w-4 mr-3" />
+                Help Desk
+              </button>
+              <button 
+                className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white"
+                onClick={() => {
+                  handleLogout();
+                }}
+              >
+                <LogOut className="h-4 w-4 mr-3" />
+                Logout
+              </button>
             </div>
-            <div className="nav-item">
-              <span className="nav-icon">💳</span>
-              Billings
-            </div>
-            <div className="nav-item">
-              <span className="nav-icon">📖</span>
-              Guide & Resources
-            </div>
-            <div className="nav-item">
-              <span className="nav-icon">❓</span>
-              Help Desk
-            </div>
-            <div className="nav-item" onClick={() => {
+          </div>
+        </nav>
+      </div>
               handleLogout();
             }}>
               <span className="nav-icon">🚪</span>
