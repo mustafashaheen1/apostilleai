@@ -206,10 +206,10 @@ body {
   font-size: 12px;
   color: #9ca3af;
   font-weight: 600;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   margin-bottom: 12px;
-  padding: 0 16px;
+  padding-left: 16px;
 }
 
 .section-title.others {
