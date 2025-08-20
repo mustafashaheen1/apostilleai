@@ -1,4 +1,4 @@
-import { supabase, User, isSupabaseConfigured } from './supabase';
+import { supabase, User } from './supabase';
 import bcrypt from 'bcryptjs';
 
 export interface SignUpData {
@@ -24,9 +24,6 @@ export interface OAuthUser {
 export class AuthService {
   static async signUp(userData: SignUpData): Promise<{ user: User | null; error: string | null }> {
     try {
-      if (!isSupabaseConfigured) {
-      }
-
       // Create user in Supabase Auth first
       const { data: authData, error: authError } = await supabase.auth.signUp({
         email: userData.email.toLowerCase().trim(),
@@ -92,9 +89,6 @@ export class AuthService {
 
   static async login(loginData: LoginData): Promise<{ user: User | null; error: string | null }> {
     try {
-      if (!isSupabaseConfigured) {
-      }
-
       // Now sign in with Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
         email: loginData.email.toLowerCase().trim(),
@@ -103,14 +97,11 @@ export class AuthService {
 
       if (authError) {
         // Handle specific Supabase Auth errors
-        if (authError.message.includes('Invalid login credentials') || authError.message.includes('Invalid')) {
+        if (authError.message.includes('Invalid login credentials')) {
           return { user: null, error: 'Invalid email or password. Please check your credentials and try again.' };
         }
         if (authError.message.includes('Email not confirmed')) {
           return { user: null, error: 'Please check your email and confirm your account before logging in.' };
-        }
-        if (authError.message.includes('Failed to fetch') || authError.message.includes('fetch')) {
-          return { user: null, error: 'Unable to connect to authentication service. Please check your internet connection and try again.' };
         }
         return { user: null, error: authError.message };
       }
@@ -141,10 +132,7 @@ export class AuthService {
       return { user: dbUser, error: null };
     } catch (error) {
       console.error('Login error:', error);
-      if (error instanceof Error && error.message.includes('fetch')) {
-        return { user: null, error: 'Unable to connect to authentication service. Please check your internet connection and try again.' };
-      }
-      return { user: null, error: 'An unexpected error occurred during login. Please try again.' };
+      return { user: null, error: 'An unexpected error occurred during login' };
     }
   }
 
@@ -205,9 +193,6 @@ export class AuthService {
   // Get current user
   static async getCurrentUser(): Promise<{ user: User | null; error: string | null }> {
     try {
-      if (!isSupabaseConfigured) {
-      }
-
       const { data: authData } = await supabase.auth.getUser();
 
       if (!authData.user) {
