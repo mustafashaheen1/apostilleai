@@ -550,6 +550,7 @@
   color: #9ca3af;
   line-height: 1.6;
   margin-bottom: 24px;
+  max-width: 448px;
 }
 
 .footer-social {
