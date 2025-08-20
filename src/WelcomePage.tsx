@@ -138,7 +138,7 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
           <h1>Get Started</h1>
           <p className="signup-subtitle">Enter your details to sign up</p>
           <p className="login-prompt">
-            If you already have an account <button onClick={onNavigateToLogin} className="login-link">Login</button>
+            If you already have an account <button onClick={onNavigateToLogin} className="login-link" style={{ color: '#2562EB' }}>Login</button>
           </p>
 
           <div className="social-buttons">
