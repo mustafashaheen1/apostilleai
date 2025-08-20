@@ -82,6 +82,40 @@ body {
   margin-top: 4px;
 }
 
+/* Notification Section */
+.notification-section {
+  padding: 16px;
+}
+
+.notification-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.notification-title {
+  display: flex;
+  align-items: center;
+}
+
+.notification-bell-icon {
+  margin-right: 8px;
+}
+
+.notification-text {
+  font-size: 14px;
+}
+
+.notification-badge {
+  background-color: #2563eb;
+  color: #ffffff;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 9999px;
+}
+
 .header {
   display: flex;
   justify-content: space-between;

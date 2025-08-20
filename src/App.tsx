@@ -362,10 +362,14 @@ function DashboardContent({
 
         <nav className="nav-menu">
           <div className="nav-section">
-            <div className="nav-item">
-              <span className="nav-icon">🔔</span>
-              Notifications
-              <span className="badge">4</span>
+            <div className="notification-section">
+              <div className="notification-header">
+                <div className="notification-title">
+                  <Bell size={16} className="notification-bell-icon" />
+                  <span className="notification-text">Notifications</span>
+                </div>
+                <span className="notification-badge">4</span>
+              </div>
             </div>
           </div>
 
