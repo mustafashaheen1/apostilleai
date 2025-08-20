@@ -4,6 +4,7 @@ import './App.css';
 import { googleCalendarService, CalendarEvent } from './googleCalendar';
 import { AuthService } from './authService';
 import { User } from './supabase';
+import LandingPage from './LandingPage';
 import WelcomePage from './WelcomePage';
 import LoginPage from './LoginPage';
 import ApostilleRequestForm from './ApostilleRequestForm';
@@ -230,7 +231,7 @@ function AppContent() {
   return (
     <Routes>
       <Route path="/" element={
-        currentUser ? <Navigate to="/dashboard" replace /> : <Navigate to="/welcome" replace />
+        currentUser ? <Navigate to="/dashboard" replace /> : <LandingPage onNavigateToSignUp={() => navigate('/welcome')} onNavigateToLogin={() => navigate('/login')} />
       } />
       
       <Route path="/welcome" element={
