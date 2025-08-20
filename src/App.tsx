@@ -454,7 +454,9 @@ function DashboardContent({
         <div className="header">
           <div className="header-left">
             <div className="user-avatar">
-              {currentUser?.full_name ? currentUser.full_name.charAt(0).toUpperCase() : 'JD'}
+              {currentUser?.full_name ? 
+                currentUser.full_name.split(' ').map(name => name.charAt(0)).join('').toUpperCase().slice(0, 2) 
+                : 'JD'}
             </div>
             <div className="header-info">
               <div className="date">{new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</div>
