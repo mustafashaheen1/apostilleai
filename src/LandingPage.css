@@ -587,7 +587,12 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px; /* space-y-2 = 8px */
+  gap: 12px; /* space-y-3 = 12px for contact section */
+}
+
+/* Quick Links specific spacing */
+.footer-column:first-child ul {
+  gap: 8px; /* space-y-2 = 8px for quick links */
 }
 
 .footer-column li {
@@ -601,6 +606,23 @@
   align-items: center;
   gap: 8px;
   transition: color 0.2s; /* transition-colors */
+}
+
+/* Contact items styling */
+.footer-column:last-child li {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* mr-2 = 8px */
+  color: #9ca3af; /* text-gray-400 */
+}
+
+/* Address item uses items-start and icon has top margin */
+.footer-column:last-child li:last-child {
+  align-items: flex-start;
+}
+
+.footer-column:last-child li:last-child svg {
+  margin-top: 2px; /* mt-0.5 = 2px */
 }
 
 .footer-column a:hover {
