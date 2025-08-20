@@ -21,10 +21,10 @@ const isSupabaseConfigured = supabaseUrl &&
   supabaseUrl.includes('.supabase.co');
 
 if (!isSupabaseConfigured) {
-  console.error('Supabase is not properly configured. Using mock client for development.');
-  console.error('Current values:', { supabaseUrl, supabaseAnonKey: supabaseAnonKey ? 'present' : 'missing' });
-  console.error('To connect to a real Supabase instance, set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your .env file.');
-  console.error('You can find these values in your Supabase project settings under API.');
+  console.warn('Supabase is not properly configured. Using mock client for development.');
+  console.warn('Current values:', { supabaseUrl, supabaseAnonKey: supabaseAnonKey ? 'present' : 'missing' });
+  console.warn('To connect to a real Supabase instance, set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your .env file.');
+  console.warn('You can find these values in your Supabase project settings under API.');
 }
 
 // Use placeholder values if environment variables are missing
