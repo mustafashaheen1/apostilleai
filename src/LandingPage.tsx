@@ -1,5 +1,5 @@
 import React from 'react';
-import { Zap, Shield, Globe, CheckCircle, Star, Check } from 'lucide-react';
+import { Zap, Shield, Globe, CheckCircle, Star, Check, FileText } from 'lucide-react';
 import './LandingPage.css';
 
 interface LandingPageProps {
@@ -301,10 +301,7 @@ export default function LandingPage({ onNavigateToSignUp, onNavigateToLogin }: L
             <div className="footer-brand">
               <div className="footer-logo">
                 <div className="logo-icon">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="3" y="3" width="18" height="18" rx="3" fill="white"/>
-                    <path d="M8 12h8M8 8h8M8 16h5" stroke="#2562EB" strokeWidth="2" strokeLinecap="round"/>
-                  </svg>
+                  <FileText size={24} color="white" />
                 </div>
                 <span>Apostille.ai™</span>
               </div>
