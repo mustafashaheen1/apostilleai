@@ -456,7 +456,7 @@
 .include-item {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 8px; /* This provides the mr-2 = 8px spacing */
   color: #6b7280;
   font-weight: 500;
 }

@@ -274,15 +274,15 @@ export default function LandingPage({ onNavigateToSignUp, onNavigateToLogin }: L
             </div>
             <div className="include-features">
               <div className="include-item">
-                <CheckCircle size={16} color="#10b981" />
+                <Check size={20} color="#10b981" />
                 Bank-level security
               </div>
               <div className="include-item">
-                <CheckCircle size={16} color="#10b981" />
+                <Check size={20} color="#10b981" />
                 190+ countries supported
               </div>
               <div className="include-item">
-                <CheckCircle size={16} color="#10b981" />
+                <Check size={20} color="#10b981" />
                 30-day money-back guarantee
               </div>
             </div>
