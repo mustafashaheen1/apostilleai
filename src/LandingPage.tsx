@@ -1,4 +1,5 @@
 import React from 'react';
+import { Zap, Shield, Globe } from 'lucide-react';
 import './LandingPage.css';
 
 interface LandingPageProps {
@@ -92,9 +93,7 @@ export default function LandingPage({ onNavigateToSignUp, onNavigateToLogin }: L
         <div className="features-container">
           <div className="feature-card">
             <div className="feature-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="#2562EB"/>
-              </svg>
+              <Zap size={32} color="#4f46e5" />
             </div>
             <h3>AI-Powered Processing</h3>
             <p>Our advanced AI analyzes documents instantly, identifying requirements and ensuring compliance automatically.</p>
@@ -102,9 +101,7 @@ export default function LandingPage({ onNavigateToSignUp, onNavigateToLogin }: L
           
           <div className="feature-card">
             <div className="feature-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9 12l2 2 4-4m5.99-.01L21 12l-1.01 1.01M3 12l1.01-1.01L5 12l-1.01 1.01M12 3l1.01 1.01L12 5l-1.01-1.01M12 19l1.01 1.01L12 21l-1.01-1.01" stroke="#2562EB" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              <Shield size={32} color="#4f46e5" />
             </div>
             <h3>Secure & Compliant</h3>
             <p>Enterprise-grade security with full compliance to international apostille conventions and regulations.</p>
@@ -112,11 +109,7 @@ export default function LandingPage({ onNavigateToSignUp, onNavigateToLogin }: L
           
           <div className="feature-card">
             <div className="feature-icon">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="10" stroke="#2562EB" strokeWidth="2"/>
-                <path d="M2 12h20" stroke="#2562EB" strokeWidth="2"/>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" stroke="#2562EB" strokeWidth="2"/>
-              </svg>
+              <Globe size={32} color="#4f46e5" />
             </div>
             <h3>Global Coverage</h3>
             <p>Process apostilles for documents from 190+ countries with local expertise and legal requirements.</p>
