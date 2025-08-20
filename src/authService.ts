@@ -25,14 +25,11 @@ export class AuthService {
   static async signUp(userData: SignUpData): Promise<{ user: User | null; error: string | null }> {
     try {
       // Check if Supabase is properly configured
-      if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
-        return { user: null, error: 'Supabase is not configured. Please set up your Supabase environment variables.' };
-      }
-
-      // Check if we're using placeholder values
-      if (import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co' || 
+      if (!import.meta.env.VITE_SUPABASE_URL || 
+          !import.meta.env.VITE_SUPABASE_ANON_KEY ||
+          import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co' || 
           import.meta.env.VITE_SUPABASE_ANON_KEY?.includes('placeholder')) {
-        return { user: null, error: 'Please configure your Supabase project credentials to enable authentication.' };
+        return { user: null, error: 'Supabase is not configured. Please set up your Supabase environment variables.' };
       }
 
       // Create user in Supabase Auth first
@@ -101,14 +98,11 @@ export class AuthService {
   static async login(loginData: LoginData): Promise<{ user: User | null; error: string | null }> {
     try {
       // Check if Supabase is properly configured
-      if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
-        return { user: null, error: 'Supabase is not configured. Please set up your Supabase environment variables.' };
-      }
-
-      // Check if we're using placeholder values
-      if (import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co' || 
+      if (!import.meta.env.VITE_SUPABASE_URL || 
+          !import.meta.env.VITE_SUPABASE_ANON_KEY ||
+          import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co' || 
           import.meta.env.VITE_SUPABASE_ANON_KEY?.includes('placeholder')) {
-        return { user: null, error: 'Please configure your Supabase project credentials to enable authentication.' };
+        return { user: null, error: 'Supabase is not configured. Please set up your Supabase environment variables.' };
       }
 
       // Now sign in with Supabase Auth
@@ -222,7 +216,8 @@ export class AuthService {
   static async getCurrentUser(): Promise<{ user: User | null; error: string | null }> {
     try {
       // Check if Supabase is properly configured
-      if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY ||
+      if (!import.meta.env.VITE_SUPABASE_URL || 
+          !import.meta.env.VITE_SUPABASE_ANON_KEY ||
           import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co' || 
           import.meta.env.VITE_SUPABASE_ANON_KEY?.includes('placeholder')) {
         return { user: null, error: null };
