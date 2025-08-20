@@ -1,4 +1,4 @@
-import { supabase, User } from './supabase';
+import { supabase, User, isSupabaseConfigured } from './supabase';
 import bcrypt from 'bcryptjs';
 
 export interface SignUpData {
@@ -24,13 +24,7 @@ export interface OAuthUser {
 export class AuthService {
   static async signUp(userData: SignUpData): Promise<{ user: User | null; error: string | null }> {
     try {
-      // Check if Supabase is properly configured
-      if (!import.meta.env.VITE_SUPABASE_URL || 
-          !import.meta.env.VITE_SUPABASE_ANON_KEY ||
-          import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co' || 
-          import.meta.env.VITE_SUPABASE_ANON_KEY?.includes('placeholder')) {
-        return { user: null, error: 'Supabase is not configured. Please set up your Supabase environment variables.' };
-      }
+      if (!isSupabaseConfigured) {
 
       // Create user in Supabase Auth first
       const { data: authData, error: authError } = await supabase.auth.signUp({
@@ -97,13 +91,7 @@ export class AuthService {
 
   static async login(loginData: LoginData): Promise<{ user: User | null; error: string | null }> {
     try {
-      // Check if Supabase is properly configured
-      if (!import.meta.env.VITE_SUPABASE_URL || 
-          !import.meta.env.VITE_SUPABASE_ANON_KEY ||
-          import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co' || 
-          import.meta.env.VITE_SUPABASE_ANON_KEY?.includes('placeholder')) {
-        return { user: null, error: 'Supabase is not configured. Please set up your Supabase environment variables.' };
-      }
+      if (!isSupabaseConfigured) {
 
       // Now sign in with Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
@@ -215,13 +203,7 @@ export class AuthService {
   // Get current user
   static async getCurrentUser(): Promise<{ user: User | null; error: string | null }> {
     try {
-      // Check if Supabase is properly configured
-      if (!import.meta.env.VITE_SUPABASE_URL || 
-          !import.meta.env.VITE_SUPABASE_ANON_KEY ||
-          import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co' || 
-          import.meta.env.VITE_SUPABASE_ANON_KEY?.includes('placeholder')) {
-        return { user: null, error: null };
-      }
+      if (!isSupabaseConfigured) {
 
       const { data: authData } = await supabase.auth.getUser();
 
