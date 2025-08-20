@@ -26,7 +26,13 @@ export class AuthService {
     try {
       // Check if Supabase is properly configured
       if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
-        return { user: null, error: 'Application configuration error. Please contact support.' };
+        return { user: null, error: 'Supabase is not configured. Please set up your Supabase environment variables.' };
+      }
+
+      // Check if we're using placeholder values
+      if (import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co' || 
+          import.meta.env.VITE_SUPABASE_ANON_KEY?.includes('placeholder')) {
+        return { user: null, error: 'Please configure your Supabase project credentials to enable authentication.' };
       }
 
       // Create user in Supabase Auth first
@@ -96,7 +102,13 @@ export class AuthService {
     try {
       // Check if Supabase is properly configured
       if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY) {
-        return { user: null, error: 'Application configuration error. Please contact support.' };
+        return { user: null, error: 'Supabase is not configured. Please set up your Supabase environment variables.' };
+      }
+
+      // Check if we're using placeholder values
+      if (import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co' || 
+          import.meta.env.VITE_SUPABASE_ANON_KEY?.includes('placeholder')) {
+        return { user: null, error: 'Please configure your Supabase project credentials to enable authentication.' };
       }
 
       // Now sign in with Supabase Auth
@@ -209,6 +221,13 @@ export class AuthService {
   // Get current user
   static async getCurrentUser(): Promise<{ user: User | null; error: string | null }> {
     try {
+      // Check if Supabase is properly configured
+      if (!import.meta.env.VITE_SUPABASE_URL || !import.meta.env.VITE_SUPABASE_ANON_KEY ||
+          import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co' || 
+          import.meta.env.VITE_SUPABASE_ANON_KEY?.includes('placeholder')) {
+        return { user: null, error: null };
+      }
+
       const { data: authData } = await supabase.auth.getUser();
 
       if (!authData.user) {
