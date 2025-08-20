@@ -348,23 +348,36 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
+  padding: 0 0 8px 0;
   background-color: #f8f9fa;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: none;
+  margin-bottom: 8px;
 }
 
-.calendar-header button {
-  background: none;
+.calendar-nav-button {
+  background: white;
   border: none;
-  font-size: 18px;
+  padding: 4px;
+  border-radius: 4px;
   cursor: pointer;
-  padding: 5px 10px;
-  color: #666;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.calendar-header span {
-  font-weight: 600;
-  color: #333;
+.calendar-nav-button:hover {
+  background-color: #f3f4f6;
+}
+
+.calendar-nav-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.calendar-month-display {
+  font-weight: 500;
+  color: #111827;
   font-size: 16px;
 }
 

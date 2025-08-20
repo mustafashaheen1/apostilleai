@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
-import { FileText, Bell, LayoutDashboard, Users, Package, Library, Stamp, Building, Shield, Bot, Fingerprint, Settings, CreditCard, BookOpen, HelpCircle, LogOut } from 'lucide-react';
+import { FileText, Bell, LayoutDashboard, Users, Package, Library, Stamp, Building, Shield, Bot, Fingerprint, Settings, CreditCard, BookOpen, HelpCircle, LogOut, ChevronLeft, ChevronRight } from 'lucide-react';
 import './App.css';
 import { googleCalendarService, CalendarEvent } from './googleCalendar';
 import { AuthService } from './authService';
@@ -491,9 +491,15 @@ function DashboardContent({
             </div>
             <div className="calendar">
               <div className="calendar-header">
-                <button onClick={() => navigateMonth('prev')}>‹</button>
-                <span>{getMonthName(currentDate)}</span>
-                <button onClick={() => navigateMonth('next')}>›</button>
+                <div className="calendar-nav-buttons">
+                  <button className="calendar-nav-button" onClick={() => navigateMonth('prev')}>
+                    <ChevronLeft size={16} />
+                  </button>
+                  <button className="calendar-nav-button" onClick={() => navigateMonth('next')}>
+                    <ChevronRight size={16} />
+                  </button>
+                </div>
+                <span className="calendar-month-display">{getMonthName(currentDate)}</span>
               </div>
               <div className="calendar-weekdays">
                 <div>Mo</div>
