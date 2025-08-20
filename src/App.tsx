@@ -298,6 +298,7 @@ function AppContent() {
             navigateMonth={navigateMonth}
             handleLogout={handleLogout}
             navigate={navigate}
+            jobs={jobs}
           />
         ) : (
           <Navigate to="/login" replace />
@@ -320,7 +321,8 @@ function DashboardContent({
   getMonthName, 
   navigateMonth, 
   handleLogout,
-  navigate 
+  navigate,
+  jobs 
 }: {
   currentUser: User;
   currentDate: Date;
@@ -330,6 +332,103 @@ function DashboardContent({
   isConnecting: boolean;
   handleGoogleConnect: () => void;
   renderCalendar: () => React.ReactNode[];
+  getMonthName: (date: Date) => string;
+  navigateMonth: (direction: 'prev' | 'next') => void;
+  handleLogout: () => void;
+  navigate: (path: string) => void;
+  jobs: Array<{ id: string; retrieved: string; notarized: string; translated: string; status: string; }>;
+}) {
+  return (
+    <div className="dashboard">
+      {/* Sidebar */}
+      <div className="sidebar">
+        <div className="sidebar-header">
+          <div className="logo">
+            <FileText size={24} />
+            <span>Apostille</span>
+          </div>
+        </div>
+        
+        <nav className="sidebar-nav">
+          <div className="nav-section">
+            <div className="nav-item active">
+              <LayoutDashboard size={20} />
+              <span>Dashboard</span>
+            </div>
+            <div className="nav-item" onClick={() => navigate('/apostille-request')}>
+              <FileText size={20} />
+              <span>Apostille Request</span>
+            </div>
+            <div className="nav-item">
+              <Bell size={20} />
+              <span>Notifications</span>
+            </div>
+            <div className="nav-item">
+              <Users size={20} />
+              <span>Clients</span>
+            </div>
+            <div className="nav-item">
+              <Package size={20} />
+              <span>Orders</span>
+            </div>
+          </div>
+          
+          <div className="nav-section">
+            <div className="nav-section-title">Services</div>
+            <div className="nav-item">
+              <Library size={20} />
+              <span>Document Library</span>
+            </div>
+            <div className="nav-item">
+              <Stamp size={20} />
+              <span>Notarization</span>
+            </div>
+            <div className="nav-item">
+              <Building size={20} />
+              <span>State Services</span>
+            </div>
+            <div className="nav-item">
+              <Shield size={20} />
+              <span>Authentication</span>
+            </div>
+          </div>
+          
+          <div className="nav-section">
+            <div className="nav-section-title">AI Tools</div>
+            <div className="nav-item">
+              <Bot size={20} />
+              <span>AI Assistant</span>
+            </div>
+            <div className="nav-item">
+              <Fingerprint size={20} />
+              <span>Document Scanner</span>
+            </div>
+          </div>
+          
+          <div className="nav-section">
+            <div className="nav-section-title">Account</div>
+            <div className="nav-item">
+              <Settings size={20} />
+              <span>Settings</span>
+            </div>
+            <div className="nav-item">
+              <CreditCard size={20} />
+              <span>Billing</span>
+            </div>
+            <div className="nav-item">
+              <BookOpen size={20} />
+              <span>Resources</span>
+            </div>
+            <div className="nav-item">
+              <HelpCircle size={20} />
+              <span>Help & Support</span>
+            </div>
+            <div className="nav-item" onClick={handleLogout}>
+              <LogOut size={20} />
+              <span>Logout</span>
+            </div>
+          </div>
+        </nav>
       </div>
 
       {/* Main Content */}
