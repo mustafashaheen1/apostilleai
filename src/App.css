@@ -364,6 +364,7 @@ body {
 .calendar-nav-buttons {
   display: flex;
   gap: 4px;
+  padding-right: 8px;
 }
 
 .calendar-nav-button {
@@ -386,6 +387,7 @@ body {
   font-weight: 500;
   color: #111827;
   font-size: 16px;
+  padding-left: 8px;
 }
 
 .calendar-weekdays {
