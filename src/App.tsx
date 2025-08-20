@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
-import { FileText, Bell } from 'lucide-react';
+import { FileText, Bell, LayoutDashboard, Users, Package, Library, Stamp, Building, Shield, Bot, Fingerprint } from 'lucide-react';
 import './App.css';
 import { googleCalendarService, CalendarEvent } from './googleCalendar';
 import { AuthService } from './authService';
@@ -375,48 +375,48 @@ function DashboardContent({
 
           <div className="nav-section">
             <div className="section-title">MENU</div>
-            <div className="nav-item active">
-              <span className="nav-icon">📊</span>
+            <div className="nav-item active" onClick={() => navigate('/dashboard')}>
+              <LayoutDashboard size={16} className="nav-icon" />
               Dashboard
             </div>
-            <div className="nav-item">
-              <span className="nav-icon">🔄</span>
+            <div className="nav-item" onClick={() => navigate('/apostille-request')}>
+              <Users size={16} className="nav-icon" />
               <span onClick={() => navigate('/apostille-request')}>USCIS Translation</span>
             </div>
             <div className="nav-item">
-              <span className="nav-icon">🏷️</span>
+              <Package size={16} className="nav-icon" />
               Generate Shipping Label
             </div>
             <div className="nav-item">
-              <span className="nav-icon">📁</span>
+              <FileText size={16} className="nav-icon" />
               Vital Records Retrieval
             </div>
             <div className="nav-item">
-              <span className="nav-icon">📋</span>
+              <FileText size={16} className="nav-icon" />
               Court Document Retrieval
             </div>
             <div className="nav-item">
-              <span className="nav-icon">📚</span>
+              <Library size={16} className="nav-icon" />
               Library
             </div>
             <div className="nav-item">
-              <span className="nav-icon">✅</span>
-              Initialise Notarisation
+              <Stamp size={16} className="nav-icon" />
+              Initialize Notarisation
             </div>
             <div className="nav-item">
-              <span className="nav-icon">🏛️</span>
+              <Building size={16} className="nav-icon" />
               Embassy Legalisation
             </div>
             <div className="nav-item">
-              <span className="nav-icon">🔐</span>
+              <Shield size={16} className="nav-icon" />
               USDOS Authentication
             </div>
             <div className="nav-item">
-              <span className="nav-icon">🤖</span>
+              <Bot size={16} className="nav-icon" />
               Ask AI (BETA)
             </div>
             <div className="nav-item">
-              <span className="nav-icon">👆</span>
+              <Fingerprint size={16} className="nav-icon" />
               Fingerprints (Coming Soon)
             </div>
           </div>
