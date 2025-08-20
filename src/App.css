@@ -212,6 +212,10 @@ body {
   padding: 0 16px;
 }
 
+.section-title.others {
+  margin-top: 32px;
+}
+
 .nav-item {
   display: flex;
   align-items: center;

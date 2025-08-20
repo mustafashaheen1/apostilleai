@@ -422,7 +422,7 @@ function DashboardContent({
           </div>
 
           <div className="nav-section">
-            <div className="section-title">OTHERS</div>
+            <div className="section-title others">OTHERS</div>
             <div className="nav-item">
               <span className="nav-icon">⚙️</span>
               Settings
