@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
-import { FileText, Bell, LayoutDashboard, Users, Package, Library, Stamp, Building, Shield, Bot, Fingerprint, Settings, CreditCard, BookOpen, HelpCircle, LogOut } from 'lucide-react';
+import { FileText, Bell, LayoutDashboard, Users, Package, Library, Stamp, Building, Shield, Bot, Fingerprint } from 'lucide-react';
 import './App.css';
 import { googleCalendarService, CalendarEvent } from './googleCalendar';
 import { AuthService } from './authService';
@@ -298,7 +298,6 @@ function AppContent() {
             navigateMonth={navigateMonth}
             handleLogout={handleLogout}
             navigate={navigate}
-            jobs={jobs}
           />
         ) : (
           <Navigate to="/login" replace />
@@ -321,8 +320,7 @@ function DashboardContent({
   getMonthName, 
   navigateMonth, 
   handleLogout,
-  navigate,
-  jobs 
+  navigate 
 }: {
   currentUser: User;
   currentDate: Date;
@@ -336,96 +334,121 @@ function DashboardContent({
   navigateMonth: (direction: 'prev' | 'next') => void;
   handleLogout: () => void;
   navigate: (path: string) => void;
-  jobs: Array<{ id: string; retrieved: string; notarized: string; translated: string; status: string; }>;
 }) {
+  const jobs = [
+    { id: '#167952', retrieved: 'Completed', notarized: 'Completed', translated: 'Completed', status: 'Shipped' },
+    { id: '#315061', retrieved: 'Completed', notarized: 'Completed', translated: 'Completed', status: 'Certified' },
+    { id: '#495740', retrieved: 'Completed', notarized: 'Completed', translated: 'Completed', status: 'Delivered' },
+  ];
+
   return (
-    <div className="dashboard">
+    <div className="app">
       {/* Sidebar */}
       <div className="sidebar">
-        <div className="sidebar-header">
-          <div className="logo">
-            <FileText size={24} />
-            <span>Apostille</span>
+        <div className="logo-section">
+          <div className="logo-container">
+            <div className="logo-icon-new">
+              <FileText size={24} color="white" />
+            </div>
+            <div className="logo-text">
+              <div className="logo-name-row">
+                <span className="company-name">Apostille.AI</span>
+                <span className="beta-badge">BETA</span>
+              </div>
+              <p className="powered-by-text">Powered by Apostille Developers LLC</p>
+            </div>
           </div>
         </div>
-        
-        <nav className="sidebar-nav">
+
+        <nav className="nav-menu">
           <div className="nav-section">
-            <div className="nav-item active">
-              <LayoutDashboard size={20} />
-              <span>Dashboard</span>
-            </div>
-            <div className="nav-item" onClick={() => navigate('/apostille-request')}>
-              <FileText size={20} />
-              <span>Apostille Request</span>
-            </div>
-            <div className="nav-item">
-              <Bell size={20} />
-              <span>Notifications</span>
-            </div>
-            <div className="nav-item">
-              <Users size={20} />
-              <span>Clients</span>
-            </div>
-            <div className="nav-item">
-              <Package size={20} />
-              <span>Orders</span>
+            <div className="notification-section">
+              <div className="notification-header">
+                <div className="notification-title">
+                  <Bell size={16} className="notification-bell-icon" />
+                  <span className="notification-text">Notifications</span>
+                </div>
+                <span className="notification-badge">4</span>
+              </div>
             </div>
           </div>
-          
+
           <div className="nav-section">
-            <div className="nav-section-title">Services</div>
-            <div className="nav-item">
-              <Library size={20} />
-              <span>Document Library</span>
-            </div>
-            <div className="nav-item">
-              <Stamp size={20} />
-              <span>Notarization</span>
-            </div>
-            <div className="nav-item">
-              <Building size={20} />
-              <span>State Services</span>
-            </div>
-            <div className="nav-item">
-              <Shield size={20} />
-              <span>Authentication</span>
+            <h3 className="text-gray-400 text-xs uppercase tracking-wider mb-3 px-4">MENU</h3>
+            <div className="space-y-1">
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors bg-blue-600 text-white">
+                <LayoutDashboard className="h-4 w-4 mr-3" />
+                Dashboard
+              </button>
+              <button 
+                className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white"
+                onClick={() => navigate('/apostille-request')}
+              >
+                <Users className="h-4 w-4 mr-3" />
+                USCIS Translation
+              </button>
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white">
+                <Package className="h-4 w-4 mr-3" />
+                Generate Shipping Label
+              </button>
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white">
+                <FileText className="h-4 w-4 mr-3" />
+                Vital Records Retrieval
+              </button>
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white">
+                <FileText className="h-4 w-4 mr-3" />
+                Court Document Retrieval
+              </button>
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white">
+                <Library className="h-4 w-4 mr-3" />
+                Library
+              </button>
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white">
+                <Stamp className="h-4 w-4 mr-3" />
+                Initialise Notarisation
+              </button>
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white">
+                <Building className="h-4 w-4 mr-3" />
+                Embassy Legalisation
+              </button>
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white">
+                <Shield className="h-4 w-4 mr-3" />
+                USDOS Authentication
+              </button>
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white">
+                <Bot className="h-4 w-4 mr-3" />
+                Ask AI (BETA)
+              </button>
+              <button className="w-full flex items-center px-3 py-2 text-sm rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white">
+                <Fingerprint className="h-4 w-4 mr-3" />
+                Fingerprints (Coming Soon)
+              </button>
             </div>
           </div>
-          
+
           <div className="nav-section">
-            <div className="nav-section-title">AI Tools</div>
+            <div className="section-title">OTHERS</div>
             <div className="nav-item">
-              <Bot size={20} />
-              <span>AI Assistant</span>
+              <span className="nav-icon">⚙️</span>
+              Settings
             </div>
             <div className="nav-item">
-              <Fingerprint size={20} />
-              <span>Document Scanner</span>
-            </div>
-          </div>
-          
-          <div className="nav-section">
-            <div className="nav-section-title">Account</div>
-            <div className="nav-item">
-              <Settings size={20} />
-              <span>Settings</span>
+              <span className="nav-icon">💳</span>
+              Billings
             </div>
             <div className="nav-item">
-              <CreditCard size={20} />
-              <span>Billing</span>
+              <span className="nav-icon">📖</span>
+              Guide & Resources
             </div>
             <div className="nav-item">
-              <BookOpen size={20} />
-              <span>Resources</span>
+              <span className="nav-icon">❓</span>
+              Help Desk
             </div>
-            <div className="nav-item">
-              <HelpCircle size={20} />
-              <span>Help & Support</span>
-            </div>
-            <div className="nav-item" onClick={handleLogout}>
-              <LogOut size={20} />
-              <span>Logout</span>
+            <div className="nav-item" onClick={() => {
+              handleLogout();
+            }}>
+              <span className="nav-icon">🚪</span>
+              Logout
             </div>
           </div>
         </nav>

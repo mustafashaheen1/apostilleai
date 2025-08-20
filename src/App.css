@@ -17,8 +17,8 @@ body {
 
 /* Sidebar Styles */
 .sidebar {
-  width: 256px;
-  background-color: #1f2937;
+  width: 280px;
+  background-color: #2c3e50;
   color: white;
   display: flex;
   flex-direction: column;
@@ -27,61 +27,93 @@ body {
   overflow-y: auto;
 }
 
-.user-info {
-  padding: 0 20px 20px 20px;
-  border-bottom: 1px solid #34495e;
-  display: flex;
-  align-items: center;
+.logo-section {
+  padding: 24px;
+  border-bottom: 1px solid #4b5563;
 }
 
-.avatar {
-  width: 40px;
-  height: 40px;
-  background-color: #3498db;
-  border-radius: 50%;
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon-new {
+  background-color: #2563eb;
+  padding: 8px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
-  margin-right: 12px;
+  flex-shrink: 0;
 }
 
-.welcome {
-  font-weight: 500;
-  margin-bottom: 4px;
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.nav-menu {
-  flex: 1;
-  padding: 20px 0;
+.logo-name-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
 }
 
-.nav-section {
-  margin-bottom: 30px;
+.company-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
 }
 
-.badge {
-  background-color: #e74c3c;
-  color: white;
-  font-size: 11px;
-  padding: 2px 6px;
-  border-radius: 10px;
-  margin-left: auto;
+.beta-badge {
+  background-color: #1e3a8a;
+  color: #60a5fa;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-left: 4px;
 }
 
-.main-content {
-  margin-left: 256px;
-  flex: 1;
-  padding: 20px;
-  background-color: #ecf0f1;
+.powered-by-text {
+  color: #9ca3af;
+  font-size: 12px;
+  margin: 0;
+  margin-top: 4px;
 }
 
-.search-bar input {
-  padding: 10px 15px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  width: 300px;
+/* Notification Section */
+.notification-section {
+  padding: 16px;
+}
+
+.notification-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.notification-title {
+  display: flex;
+  align-items: center;
+}
+
+.notification-bell-icon {
+  margin-right: 8px;
+}
+
+.notification-text {
   font-size: 14px;
+}
+
+.notification-badge {
+  background-color: #2563eb;
+  color: #ffffff;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 9999px;
 }
 
 .header {
@@ -134,6 +166,58 @@ body {
   align-items: center;
   gap: 15px;
 }
+
+.user-info {
+  padding: 0 20px 20px 20px;
+  border-bottom: 1px solid #34495e;
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background-color: #3498db;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-right: 12px;
+}
+
+.welcome {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.nav-menu {
+  flex: 1;
+  padding: 20px 0;
+}
+
+.nav-section {
+  margin-bottom: 30px;
+}
+
+.badge {
+  background-color: #e74c3c;
+  color: white;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: auto;
+}
+
+.main-content {
+  margin-left: 280px;
+  flex: 1;
+  padding: 20px;
+  background-color: #ecf0f1;
+}
+
+.search-bar input {
+  padding: 10px 15px;
   border: 1px solid #ddd;
   border-radius: 6px;
   width: 300px;
