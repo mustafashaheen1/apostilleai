@@ -129,18 +129,23 @@
 }
 
 .hero-title {
-  font-size: 64px;
+  font-size: 36px;
   font-weight: 700;
-  line-height: 1.1;
-  color: #1f2937;
+  line-height: 1.25;
+  color: #111827;
   margin-bottom: 24px;
-  max-width: 900px;
-  margin-left: auto;
-  margin-right: auto;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .hero-title {
+    font-size: 60px;
+  }
 }
 
 .hero-highlight {
-  color: #2562EB;
+  color: #2563eb;
+  display: block;
 }
 
 .hero-subtitle {
@@ -221,41 +226,7 @@
 }
 
 .features-container {
-  max-width: 1200px;
-  margin: 0 auto;
   padding: 0 24px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 48px;
-}
-
-.feature-card {
-  text-align: center;
-  padding: 32px;
-}
-
-.feature-icon {
-  width: 64px;
-  height: 64px;
-  background: #dbeafe;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 24px;
-}
-
-.feature-card h3 {
-  font-size: 24px;
-  font-weight: 600;
-  color: #1f2937;
-  margin-bottom: 16px;
-}
-
-.feature-card p {
-  color: #6b7280;
-  font-size: 16px;
-  line-height: 1.6;
 }
 
 /* Pricing Section */
