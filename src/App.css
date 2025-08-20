@@ -348,9 +348,16 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 0 8px 0;
+  padding: 0;
   background-color: #f8f9fa;
   border-bottom: none;
+  margin-bottom: 16px;
+}
+
+.calendar-month-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   margin-bottom: 8px;
 }
 
@@ -379,6 +386,7 @@ body {
   font-weight: 500;
   color: #111827;
   font-size: 16px;
+  margin-bottom: 8px;
 }
 
 .calendar-weekdays {
