@@ -491,15 +491,15 @@ function DashboardContent({
             </div>
             <div className="calendar">
               <div className="calendar-header">
-                <div className="calendar-nav-buttons">
+                <div className="calendar-month-nav">
                   <button className="calendar-nav-button" onClick={() => navigateMonth('prev')}>
                     <ChevronLeft size={16} />
                   </button>
                   <button className="calendar-nav-button" onClick={() => navigateMonth('next')}>
                     <ChevronRight size={16} />
                   </button>
+                  <span className="calendar-month-display">{getMonthName(currentDate)}</span>
                 </div>
-                <span className="calendar-month-display">{getMonthName(currentDate)}</span>
               </div>
               <div className="calendar-weekdays">
                 <div>Mo</div>
