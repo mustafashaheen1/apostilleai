@@ -124,7 +124,7 @@ export default function LandingPage({ onNavigateToSignUp, onNavigateToLogin }: L
             <div className="pricing-card">
               <div className="card-header">
                 <h3>Starter</h3>
-                <p>Perfect for individuals and small businesses</p>
+                <p>Perfect for individuals and small<br />businesses</p>
               </div>
               <div className="card-price">
                 <span className="price">$29</span>
