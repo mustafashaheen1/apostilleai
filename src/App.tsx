@@ -344,21 +344,18 @@ function DashboardContent({
     <div className="app">
       {/* Sidebar */}
       <div className="sidebar">
-        <div className="p-6 border-b border-gray-600">
-          <div className="flex items-center mb-1">
-            <div className="bg-blue-600 p-2 rounded-lg mr-3">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <polyline points="14,2 14,8 20,8" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <line x1="16" y1="13" x2="8" y2="13" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <line x1="16" y1="17" x2="8" y2="17" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                <polyline points="10,9 9,9 8,9" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-            </div>
-            <span className="text-lg font-bold text-white">Apostille.AI</span>
-            <span className="bg-blue-900 text-blue-400 text-xs px-2 py-1 rounded ml-1">BETA</span>
+        <div className="logo">
+          <div className="logo-row">
+          <div className="logo-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="3" width="18" height="18" rx="3" fill="white"/>
+              <path d="M8 12h8M8 8h8M8 16h5" stroke="#2562EB" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
           </div>
-          <p className="text-gray-400 text-xs mt-1">Powered by Apostille Developers LLC</p>
+          <span>Apostille.ai™</span>
+          <span className="beta">BETA</span>
+          </div>
+          <p className="powered-by">Powered by Apostille Technologies LLC</p>
         </div>
 
         <nav className="nav-menu">
