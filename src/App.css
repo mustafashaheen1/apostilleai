@@ -333,7 +333,7 @@ body {
   border-radius: 4px;
   cursor: pointer;
   font-size: 0.875rem;
-  transition: background-color 0.2s;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
 }
 
 .connect-google-btn:disabled {
