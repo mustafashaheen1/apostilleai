@@ -25,6 +25,7 @@ export class AuthService {
   static async signUp(userData: SignUpData): Promise<{ user: User | null; error: string | null }> {
     try {
       if (!isSupabaseConfigured) {
+      }
 
       // Create user in Supabase Auth first
       const { data: authData, error: authError } = await supabase.auth.signUp({
@@ -92,6 +93,7 @@ export class AuthService {
   static async login(loginData: LoginData): Promise<{ user: User | null; error: string | null }> {
     try {
       if (!isSupabaseConfigured) {
+      }
 
       // Now sign in with Supabase Auth
       const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
@@ -204,6 +206,7 @@ export class AuthService {
   static async getCurrentUser(): Promise<{ user: User | null; error: string | null }> {
     try {
       if (!isSupabaseConfigured) {
+      }
 
       const { data: authData } = await supabase.auth.getUser();
 
