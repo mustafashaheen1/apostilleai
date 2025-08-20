@@ -299,10 +299,17 @@ body {
 /* Calendar Styles */
 .calendar-section {
   background: #ffffff;
-  padding: 24px;
   border-radius: 8px;
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   border: 1px solid #e5e7eb;
+  padding: 24px;
+  grid-column: span 1;
+}
+
+@media (min-width: 1024px) {
+  .calendar-section {
+    grid-column: span 1;
+  }
 }
 
 .section-header {
