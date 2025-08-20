@@ -84,26 +84,26 @@ export default function LandingPage({ onNavigateToSignUp, onNavigateToLogin }: L
 
       {/* Features Section */}
       <section className="features-section">
-        <div className="features-container max-w-5xl mx-auto grid md:grid-cols-3 gap-8">
-          <div className="feature-card bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-            <div className="feature-icon bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4 mx-auto">
-              <Zap size={24} color="#2563eb" />
+        <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-8">
+          <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+            <div className="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4 mx-auto">
+              <Zap className="h-6 w-6 text-blue-600" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-3 text-center">AI-Powered Processing</h3>
             <p className="text-gray-600 text-center">Our advanced AI analyzes documents instantly, identifying requirements and ensuring compliance automatically.</p>
           </div>
           
-          <div className="feature-card bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-            <div className="feature-icon bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4 mx-auto">
-              <Shield size={24} color="#2563eb" />
+          <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+            <div className="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4 mx-auto">
+              <Shield className="h-6 w-6 text-blue-600" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-3 text-center">Secure & Compliant</h3>
             <p className="text-gray-600 text-center">Enterprise-grade security with full compliance to international apostille conventions and regulations.</p>
           </div>
           
-          <div className="feature-card bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-            <div className="feature-icon bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4 mx-auto">
-              <Globe size={24} color="#2563eb" />
+          <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+            <div className="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center mb-4 mx-auto">
+              <Globe className="h-6 w-6 text-blue-600" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-3 text-center">Global Coverage</h3>
             <p className="text-gray-600 text-center">Process apostilles for documents from 190+ countries with local expertise and legal requirements.</p>
