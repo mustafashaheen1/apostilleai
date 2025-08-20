@@ -389,7 +389,7 @@
 .card-features li {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 12px; /* This provides the mr-3 = 12px spacing */
   color: #374151;
 }
 

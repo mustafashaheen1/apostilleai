@@ -1,5 +1,5 @@
 import React from 'react';
-import { Zap, Shield, Globe, CheckCircle, Star } from 'lucide-react';
+import { Zap, Shield, Globe, CheckCircle, Star, Check } from 'lucide-react';
 import './LandingPage.css';
 
 interface LandingPageProps {
@@ -132,27 +132,27 @@ export default function LandingPage({ onNavigateToSignUp, onNavigateToLogin }: L
               </div>
               <ul className="card-features">
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   5 documents per month
                 </li>
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   Basic AI processing
                 </li>
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   Email support
                 </li>
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   Standard processing time
                 </li>
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   Basic document types
                 </li>
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   Mobile app access
                 </li>
               </ul>
@@ -175,35 +175,35 @@ export default function LandingPage({ onNavigateToSignUp, onNavigateToLogin }: L
               </div>
               <ul className="card-features">
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   25 documents per month
                 </li>
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   Advanced AI processing
                 </li>
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   Priority support
                 </li>
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   Faster processing time
                 </li>
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   All document types
                 </li>
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   API access
                 </li>
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   Bulk processing
                 </li>
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   Custom workflows
                 </li>
               </ul>
@@ -222,43 +222,43 @@ export default function LandingPage({ onNavigateToSignUp, onNavigateToLogin }: L
               </div>
               <ul className="card-features">
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   Unlimited documents
                 </li>
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   Premium AI processing
                 </li>
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   24/7 phone support
                 </li>
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   Fastest processing time
                 </li>
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   All document types
                 </li>
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   Full API access
                 </li>
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   Advanced analytics
                 </li>
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   Custom integrations
                 </li>
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   Dedicated account manager
                 </li>
                 <li>
-                  <CheckCircle size={20} color="#10b981" />
+                  <Check size={20} color="#10b981" />
                   SLA guarantee
                 </li>
               </ul>
