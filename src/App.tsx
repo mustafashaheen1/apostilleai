@@ -499,7 +499,7 @@ function DashboardContent({
                   <button className="calendar-nav-button" onClick={() => navigateMonth('next')}>
                     <ChevronRight size={16} />
                   </button>
-                  <span className="calendar-month-display">{getMonthName(currentDate)}</span>
+                </div>
               </div>
               <div className="calendar-weekdays">
                 <div>Mo</div>
