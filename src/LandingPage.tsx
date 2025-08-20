@@ -267,7 +267,7 @@ export default function LandingPage({ onNavigateToSignUp, onNavigateToLogin }: L
           </div>
           
           {/* All Plans Include */}
-          <div className="plans-include">
+          <div className="plans-include max-w-4xl mx-auto mt-16 bg-white rounded-xl p-8 shadow-sm border border-gray-200">
             <div className="include-header">
               <Zap size={20} color="#2563eb" />
               All plans include:
