@@ -371,15 +371,17 @@ body {
 .calendar-weekdays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 8px;
   background-color: #f8f9fa;
 }
 
 .calendar-weekdays div {
   text-align: center;
-  font-size: 20px;
+  font-size: 0.75rem;
   font-weight: 600;
-  color: #7f8c8d;
-  padding: 15px 8px;
+  color: #6b7280;
+  padding: 4px;
 }
 
 .calendar-grid {
