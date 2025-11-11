@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import './WelcomePage.css';
 import { AuthService } from './authService';
 
@@ -8,9 +9,12 @@ interface WelcomePageProps {
 }
 
 export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: WelcomePageProps) {
+  const location = useLocation();
+  const accountType = location.state?.accountType as 'individual' | 'company' || 'individual';
+  
   const [formData, setFormData] = useState({
     fullName: '',
-    company: '',
+    company: accountType === 'company' ? '' : undefined,
     email: '',
     password: '',
     confirmPassword: ''
@@ -65,9 +69,10 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
         setFormData({
           fullName: '',
           company: '',
-          email: '',
+          company: formData.company || '',
           password: '',
-          confirmPassword: ''
+          password: formData.password,
+          accountType: accountType
         });
         setAgreeToTerms(false);
         onSignUpSuccess();
@@ -175,18 +180,20 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
               />
             </div>
 
-            <div className="form-group">
-              <label htmlFor="company">Company Name</label>
-              <input
-                type="text"
-                id="company"
-                name="company"
-                placeholder="Company Name"
-                value={formData.company}
-                onChange={handleInputChange}
-                required
-              />
-            </div>
+            {accountType === 'company' && (
+              <div className="form-group">
+                <label htmlFor="company">Company Name</label>
+                <input
+                  type="text"
+                  id="company"
+                  name="company"
+                  placeholder="Company Name"
+                  value={formData.company || ''}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+            )}
 
             <div className="form-group">
               <label htmlFor="email">Email Address</label>

@@ -12,6 +12,7 @@ import ApostilleRequestForm from './ApostilleRequestForm';
 import AssignClientPage from './AssignClientPage';
 import ForgotPasswordPage from './ForgotPasswordPage';
 import ResetPasswordPage from './ResetPasswordPage';
+import AccountTypePage from './AccountTypePage';
 
 function AppContent() {
   const navigate = useNavigate();
@@ -232,7 +233,13 @@ function AppContent() {
   return (
     <Routes>
       <Route path="/" element={
-        currentUser ? <Navigate to="/dashboard" replace /> : <LandingPage onNavigateToSignUp={() => navigate('/welcome')} onNavigateToLogin={() => navigate('/login')} />
+        currentUser ? <Navigate to="/dashboard" replace /> : <LandingPage onNavigateToSignUp={() => navigate('/account-type')} onNavigateToLogin={() => navigate('/login')} />
+      } />
+      
+      <Route path="/account-type" element={
+        <AccountTypePage 
+          onNavigateToLanding={() => navigate('/')}
+        />
       } />
       
       <Route path="/welcome" element={

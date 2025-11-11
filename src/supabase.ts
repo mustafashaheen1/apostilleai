@@ -17,6 +17,7 @@ export interface User {
   provider: 'email' | 'google' | 'apple';
   provider_id?: string;
   picture?: string;
+  account_type: 'individual' | 'company';
   created_at: string;
   updated_at: string;
 }

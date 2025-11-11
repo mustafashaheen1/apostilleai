@@ -3,9 +3,10 @@ import bcrypt from 'bcryptjs';
 
 export interface SignUpData {
   fullName: string;
-  company: string;
+  company?: string;
   email: string;
   password: string;
+  accountType: 'individual' | 'company';
 }
 
 export interface LoginData {
@@ -63,10 +64,11 @@ export class AuthService {
         .insert({
           id: authData.user.id,
           full_name: userData.fullName,
-          company: userData.company,
+          company: userData.company || '',
           email: userData.email.toLowerCase().trim(),
           password_hash: passwordHash,
-          provider: 'email'
+          provider: 'email',
+          account_type: userData.accountType
         })
         .select()
         .single();
