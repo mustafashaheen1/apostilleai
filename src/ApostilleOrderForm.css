@@ -26,6 +26,11 @@
   margin: 0;
 }
 
+.apostille-form {
+  width: 100%;
+  max-width: 100%;
+}
+
 .form-container {
   width: 90%;
   margin-left: auto;
