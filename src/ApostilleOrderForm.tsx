@@ -26,14 +26,18 @@ interface DocumentInfo {
   country: string;
 }
 
-interface EntityRecord {
-  entityName: string;
-  stateOfIncorporation: string;
-  entityNumber: string;
-  documentTitle: string;
+interface EntityDocument {
+  title: string;
   dateFiled: string;
   qty: number;
-  apostilleRequired: boolean;
+}
+
+interface EntityRecord {
+  entityName: string;
+  state: string;
+  entityNumber: string;
+  documents: EntityDocument[];
+  apostille: 'yes' | 'no';
   destinationCountry: string;
 }
 
@@ -104,12 +108,10 @@ export default function ApostilleOrderForm({ onBack }: ApostilleOrderFormProps) 
     dateNeeded: '',
     entityRecords: {
       entityName: '',
-      stateOfIncorporation: 'DE',
+      state: 'DE',
       entityNumber: '',
-      documentTitle: '',
-      dateFiled: '',
-      qty: 1,
-      apostilleRequired: false,
+      documents: [{ title: '', dateFiled: '', qty: 1 }],
+      apostille: 'no',
       destinationCountry: ''
     },
     entityRecordsEnabled: false,
@@ -211,6 +213,41 @@ export default function ApostilleOrderForm({ onBack }: ApostilleOrderFormProps) 
       entityRecords: {
         ...prev.entityRecords,
         [field]: value
+      }
+    }));
+  };
+
+  const addEntityDocument = () => {
+    setFormData(prev => ({
+      ...prev,
+      entityRecords: {
+        ...prev.entityRecords,
+        documents: [
+          ...prev.entityRecords.documents,
+          { title: '', dateFiled: '', qty: 1 }
+        ]
+      }
+    }));
+  };
+
+  const removeEntityDocument = (index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      entityRecords: {
+        ...prev.entityRecords,
+        documents: prev.entityRecords.documents.filter((_, i) => i !== index)
+      }
+    }));
+  };
+
+  const handleEntityDocumentChange = (index: number, field: string, value: any) => {
+    setFormData(prev => ({
+      ...prev,
+      entityRecords: {
+        ...prev.entityRecords,
+        documents: prev.entityRecords.documents.map((doc, i) =>
+          i === index ? { ...doc, [field]: value } : doc
+        )
       }
     }));
   };
@@ -702,9 +739,9 @@ export default function ApostilleOrderForm({ onBack }: ApostilleOrderFormProps) 
                 <button
                   type="button"
                   className="section-toggle"
-                  onClick={() => setFormData(prev => ({ 
-                    ...prev, 
-                    entityRecordsEnabled: !prev.entityRecordsEnabled 
+                  onClick={() => setFormData(prev => ({
+                    ...prev,
+                    entityRecordsEnabled: !prev.entityRecordsEnabled
                   }))}
                 >
                   {formData.entityRecordsEnabled ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
@@ -729,9 +766,10 @@ export default function ApostilleOrderForm({ onBack }: ApostilleOrderFormProps) 
                         <label htmlFor="stateOfIncorporation">State of Incorporation/Registration</label>
                         <select
                           id="stateOfIncorporation"
-                          value={formData.entityRecords.stateOfIncorporation}
-                          onChange={(e) => handleEntityRecordChange('stateOfIncorporation', e.target.value)}
+                          value={formData.entityRecords.state}
+                          onChange={(e) => handleEntityRecordChange('state', e.target.value)}
                         >
+                          <option value="">Select State</option>
                           <option value="DE">Delaware</option>
                           <option value="CA">California</option>
                           <option value="Other">Other</option>
@@ -748,69 +786,92 @@ export default function ApostilleOrderForm({ onBack }: ApostilleOrderFormProps) 
                           placeholder="Entity Number"
                         />
                       </div>
-
-                      <div className="form-group">
-                        <label htmlFor="documentTitle">Document Title</label>
-                        <input
-                          type="text"
-                          id="documentTitle"
-                          value={formData.entityRecords.documentTitle}
-                          onChange={(e) => handleEntityRecordChange('documentTitle', e.target.value)}
-                          placeholder="Document Title"
-                        />
-                      </div>
-
-                      <div className="form-group">
-                        <label htmlFor="dateFiled">Date Filed</label>
-                        <input
-                          type="date"
-                          id="dateFiled"
-                          value={formData.entityRecords.dateFiled}
-                          onChange={(e) => handleEntityRecordChange('dateFiled', e.target.value)}
-                        />
-                      </div>
-
-                      <div className="form-group">
-                        <label htmlFor="entityQty">Qty</label>
-                        <input
-                          type="number"
-                          id="entityQty"
-                          min="1"
-                          value={formData.entityRecords.qty}
-                          onChange={(e) => handleEntityRecordChange('qty', parseInt(e.target.value) || 1)}
-                        />
-                      </div>
                     </div>
 
+                    {/* Multiple Documents Table */}
+                    <div className="entity-documents-section">
+                      <h3 className="section-title">Entity Documents</h3>
+                      <div className="document-table">
+                        <div className="table-header">
+                          <div>Document Title</div>
+                          <div>Date Filed</div>
+                          <div>Qty</div>
+                          <div>Action</div>
+                        </div>
+
+                        {formData.entityRecords.documents.map((doc, index) => (
+                          <div key={index} className="table-row">
+                            <input
+                              type="text"
+                              placeholder="Document Title"
+                              value={doc.title}
+                              onChange={(e) => handleEntityDocumentChange(index, 'title', e.target.value)}
+                            />
+                            <input
+                              type="date"
+                              placeholder="Date Filed"
+                              value={doc.dateFiled}
+                              onChange={(e) => handleEntityDocumentChange(index, 'dateFiled', e.target.value)}
+                            />
+                            <input
+                              type="number"
+                              min="1"
+                              placeholder="Qty"
+                              value={doc.qty}
+                              onChange={(e) => handleEntityDocumentChange(index, 'qty', parseInt(e.target.value) || 1)}
+                            />
+                            {formData.entityRecords.documents.length > 1 && (
+                              <button
+                                type="button"
+                                className="remove-btn"
+                                onClick={() => removeEntityDocument(index)}
+                              >
+                                Remove
+                              </button>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+
+                      <button
+                        type="button"
+                        className="add-btn"
+                        onClick={addEntityDocument}
+                      >
+                        + Add Document
+                      </button>
+                    </div>
+
+                    {/* Apostille/Legalize Question */}
                     <div className="form-group">
                       <label>Apostille/Legalize?</label>
-                      <div className="radio-group">
-                        <div className="radio-option">
+                      <div style={{ display: 'flex', gap: '20px', marginTop: '10px' }}>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <input
                             type="radio"
-                            id="apostilleYes"
-                            name="apostilleRequired"
-                            checked={formData.entityRecords.apostilleRequired === true}
-                            onChange={() => handleEntityRecordChange('apostilleRequired', true)}
+                            name="entityRecord.apostille"
+                            value="yes"
+                            checked={formData.entityRecords.apostille === 'yes'}
+                            onChange={() => handleEntityRecordChange('apostille', 'yes')}
                           />
-                          <label htmlFor="apostilleYes">Yes</label>
-                        </div>
-                        <div className="radio-option">
+                          Yes
+                        </label>
+                        <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                           <input
                             type="radio"
-                            id="apostilleNo"
-                            name="apostilleRequired"
-                            checked={formData.entityRecords.apostilleRequired === false}
-                            onChange={() => handleEntityRecordChange('apostilleRequired', false)}
+                            name="entityRecord.apostille"
+                            value="no"
+                            checked={formData.entityRecords.apostille === 'no'}
+                            onChange={() => handleEntityRecordChange('apostille', 'no')}
                           />
-                          <label htmlFor="apostilleNo">No</label>
-                        </div>
+                          No
+                        </label>
                       </div>
                     </div>
 
-                    {formData.entityRecords.apostilleRequired && (
+                    {formData.entityRecords.apostille === 'yes' && (
                       <div className="form-group">
-                        <label htmlFor="entityDestinationCountry">Destination Country/Consulate</label>
+                        <label htmlFor="entityDestinationCountry">If Yes, Destination Country/Consulate:</label>
                         <input
                           type="text"
                           id="entityDestinationCountry"
