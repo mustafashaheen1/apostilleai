@@ -5,8 +5,8 @@ interface OrderData {
   id: string;
   state: string;
   city: string;
-  stateX: number;
-  stateY: number;
+  mapX: number;
+  mapY: number;
   status: string;
   statusColor: string;
   document: string;
@@ -16,14 +16,14 @@ interface OrderData {
 }
 
 const orderData: OrderData[] = [
-  { id: '#167952', state: 'CA', city: 'Los Angeles', stateX: 10, stateY: 58, status: 'Shipped', statusColor: '#10B981', document: 'Birth Certificate', date: 'Nov 10, 2025', email: 'contact@apostille.ai', phone: '+1 (555) 123-4567' },
-  { id: '#315061', state: 'NY', city: 'New York', stateX: 85, stateY: 25, status: 'Active', statusColor: '#2563EB', document: 'Marriage Certificate', date: 'Nov 11, 2025', email: 'contact@apostille.ai', phone: '+1 (555) 123-4567' },
-  { id: '#495740', state: 'IL', city: 'Chicago', stateX: 65, stateY: 32, status: 'Delivered', statusColor: '#10B981', document: 'Diploma', date: 'Nov 05, 2025', email: 'contact@apostille.ai', phone: '+1 (555) 123-4567' },
-  { id: '#789123', state: 'TX', city: 'Houston', stateX: 45, stateY: 75, status: 'Active', statusColor: '#2563EB', document: 'Power of Attorney', date: 'Nov 12, 2025', email: 'contact@apostille.ai', phone: '+1 (555) 123-4567' },
-  { id: '#456789', state: 'AZ', city: 'Phoenix', stateX: 20, stateY: 65, status: 'Pending Review', statusColor: '#F59E0B', document: 'Affidavit', date: 'Nov 11, 2025', email: 'contact@apostille.ai', phone: '+1 (555) 123-4567' },
-  { id: '#234567', state: 'CO', city: 'Denver', stateX: 35, stateY: 45, status: 'Active', statusColor: '#2563EB', document: 'Corporate Documents', date: 'Nov 12, 2025', email: 'contact@apostille.ai', phone: '+1 (555) 123-4567' },
-  { id: '#890123', state: 'WA', city: 'Seattle', stateX: 15, stateY: 15, status: 'Shipped', statusColor: '#10B981', document: 'Transcripts', date: 'Nov 09, 2025', email: 'contact@apostille.ai', phone: '+1 (555) 123-4567' },
-  { id: '#567890', state: 'FL', city: 'Miami', stateX: 80, stateY: 80, status: 'Active', statusColor: '#2563EB', document: 'Passport Copy', date: 'Nov 12, 2025', email: 'contact@apostille.ai', phone: '+1 (555) 123-4567' },
+  { id: '#167952', state: 'CA', city: 'Los Angeles', mapX: 12, mapY: 55, status: 'Shipped', statusColor: '#10B981', document: 'Birth Certificate', date: 'Nov 10, 2025', email: 'contact@apostille.ai', phone: '+1 (555) 123-4567' },
+  { id: '#315061', state: 'NY', city: 'New York', mapX: 85, mapY: 25, status: 'Active', statusColor: '#2563EB', document: 'Marriage Certificate', date: 'Nov 11, 2025', email: 'contact@apostille.ai', phone: '+1 (555) 123-4567' },
+  { id: '#495740', state: 'IL', city: 'Chicago', mapX: 62, mapY: 32, status: 'Delivered', statusColor: '#10B981', document: 'Diploma', date: 'Nov 05, 2025', email: 'contact@apostille.ai', phone: '+1 (555) 123-4567' },
+  { id: '#789123', state: 'TX', city: 'Houston', mapX: 48, mapY: 75, status: 'Active', statusColor: '#2563EB', document: 'Power of Attorney', date: 'Nov 12, 2025', email: 'contact@apostille.ai', phone: '+1 (555) 123-4567' },
+  { id: '#456789', state: 'AZ', city: 'Phoenix', mapX: 22, mapY: 58, status: 'Pending Review', statusColor: '#F59E0B', document: 'Affidavit', date: 'Nov 11, 2025', email: 'contact@apostille.ai', phone: '+1 (555) 123-4567' },
+  { id: '#234567', state: 'CO', city: 'Denver', mapX: 35, mapY: 42, status: 'Active', statusColor: '#2563EB', document: 'Corporate Documents', date: 'Nov 12, 2025', email: 'contact@apostille.ai', phone: '+1 (555) 123-4567' },
+  { id: '#890123', state: 'WA', city: 'Seattle', mapX: 15, mapY: 12, status: 'Shipped', statusColor: '#10B981', document: 'Transcripts', date: 'Nov 09, 2025', email: 'contact@apostille.ai', phone: '+1 (555) 123-4567' },
+  { id: '#567890', state: 'FL', city: 'Miami', mapX: 82, mapY: 82, status: 'Active', statusColor: '#2563EB', document: 'Passport Copy', date: 'Nov 12, 2025', email: 'contact@apostille.ai', phone: '+1 (555) 123-4567' },
 ];
 
 const activeStates = ['CA', 'NY', 'IL', 'TX', 'AZ', 'CO', 'WA', 'FL'];
@@ -106,78 +106,50 @@ export default function Map3D() {
           ))}
         </div>
 
-        {/* 3D Map Container */}
-        <div className="map-3d-container">
-          <div className="usa-map-3d">
-            {/* Simplified USA Map SVG */}
-            <svg viewBox="0 0 100 100" className="usa-svg">
-              {/* States as simplified rectangles for demo - in production use actual state paths */}
-              <g className="states-group">
-                {/* West Coast */}
-                <rect className={`state-3d ${activeStates.includes('WA') ? 'active' : ''}`} x="5" y="8" width="8" height="12" rx="1" />
-                <rect className={`state-3d ${activeStates.includes('CA') ? 'active' : ''}`} x="3" y="25" width="12" height="25" rx="1" />
+        {/* Map Visualization */}
+        <div className="map-visualization">
+          {/* Pins positioned on map */}
+          {orderData.map(order => (
+            visiblePins.includes(order.id) && (
+              <div
+                key={order.id}
+                className="map-pin-wrapper"
+                style={{
+                  left: `${order.mapX}%`,
+                  top: `${order.mapY}%`,
+                }}
+                onClick={() => handlePinClick(order)}
+              >
+                {/* Pin Shadow */}
+                <div className="pin-shadow-base"></div>
 
-                {/* Southwest */}
-                <rect className={`state-3d ${activeStates.includes('AZ') ? 'active' : ''}`} x="15" y="42" width="10" height="12" rx="1" />
-                <rect className={`state-3d ${activeStates.includes('CO') ? 'active' : ''}`} x="28" y="32" width="10" height="10" rx="1" />
+                {/* 3D Pin */}
+                <svg
+                  className="pin-3d"
+                  width="40"
+                  height="50"
+                  viewBox="0 0 40 50"
+                  style={{ filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25))' }}
+                >
+                  {/* Pin Body */}
+                  <path
+                    d="M 20,5 C 12,5 6,11 6,19 C 6,27 20,45 20,45 C 20,45 34,27 34,19 C 34,11 28,5 20,5 Z"
+                    fill={order.statusColor}
+                    className="pin-body"
+                  />
 
-                {/* Central */}
-                <rect className={`state-3d ${activeStates.includes('TX') ? 'active' : ''}`} x="35" y="50" width="18" height="20" rx="1" />
-                <rect className={`state-3d ${activeStates.includes('IL') ? 'active' : ''}`} x="55" y="25" width="8" height="12" rx="1" />
-
-                {/* East Coast */}
-                <rect className={`state-3d ${activeStates.includes('NY') ? 'active' : ''}`} x="75" y="15" width="10" height="10" rx="1" />
-                <rect className={`state-3d ${activeStates.includes('FL') ? 'active' : ''}`} x="72" y="60" width="12" height="20" rx="1" />
-
-                {/* Inactive States (for visual context) */}
-                <rect className="state-3d" x="40" y="15" width="10" height="10" rx="1" />
-                <rect className="state-3d" x="20" y="20" width="12" height="15" rx="1" />
-                <rect className="state-3d" x="58" y="40" width="10" height="12" rx="1" />
-                <rect className="state-3d" x="70" y="35" width="8" height="10" rx="1" />
-              </g>
-
-              {/* 3D Pins */}
-              {orderData.map(order => (
-                visiblePins.includes(order.id) && (
-                  <g
-                    key={order.id}
-                    className="pin-3d"
-                    style={{
-                      transform: `translate(${order.stateX}%, ${order.stateY}%)`,
-                    }}
-                    onClick={() => handlePinClick(order)}
-                  >
-                    {/* Pin Shadow */}
-                    <ellipse
-                      cx="0"
-                      cy="3"
-                      rx="2"
-                      ry="1"
-                      fill="rgba(0,0,0,0.3)"
-                      className="pin-shadow"
-                    />
-
-                    {/* Pin Body */}
-                    <path
-                      d="M 0,-8 C -2.5,-8 -4.5,-6 -4.5,-3.5 C -4.5,-1 0,3 0,3 C 0,3 4.5,-1 4.5,-3.5 C 4.5,-6 2.5,-8 0,-8 Z"
-                      fill={order.statusColor}
-                      className="pin-body"
-                    />
-
-                    {/* Pin Circle Cutout */}
-                    <circle
-                      cx="0"
-                      cy="-5"
-                      r="1.5"
-                      fill="white"
-                      className="pin-circle"
-                    />
-                  </g>
-                )
-              ))}
-            </svg>
-          </div>
-
+                  {/* Pin Circle Cutout */}
+                  <circle
+                    cx="20"
+                    cy="16"
+                    r="6"
+                    fill="white"
+                    className="pin-circle"
+                  />
+                </svg>
+              </div>
+            )
+          ))}
           {/* Order Popup */}
           {selectedOrder && (
             <div className="order-popup">

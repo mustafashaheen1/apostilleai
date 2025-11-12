@@ -128,110 +128,84 @@
   font-weight: 600;
 }
 
-.map-3d-container {
+.map-visualization {
   flex: 1;
-  perspective: 2000px;
-  perspective-origin: center center;
   position: relative;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: linear-gradient(135deg, #e0e7ff 0%, #f0f4f8 100%);
   border-radius: 12px;
   padding: 40px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-  overflow: visible;
   min-height: 500px;
+  overflow: visible;
 }
 
-.usa-map-3d {
-  transform: rotateX(45deg) rotateZ(-5deg);
-  transform-style: preserve-3d;
-  transition: transform 0.6s ease;
-  width: 100%;
-  height: 100%;
-}
-
-.usa-svg {
-  width: 100%;
-  height: auto;
-  transform-style: preserve-3d;
-}
-
-.states-group {
-  transform-style: preserve-3d;
-}
-
-.state-3d {
-  fill: #E5E5E5;
-  stroke: #ffffff;
-  stroke-width: 0.5;
-  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.2));
-  transform: translateZ(30px);
-  transition: all 0.3s ease;
+.map-pin-wrapper {
+  position: absolute;
+  transform: translate(-50%, -100%);
   cursor: pointer;
+  transition: transform 0.3s ease;
+  animation: pinDrop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  z-index: 10;
 }
 
-.state-3d.active {
-  fill: #00FF7F;
-  filter: drop-shadow(0 20px 30px rgba(0, 255, 127, 0.4));
-  transform: translateZ(35px);
+.map-pin-wrapper:hover {
+  transform: translate(-50%, -100%) scale(1.15);
+  z-index: 20;
 }
 
-.state-3d:hover {
-  transform: translateZ(40px) scale(1.05);
-  filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.3));
+.pin-shadow-base {
+  position: absolute;
+  bottom: -5px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  filter: blur(3px);
+  animation: shadowExpand 0.6s ease-out;
 }
 
 .pin-3d {
-  cursor: pointer;
-  transform-origin: center;
-  animation: pinDrop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  transition: transform 0.3s ease;
+  display: block;
+  transition: all 0.3s ease;
 }
 
-.pin-3d:hover {
-  transform: scale(1.15) translateY(-2px);
-}
-
-.pin-3d:hover .pin-body {
+.map-pin-wrapper:hover .pin-body {
   filter: brightness(1.2);
 }
 
 @keyframes pinDrop {
   0% {
     opacity: 0;
-    transform: translateY(-50px) scale(0);
+    transform: translate(-50%, -150%) scale(0);
   }
   60% {
-    transform: translateY(2px) scale(1.1);
+    transform: translate(-50%, -95%) scale(1.1);
   }
   100% {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translate(-50%, -100%) scale(1);
   }
-}
-
-.pin-shadow {
-  opacity: 0.3;
-  animation: shadowExpand 0.6s ease-out;
 }
 
 @keyframes shadowExpand {
   0% {
-    transform: scale(0);
+    transform: translateX(-50%) scale(0);
     opacity: 0;
   }
   100% {
-    transform: scale(1);
-    opacity: 0.3;
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
   }
 }
 
 .pin-body {
-  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
   transition: filter 0.3s ease;
 }
 
 .pin-circle {
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
+  transition: all 0.3s ease;
 }
 
 .order-popup {
