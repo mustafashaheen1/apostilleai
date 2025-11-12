@@ -26,7 +26,8 @@
 }
 
 .form-container {
-  max-width: 1400px;
+  width: 90%;
+  max-width: none;
   margin: 0 auto;
   background: white;
   padding: 40px;
@@ -429,6 +430,13 @@
 }
 
 /* Responsive Design */
+@media (max-width: 1200px) {
+  .form-container {
+    width: 95%;
+    padding: 30px;
+  }
+}
+
 @media (max-width: 768px) {
   .apostille-order-page {
     padding: 20px 10px;
@@ -439,6 +447,7 @@
   }
 
   .form-container {
+    width: 100%;
     padding: 24px 20px;
   }
 
@@ -447,6 +456,63 @@
     gap: 15px;
   }
 
+  .table-header,
+  .table-row {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .table-header {
+    display: none;
+  }
+
+  .table-row {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+
+  .table-row input {
+    margin-bottom: 10px;
+  }
+
+  .translation-table .table-header,
+  .translation-table .table-row {
+    grid-template-columns: 1fr;
+  }
+
+  .email-inputs {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .apostille-order-header h1 {
+    font-size: 20px;
+  }
+
+  .section-title {
+    font-size: 16px;
+  }
+
+  .form-section {
+    padding: 15px;
+  }
+  
+  .form-container {
+    padding: 20px 15px;
+  }
   .table-header,
   .table-row {
     grid-template-columns: 1fr;
