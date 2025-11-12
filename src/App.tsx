@@ -251,7 +251,7 @@ function AppContent() {
       
       <Route path="/login" element={
         <LoginPage 
-          onNavigateToWelcome={() => navigate('/welcome')} 
+          onNavigateToAccountType={() => navigate('/account-type')}
           onNavigateToForgotPassword={() => navigate('/forgot-password')}
           onLoginSuccess={handleLoginSuccess}
         />

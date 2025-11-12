@@ -3,12 +3,12 @@ import './LoginPage.css';
 import { AuthService } from './authService';
 
 interface LoginPageProps {
-  onNavigateToWelcome: () => void;
+  onNavigateToAccountType: () => void;
   onNavigateToForgotPassword: () => void;
   onLoginSuccess: () => void;
 }
 
-export default function LoginPage({ onNavigateToWelcome, onNavigateToForgotPassword, onLoginSuccess }: LoginPageProps) {
+export default function LoginPage({ onNavigateToAccountType, onNavigateToForgotPassword, onLoginSuccess }: LoginPageProps) {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -124,7 +124,7 @@ export default function LoginPage({ onNavigateToWelcome, onNavigateToForgotPassw
           <h1>Login</h1>
           <p className="login-subtitle">Enter your details to Login up</p>
           <p className="signup-prompt">
-            If you don't have an account <button onClick={onNavigateToWelcome} className="signup-link">Sign Up</button>
+            If you don't have an account <button onClick={onNavigateToAccountType} className="signup-link">Sign Up</button>
           </p>
 
           <div className="social-buttons">
