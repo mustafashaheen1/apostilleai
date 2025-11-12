@@ -13,6 +13,7 @@ import AssignClientPage from './AssignClientPage';
 import ForgotPasswordPage from './ForgotPasswordPage';
 import ResetPasswordPage from './ResetPasswordPage';
 import AccountTypePage from './AccountTypePage';
+import ApostilleOrderForm from './ApostilleOrderForm';
 
 function AppContent() {
   const navigate = useNavigate();
@@ -290,6 +291,16 @@ function AppContent() {
         )
       } />
       
+      <Route path="/apostille-order" element={
+        currentUser ? (
+          <ApostilleOrderForm 
+            onBack={() => navigate('/dashboard')}
+          />
+        ) : (
+          <Navigate to="/login" replace />
+        )
+      } />
+      
       <Route path="/dashboard" element={
         currentUser ? (
           <DashboardContent 
@@ -386,9 +397,9 @@ function DashboardContent({
               <LayoutDashboard size={16} className="nav-icon" />
               Dashboard
             </div>
-            <div className="nav-item" onClick={() => navigate('/apostille-request')}>
+            <div className="nav-item" onClick={() => navigate('/apostille-order')}>
               <Users size={16} className="nav-icon" />
-              <span onClick={() => navigate('/apostille-request')}>USCIS Translation</span>
+              <span>Apostille Order</span>
             </div>
             <div className="nav-item">
               <Package size={16} className="nav-icon" />
@@ -474,7 +485,7 @@ function DashboardContent({
             <div className="search-bar">
               <input type="text" placeholder="Search" />
             </div>
-            <button className="create-job-btn" onClick={() => navigate('/assign-client')}>+ Create Job</button>
+            <button className="create-job-btn" onClick={() => navigate('/apostille-order')}>+ Create Order</button>
           </div>
         </div>
 
@@ -545,7 +556,7 @@ function DashboardContent({
         <div className="jobs-tracker">
           <div className="section-header">
             <h2>Jobs Tracker</h2>
-            <button className="create-new-job-btn" onClick={() => navigate('/assign-client')}>+ Create New Job</button>
+            <button className="create-new-job-btn" onClick={() => navigate('/apostille-order')}>+ Create New Order</button>
           </div>
 
           <div className="jobs-table">
@@ -580,7 +591,7 @@ function DashboardContent({
             ⚠️ Need Help With Delivery? Contact Support
             <div className="premium-feature">Premium feature</div>
           </div>
-          <button className="action-btn hire-courier">
+          <button className="action-btn hire-courier" onClick={() => navigate('/apostille-order')}>
             🚗 Hire An On-Demand Apostille Courier
             <div className="courier-subtitle">Same-day service where available</div>
           </button>
