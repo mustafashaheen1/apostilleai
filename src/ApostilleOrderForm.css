@@ -27,7 +27,7 @@
 }
 
 .apostille-form {
-  width: 100%;
+  width: max-content;
   max-width: 100%;
 }
 
