@@ -58,17 +58,20 @@
 
 .map-3d-content {
   display: flex;
-  gap: 24px;
-  padding: 24px;
+  gap: 30px;
+  padding: 30px;
   background: linear-gradient(135deg, #f5f7fa 0%, #e3e9f0 100%);
   min-height: 500px;
 }
 
 .state-cards-grid {
+  flex: 0 0 280px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
   align-content: start;
+  max-height: 500px;
+  overflow-y: auto;
 }
 
 .state-card {
@@ -135,6 +138,7 @@
   padding: 40px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
   overflow: visible;
+  min-height: 500px;
 }
 
 .usa-map-3d {
@@ -247,7 +251,7 @@
 @keyframes popupFadeIn {
   0% {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.9);
+    transform: translate(-50%, -50%) scale(0.95);
   }
   100% {
     opacity: 1;

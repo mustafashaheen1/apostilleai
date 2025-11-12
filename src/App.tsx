@@ -510,55 +510,53 @@ function DashboardContent({
           </div>
         </div>
 
-        <div className="content-grid">
-          {/* Calendar Section */}
-          <div className="calendar-section">
-            <div className="section-header">
-              <h2>Calendar</h2>
-              <button 
-                className="connect-google-btn" 
-                onClick={handleGoogleConnect}
-                disabled={isConnecting}
-              >
-                {isConnecting 
-                  ? 'Connecting...' 
-                  : isGoogleConnected 
-                    ? 'Disconnect Google' 
-                    : 'Connect Google'
-                }
-              </button>
+        {/* Calendar Section - Full Width */}
+        <div className="calendar-section-full">
+          <div className="section-header">
+            <h2>Calendar</h2>
+            <button
+              className="connect-google-btn"
+              onClick={handleGoogleConnect}
+              disabled={isConnecting}
+            >
+              {isConnecting
+                ? 'Connecting...'
+                : isGoogleConnected
+                  ? 'Disconnect Google'
+                  : 'Connect Google'
+              }
+            </button>
+          </div>
+          <div className="calendar">
+            <div className="calendar-header">
+              <span className="calendar-month-display">{getMonthName(currentDate)}</span>
+              <div className="calendar-month-nav">
+                <button className="calendar-nav-button" onClick={() => navigateMonth('prev')}>
+                  <ChevronLeft size={16} />
+                </button>
+                <button className="calendar-nav-button" onClick={() => navigateMonth('next')}>
+                  <ChevronRight size={16} />
+                </button>
+              </div>
             </div>
-            <div className="calendar">
-              <div className="calendar-header">
-                <span className="calendar-month-display">{getMonthName(currentDate)}</span>
-                <div className="calendar-month-nav">
-                  <button className="calendar-nav-button" onClick={() => navigateMonth('prev')}>
-                    <ChevronLeft size={16} />
-                  </button>
-                  <button className="calendar-nav-button" onClick={() => navigateMonth('next')}>
-                    <ChevronRight size={16} />
-                  </button>
-                </div>
-              </div>
-              <div className="calendar-weekdays">
-                <div>Mo</div>
-                <div>Tu</div>
-                <div>We</div>
-                <div>Th</div>
-                <div>Fr</div>
-                <div>Sa</div>
-                <div>Su</div>
-              </div>
-              <div className="calendar-grid">
-                {renderCalendar()}
-              </div>
+            <div className="calendar-weekdays">
+              <div>Mo</div>
+              <div>Tu</div>
+              <div>We</div>
+              <div>Th</div>
+              <div>Fr</div>
+              <div>Sa</div>
+              <div>Su</div>
+            </div>
+            <div className="calendar-grid">
+              {renderCalendar()}
             </div>
           </div>
+        </div>
 
-          {/* 3D Order Map */}
-          <div className="interactive-map-container">
-            <Map3D />
-          </div>
+        {/* 3D Order Map - Full Width */}
+        <div className="map-section-full-width">
+          <Map3D />
         </div>
 
         {/* Jobs Tracker */}

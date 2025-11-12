@@ -61,6 +61,10 @@ export default function Map3D() {
 
   const handleStateCardClick = (stateAbbr: string) => {
     setSelectedState(stateAbbr);
+    const stateOrders = orderData.filter(order => order.state === stateAbbr);
+    if (stateOrders.length > 0) {
+      setSelectedOrder(stateOrders[0]);
+    }
   };
 
   const stateOrderCounts = activeStates.reduce((acc, state) => {

@@ -289,27 +289,24 @@ body {
   background-color: #1e4fd6;
 }
 
-.content-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+/* Calendar Section - Full Width */
+.calendar-section-full {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  padding: 24px;
   margin-bottom: 30px;
 }
 
-/* Calendar Styles */
-.calendar-section {
-  background: #ffffff;
+/* Map Section - Full Width */
+.map-section-full-width {
+  width: 100%;
+  background: white;
   border-radius: 8px;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  border: 1px solid #e5e7eb;
-  padding: 24px;
-  grid-column: span 1;
-}
-
-@media (min-width: 1024px) {
-  .calendar-section {
-    grid-column: span 1;
-  }
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
 }
 
 .section-header {
@@ -507,14 +504,6 @@ body {
 }
 
 /* Interactive Map Styles */
-.interactive-map-container {
-  background: white;
-  padding: 0;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  overflow: hidden;
-  height: 100%;
-}
 
 /* Jobs Tracker Styles */
 .jobs-tracker {
@@ -656,9 +645,6 @@ body {
 
 /* Responsive Design */
 @media (max-width: 1200px) {
-  .content-grid {
-    grid-template-columns: 1fr;
-  }
 
   .action-buttons {
     grid-template-columns: 1fr;
