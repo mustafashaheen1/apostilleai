@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronDown, ChevronRight, Plus, Trash2 } from 'lucide-react';
+import { ChevronDown, ChevronRight, Plus, Trash2, Home, LogOut } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { OrderDraftService } from './orderDraftService';
+import { AuthService } from './authService';
 import './ApostilleOrderForm.css';
 
 // Type definitions
@@ -433,6 +434,15 @@ export default function ApostilleOrderForm({ onBack }: ApostilleOrderFormProps) 
     navigate('/');
   };
 
+  const handleLogout = async () => {
+    await AuthService.logout();
+    navigate('/');
+  };
+
+  const handleGoHome = () => {
+    navigate('/');
+  };
+
   const countries = [
     'United States', 'Canada', 'United Kingdom', 'Australia', 'Germany', 
     'France', 'Spain', 'Italy', 'Japan', 'China', 'India', 'Brazil', 'Other'
@@ -440,6 +450,27 @@ export default function ApostilleOrderForm({ onBack }: ApostilleOrderFormProps) 
 
   return (
     <div className="apostille-order-page">
+      {/* Top Navigation Header */}
+      <div className="form-top-nav">
+        <button
+          type="button"
+          className="nav-btn home-btn"
+          onClick={handleGoHome}
+        >
+          <Home size={20} />
+          <span>Home</span>
+        </button>
+
+        <button
+          type="button"
+          className="nav-btn logout-btn"
+          onClick={handleLogout}
+        >
+          <span>Logout</span>
+          <LogOut size={20} />
+        </button>
+      </div>
+
       <div className="apostille-order-header">
         <div className="step-label">Step 1</div>
         <h1>Apostille Order Form</h1>
