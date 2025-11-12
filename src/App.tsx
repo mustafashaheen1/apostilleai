@@ -14,7 +14,7 @@ import ForgotPasswordPage from './ForgotPasswordPage';
 import ResetPasswordPage from './ResetPasswordPage';
 import AccountTypePage from './AccountTypePage';
 import ApostilleOrderForm from './ApostilleOrderForm';
-import InteractiveMap from './InteractiveMap';
+import Map3D from './Map3D';
 
 function AppContent() {
   const navigate = useNavigate();
@@ -555,9 +555,9 @@ function DashboardContent({
             </div>
           </div>
 
-          {/* Interactive Order Map */}
+          {/* 3D Order Map */}
           <div className="interactive-map-container">
-            <InteractiveMap />
+            <Map3D />
           </div>
         </div>
 
