@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, ChevronRight, Plus, Trash2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { OrderDraftService } from './orderDraftService';
 import './ApostilleOrderForm.css';
 
 // Type definitions
@@ -75,6 +77,7 @@ interface ApostilleOrderFormProps {
 }
 
 export default function ApostilleOrderForm({ onBack }: ApostilleOrderFormProps) {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<ApostilleOrderFormData>({
     primaryContact: {
       name: '',
@@ -135,9 +138,20 @@ export default function ApostilleOrderForm({ onBack }: ApostilleOrderFormProps) 
 
   const [errors, setErrors] = useState<{[key: string]: string}>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [isSavingDraft, setIsSavingDraft] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
-  // Auto-copy primary contact to shipping when sameAsPrimary is checked
+  useEffect(() => {
+    const loadDraft = async () => {
+      const { draft, error } = await OrderDraftService.getDraft();
+      if (draft && !error) {
+        setFormData(draft);
+      }
+    };
+    loadDraft();
+  }, []);
+
   useEffect(() => {
     if (formData.shippingAddress.sameAsPrimary) {
       setFormData(prev => ({
@@ -360,36 +374,63 @@ export default function ApostilleOrderForm({ onBack }: ApostilleOrderFormProps) 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
     setIsLoading(true);
-    
+
     try {
-      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      console.log('Form Data Submitted:', formData);
+
+      console.log('Order Submitted:', formData);
+
+      await OrderDraftService.deleteDraft();
+
+      setSuccessMessage('Order submitted successfully! We will contact you shortly.');
       setShowSuccess(true);
-      
-      // Reset form after successful submission
+
       setTimeout(() => {
         setShowSuccess(false);
-        // Could navigate to confirmation page or reset form
+        navigate('/');
       }, 3000);
-      
+
     } catch (error) {
       console.error('Submission error:', error);
+      setErrors({ general: 'Failed to submit order. Please try again.' });
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleSaveDraft = () => {
-    console.log('Draft saved:', formData);
-    // Implement draft saving logic
+  const handleSaveDraft = async () => {
+    setIsSavingDraft(true);
+
+    try {
+      const { success, error } = await OrderDraftService.saveDraft(formData);
+
+      if (success) {
+        setSuccessMessage('Draft saved successfully!');
+        setShowSuccess(true);
+
+        setTimeout(() => {
+          setShowSuccess(false);
+          navigate('/');
+        }, 2000);
+      } else {
+        setErrors({ general: error || 'Failed to save draft' });
+      }
+    } catch (error) {
+      console.error('Save draft error:', error);
+      setErrors({ general: 'An unexpected error occurred' });
+    } finally {
+      setIsSavingDraft(false);
+    }
+  };
+
+  const handleCancel = () => {
+    navigate('/');
   };
 
   const countries = [
@@ -407,7 +448,19 @@ export default function ApostilleOrderForm({ onBack }: ApostilleOrderFormProps) 
       <div className="form-container">
         {showSuccess && (
           <div className="success-message">
-            Order submitted successfully! We will contact you shortly to confirm your request.
+            {successMessage}
+          </div>
+        )}
+
+        {errors.general && (
+          <div className="error-message" style={{
+            padding: '15px',
+            marginBottom: '20px',
+            backgroundColor: '#fee',
+            borderRadius: '8px',
+            border: '1px solid #e74c3c'
+          }}>
+            {errors.general}
           </div>
         )}
 
@@ -1081,15 +1134,42 @@ export default function ApostilleOrderForm({ onBack }: ApostilleOrderFormProps) 
 
           {/* Form Actions */}
           <div className="form-actions">
-            <button type="button" onClick={onBack} className="btn btn-tertiary">
+            <button
+              type="button"
+              className="btn btn-tertiary"
+              onClick={handleCancel}
+              disabled={isLoading || isSavingDraft}
+            >
               Cancel
             </button>
-            <button type="button" onClick={handleSaveDraft} className="btn btn-secondary">
-              Save Draft
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={handleSaveDraft}
+              disabled={isLoading || isSavingDraft}
+            >
+              {isSavingDraft ? (
+                <>
+                  <span className="loading-spinner"></span>
+                  Saving...
+                </>
+              ) : (
+                'Save Draft'
+              )}
             </button>
-            <button type="submit" className="btn btn-primary" disabled={isLoading}>
-              {isLoading && <span className="loading-spinner"></span>}
-              {isLoading ? 'Submitting...' : 'Submit Order'}
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={isLoading || isSavingDraft}
+            >
+              {isLoading ? (
+                <>
+                  <span className="loading-spinner"></span>
+                  Submitting...
+                </>
+              ) : (
+                'Submit Order'
+              )}
             </button>
           </div>
         </form>
