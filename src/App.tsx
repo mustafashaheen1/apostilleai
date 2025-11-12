@@ -108,7 +108,12 @@ function AppContent() {
       const { user } = await AuthService.getCurrentUser();
       if (user) {
         setCurrentUser(user);
-        navigate('/dashboard');
+        // Route based on account type
+        if (user.account_type === 'individual') {
+          navigate('/apostille-order');
+        } else {
+          navigate('/dashboard');
+        }
       }
     };
     loadUser();
@@ -120,7 +125,12 @@ function AppContent() {
       const { user } = await AuthService.getCurrentUser();
       if (user) {
         setCurrentUser(user);
-        navigate('/dashboard');
+        // Route based on account type
+        if (user.account_type === 'individual') {
+          navigate('/apostille-order');
+        } else {
+          navigate('/dashboard');
+        }
       }
     };
     loadUser();

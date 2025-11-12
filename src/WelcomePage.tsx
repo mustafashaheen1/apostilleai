@@ -59,7 +59,8 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
         fullName: formData.fullName,
         company: formData.company,
         email: formData.email,
-        password: formData.password
+        password: formData.password,
+        accountType: accountType
       });
 
       if (error) {
