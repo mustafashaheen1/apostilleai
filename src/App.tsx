@@ -76,13 +76,14 @@ function AppContent() {
       const { user } = await AuthService.getCurrentUser();
       if (user) {
         setCurrentUser(user);
-        // Only navigate to dashboard if we're on the root path
-        if (location.pathname === '/') {
+        // Only navigate company users to dashboard if they're on the root path
+        // Individual users should stay on landing page
+        if (location.pathname === '/' && user.account_type === 'company') {
           navigate('/dashboard', { replace: true });
         }
       } else {
         // Only navigate to welcome if we're on a protected route
-        const protectedRoutes = ['/dashboard', '/apostille-request', '/assign-client'];
+        const protectedRoutes = ['/dashboard', '/apostille-request', '/assign-client', '/apostille-order'];
         if (protectedRoutes.includes(location.pathname)) {
           navigate('/welcome', { replace: true });
         }
