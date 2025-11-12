@@ -69,11 +69,10 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
         // Clear form data on successful signup
         setFormData({
           fullName: '',
-          company: '',
-          company: formData.company || '',
+          company: accountType === 'company' ? '' : undefined,
+          email: '',
           password: '',
-          password: formData.password,
-          accountType: accountType
+          confirmPassword: ''
         });
         setAgreeToTerms(false);
         onSignUpSuccess();
