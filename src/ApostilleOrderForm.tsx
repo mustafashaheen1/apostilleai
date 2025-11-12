@@ -75,9 +75,10 @@ interface ApostilleOrderFormData {
 
 interface ApostilleOrderFormProps {
   onBack: () => void;
+  onLogout: () => void;
 }
 
-export default function ApostilleOrderForm({ onBack }: ApostilleOrderFormProps) {
+export default function ApostilleOrderForm({ onBack, onLogout }: ApostilleOrderFormProps) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<ApostilleOrderFormData>({
     primaryContact: {
@@ -436,7 +437,7 @@ export default function ApostilleOrderForm({ onBack }: ApostilleOrderFormProps) 
 
   const handleLogout = async () => {
     await AuthService.logout();
-    navigate('/');
+    onLogout();
   };
 
   const handleGoHome = () => {

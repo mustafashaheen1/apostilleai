@@ -314,6 +314,7 @@ function AppContent() {
         currentUser ? (
           <ApostilleOrderForm
             onBack={() => navigate('/')}
+            onLogout={handleLogout}
           />
         ) : (
           <Navigate to="/login" replace />
