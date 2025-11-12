@@ -506,36 +506,14 @@ body {
   padding: 20px;
 }
 
-/* Quick Stats Styles */
-.quick-stats {
+/* Interactive Map Styles */
+.interactive-map-container {
   background: white;
-  padding: 25px;
+  padding: 0;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-}
-
-.quick-stats h2 {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
-.stat-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 0;
-  border-bottom: 1px solid #ecf0f1;
-}
-
-.stat-item:last-child {
-  border-bottom: none;
-}
-
-.stat-value {
-  font-size: 18px;
-  font-weight: 600;
-  color: #2562EB;
+  overflow: hidden;
+  height: 100%;
 }
 
 /* Jobs Tracker Styles */

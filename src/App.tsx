@@ -14,6 +14,7 @@ import ForgotPasswordPage from './ForgotPasswordPage';
 import ResetPasswordPage from './ResetPasswordPage';
 import AccountTypePage from './AccountTypePage';
 import ApostilleOrderForm from './ApostilleOrderForm';
+import InteractiveMap from './InteractiveMap';
 
 function AppContent() {
   const navigate = useNavigate();
@@ -554,21 +555,9 @@ function DashboardContent({
             </div>
           </div>
 
-          {/* Quick Stats */}
-          <div className="quick-stats">
-            <h2>Quick Stats</h2>
-            <div className="stat-item">
-              <span>Active Jobs</span>
-              <span className="stat-value">3</span>
-            </div>
-            <div className="stat-item">
-              <span>Completed This Month</span>
-              <span className="stat-value">12</span>
-            </div>
-            <div className="stat-item">
-              <span>Pending Review</span>
-              <span className="stat-value">3</span>
-            </div>
+          {/* Interactive Order Map */}
+          <div className="interactive-map-container">
+            <InteractiveMap />
           </div>
         </div>
 
