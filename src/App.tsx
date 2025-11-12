@@ -244,7 +244,15 @@ function AppContent() {
   return (
     <Routes>
       <Route path="/" element={
-        currentUser ? <Navigate to="/dashboard" replace /> : <LandingPage onNavigateToSignUp={() => navigate('/account-type')} onNavigateToLogin={() => navigate('/login')} />
+        currentUser?.account_type === 'company' ?
+          <Navigate to="/dashboard" replace /> :
+          <LandingPage
+            onNavigateToSignUp={() => navigate('/account-type')}
+            onNavigateToLogin={() => navigate('/login')}
+            onNavigateToOrderForm={() => navigate('/apostille-order')}
+            isLoggedIn={!!currentUser}
+            userType={currentUser?.account_type}
+          />
       } />
       
       <Route path="/account-type" element={

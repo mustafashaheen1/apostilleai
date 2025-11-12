@@ -5,9 +5,18 @@ import './LandingPage.css';
 interface LandingPageProps {
   onNavigateToSignUp: () => void;
   onNavigateToLogin: () => void;
+  onNavigateToOrderForm?: () => void;
+  isLoggedIn?: boolean;
+  userType?: 'individual' | 'company';
 }
 
-export default function LandingPage({ onNavigateToSignUp, onNavigateToLogin }: LandingPageProps) {
+export default function LandingPage({
+  onNavigateToSignUp,
+  onNavigateToLogin,
+  onNavigateToOrderForm,
+  isLoggedIn = false,
+  userType
+}: LandingPageProps) {
   return (
     <div className="landing-page">
       {/* Navigation */}
@@ -31,8 +40,18 @@ export default function LandingPage({ onNavigateToSignUp, onNavigateToLogin }: L
           </div>
           
           <div className="nav-actions">
-            <button className="sign-in-btn" onClick={onNavigateToLogin}>Sign In</button>
-            <button className="get-started-btn" onClick={onNavigateToSignUp}>Get Started</button>
+            {!isLoggedIn && (
+              <button className="sign-in-btn" onClick={onNavigateToLogin}>Sign In</button>
+            )}
+            {isLoggedIn && userType === 'individual' ? (
+              <button className="get-started-btn" onClick={onNavigateToOrderForm}>
+                Order Form
+              </button>
+            ) : !isLoggedIn ? (
+              <button className="get-started-btn" onClick={onNavigateToSignUp}>
+                Get Started
+              </button>
+            ) : null}
           </div>
         </div>
       </nav>
@@ -56,8 +75,11 @@ export default function LandingPage({ onNavigateToSignUp, onNavigateToLogin }: L
           </p>
           
           <div className="hero-actions">
-            <button className="try-free-btn" onClick={onNavigateToSignUp}>
-              Try for Free
+            <button
+              className="try-free-btn"
+              onClick={isLoggedIn && userType === 'individual' ? onNavigateToOrderForm : onNavigateToSignUp}
+            >
+              {isLoggedIn && userType === 'individual' ? 'Create Order' : 'Try for Free'}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M5 12h14M12 5l7 7-7 7" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
