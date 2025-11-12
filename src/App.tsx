@@ -311,8 +311,8 @@ function AppContent() {
       
       <Route path="/apostille-order" element={
         currentUser ? (
-          <ApostilleOrderForm 
-            onBack={() => navigate('/dashboard')}
+          <ApostilleOrderForm
+            onBack={() => navigate('/')}
           />
         ) : (
           <Navigate to="/login" replace />
