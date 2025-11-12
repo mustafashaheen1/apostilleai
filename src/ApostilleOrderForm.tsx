@@ -362,19 +362,19 @@ export default function ApostilleOrderForm({ onBack }: ApostilleOrderFormProps) 
 
   return (
     <div className="apostille-order-page">
-      <div className="form-container">
-        <div className="form-header">
-          <h1>Step 1: Apostille Order Form</h1>
-        </div>
+      <div className="apostille-order-header">
+        <div className="step-label">Step 1</div>
+        <h1>Apostille Order Form</h1>
+      </div>
 
+      <div className="form-container">
         {showSuccess && (
           <div className="success-message">
             Order submitted successfully! We will contact you shortly to confirm your request.
           </div>
         )}
 
-        <form onSubmit={handleSubmit}>
-          <div className="form-content">
+        <form onSubmit={handleSubmit} className="apostille-form">
             {/* Section 1: Primary Contact Information */}
             <div className="form-section">
               <h2 className="section-title">Primary Contact Information</h2>
@@ -1017,7 +1017,6 @@ export default function ApostilleOrderForm({ onBack }: ApostilleOrderFormProps) 
                 />
               </div>
             </div>
-          </div>
 
           {/* Form Actions */}
           <div className="form-actions">
