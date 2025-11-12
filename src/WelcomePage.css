@@ -319,7 +319,7 @@
 .promo-heading {
   text-align: center;
   font-size: 40px !important;
-  margin-bottom: 30px !important;
+  margin-bottom: 15px !important;
   max-width: none !important;
 }
 
@@ -613,6 +613,44 @@
   padding-top: 20px;
   border-top: 1px solid #eee;
   justify-content: center;
+}
+
+/* Company Logos Section */
+.company-logos {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.company-logos p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 24px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.logos-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.logo-item {
+  opacity: 0.9;
+  transition: opacity 0.3s;
+  filter: brightness(0) invert(1);
+}
+
+.logo-item:hover {
+  opacity: 1;
+}
+
+.logo-item img {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
 }
 
 /* Responsive Design */

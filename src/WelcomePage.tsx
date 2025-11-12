@@ -284,11 +284,37 @@ export default function WelcomePage({ onNavigateToLogin, onSignUpSuccess }: Welc
         <div className="preview-content">
           <h2 className="promo-heading">Apostille AI is the best way to suspendisse eu sed euismod nibh lectus pellentesque velit leo condimentum.</h2>
           <div className="dashboard-image">
-            <img 
-              src="dashboard_screenshot.png" 
-              alt="Apostille AI Dashboard Preview" 
+            <img
+              src="dashboard_screenshot.png"
+              alt="Apostille AI Dashboard Preview"
               className="dashboard-screenshot"
             />
+          </div>
+
+          <div className="company-logos">
+            <p>Trusted by leading companies</p>
+            <div className="logos-grid">
+              <div className="logo-item">
+                <svg width="120" height="32" viewBox="0 0 120 32" fill="currentColor">
+                  <text x="0" y="24" fontFamily="Arial, sans-serif" fontSize="20" fontWeight="bold">Google</text>
+                </svg>
+              </div>
+              <div className="logo-item">
+                <svg width="120" height="32" viewBox="0 0 120 32" fill="currentColor">
+                  <text x="0" y="24" fontFamily="Arial, sans-serif" fontSize="18" fontWeight="bold">Booking.com</text>
+                </svg>
+              </div>
+              <div className="logo-item">
+                <svg width="100" height="32" viewBox="0 0 100 32" fill="currentColor">
+                  <text x="0" y="24" fontFamily="Arial, sans-serif" fontSize="20" fontWeight="bold">Spotify</text>
+                </svg>
+              </div>
+              <div className="logo-item">
+                <svg width="100" height="32" viewBox="0 0 100 32" fill="currentColor">
+                  <text x="0" y="24" fontFamily="Arial, sans-serif" fontSize="20" fontWeight="bold">Stripe</text>
+                </svg>
+              </div>
+            </div>
           </div>
         </div>
       </div>
