@@ -200,6 +200,7 @@
   font-weight: 600;
   transition: background 0.2s;
   margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .add-btn:hover {
