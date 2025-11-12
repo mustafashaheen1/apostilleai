@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, ChevronRight, Plus, Trash2 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
-import { OrderDraftService } from './orderDraftService';
 import './ApostilleOrderForm.css';
 
 // Type definitions
@@ -77,9 +75,6 @@ interface ApostilleOrderFormProps {
 }
 
 export default function ApostilleOrderForm({ onBack }: ApostilleOrderFormProps) {
-  const navigate = useNavigate();
-  const [isSavingDraft, setIsSavingDraft] = useState(false);
-  const [successMessage, setSuccessMessage] = useState('');
   const [formData, setFormData] = useState<ApostilleOrderFormData>({
     primaryContact: {
       name: '',
@@ -141,77 +136,6 @@ export default function ApostilleOrderForm({ onBack }: ApostilleOrderFormProps) 
   const [errors, setErrors] = useState<{[key: string]: string}>({});
   const [isLoading, setIsLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
-  const [isLoadingDraft, setIsLoadingDraft] = useState(true);
-
-  // Load draft on component mount
-  useEffect(() => {
-    const loadDraft = async () => {
-      setIsLoadingDraft(true);
-      const { draft, error } = await OrderDraftService.getDraft();
-      if (draft && !error) {
-        const loadedData: ApostilleOrderFormData = {
-          primaryContact: {
-            name: draft.primaryContact.name,
-            company: draft.primaryContact.company,
-            address: draft.primaryContact.address,
-            city: draft.primaryContact.city,
-            state: draft.primaryContact.stateProvince,
-            zipCode: draft.primaryContact.zipCode,
-            country: draft.primaryContact.country,
-            email: draft.primaryContact.email,
-            daytimeTel: draft.primaryContact.daytimeTel
-          },
-          shippingAddress: {
-            name: draft.returnShipping.name,
-            company: draft.returnShipping.company,
-            address: draft.returnShipping.address,
-            city: draft.returnShipping.city,
-            state: draft.returnShipping.stateProvince,
-            zipCode: draft.returnShipping.zipCode,
-            country: draft.returnShipping.country,
-            email: draft.returnShipping.email,
-            daytimeTel: draft.returnShipping.daytimeTel,
-            sameAsPrimary: draft.returnShipping.sameAsPrimary
-          },
-          documents: draft.documents.map((doc, index) => ({
-            id: (index + 1).toString(),
-            title: doc.title,
-            qty: doc.qty,
-            country: doc.country
-          })),
-          dateNeeded: draft.dateNeeded,
-          entityRecords: {
-            entityName: draft.entityRecord.entityName,
-            state: draft.entityRecord.state,
-            entityNumber: draft.entityRecord.entityNumber,
-            documents: draft.entityRecord.documents,
-            apostille: draft.entityRecord.apostille as 'yes' | 'no',
-            destinationCountry: draft.entityRecord.destinationCountry
-          },
-          entityRecordsEnabled: draft.entityRecord.entityName !== '',
-          translations: draft.translations.map((trans, index) => ({
-            id: (index + 1).toString(),
-            documentTitle: trans.title,
-            targetLanguage: trans.targetLanguage,
-            destinationCountry: trans.destinationCountry
-          })),
-          apostilleTranslations: draft.translationApostille.apostilleTranslation === 'yes',
-          apostilleTranslationsCountry: draft.translationApostille.translationDestination,
-          apostilleOriginals: draft.translationApostille.apostilleOriginal === 'yes',
-          apostilleOriginalsCountry: draft.translationApostille.originalDestination,
-          specialServices: {
-            requireScannedCopy: draft.specialServices.scannedCopy,
-            scannedCopyEmails: draft.specialServices.scannedEmails,
-            requireUSArabChamber: draft.specialServices.arabChamber
-          },
-          specialInstructions: draft.specialInstructions
-        };
-        setFormData(loadedData);
-      }
-      setIsLoadingDraft(false);
-    };
-    loadDraft();
-  }, []);
 
   // Auto-copy primary contact to shipping when sameAsPrimary is checked
   useEffect(() => {
@@ -436,155 +360,42 @@ export default function ApostilleOrderForm({ onBack }: ApostilleOrderFormProps) 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    
     if (!validateForm()) {
       return;
     }
 
     setIsLoading(true);
-
+    
     try {
-      // Simulate API call for order submission
+      // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 2000));
-
-      console.log('Order Submitted:', formData);
-
-      // Delete draft after successful submission
-      await OrderDraftService.deleteDraft();
-
-      setSuccessMessage('Order submitted successfully! We will contact you shortly.');
+      
+      console.log('Form Data Submitted:', formData);
       setShowSuccess(true);
-
-      // Navigate to landing page after 3 seconds
+      
+      // Reset form after successful submission
       setTimeout(() => {
         setShowSuccess(false);
-        navigate('/');
+        // Could navigate to confirmation page or reset form
       }, 3000);
-
+      
     } catch (error) {
       console.error('Submission error:', error);
-      setErrors({ general: 'Failed to submit order. Please try again.' });
     } finally {
       setIsLoading(false);
     }
   };
 
-  const handleSaveDraft = async () => {
-    setIsSavingDraft(true);
-
-    try {
-      const draftData = {
-        primaryContact: {
-          name: formData.primaryContact.name,
-          company: formData.primaryContact.company,
-          address: formData.primaryContact.address,
-          city: formData.primaryContact.city,
-          stateProvince: formData.primaryContact.state,
-          zipCode: formData.primaryContact.zipCode,
-          country: formData.primaryContact.country,
-          email: formData.primaryContact.email,
-          daytimeTel: formData.primaryContact.daytimeTel
-        },
-        returnShipping: {
-          sameAsPrimary: formData.shippingAddress.sameAsPrimary,
-          name: formData.shippingAddress.name,
-          company: formData.shippingAddress.company,
-          address: formData.shippingAddress.address,
-          city: formData.shippingAddress.city,
-          stateProvince: formData.shippingAddress.state,
-          zipCode: formData.shippingAddress.zipCode,
-          country: formData.shippingAddress.country,
-          email: formData.shippingAddress.email,
-          daytimeTel: formData.shippingAddress.daytimeTel
-        },
-        documents: formData.documents.map(doc => ({
-          title: doc.title,
-          qty: doc.qty,
-          country: doc.country
-        })),
-        dateNeeded: formData.dateNeeded,
-        entityRecord: {
-          entityName: formData.entityRecords.entityName,
-          state: formData.entityRecords.state,
-          entityNumber: formData.entityRecords.entityNumber,
-          documents: formData.entityRecords.documents,
-          apostille: formData.entityRecords.apostille,
-          destinationCountry: formData.entityRecords.destinationCountry
-        },
-        translations: formData.translations.map(trans => ({
-          title: trans.documentTitle,
-          targetLanguage: trans.targetLanguage,
-          destinationCountry: trans.destinationCountry
-        })),
-        translationApostille: {
-          apostilleTranslation: formData.apostilleTranslations ? 'yes' : 'no',
-          translationDestination: formData.apostilleTranslationsCountry,
-          apostilleOriginal: formData.apostilleOriginals ? 'yes' : 'no',
-          originalDestination: formData.apostilleOriginalsCountry
-        },
-        specialServices: {
-          scannedCopy: formData.specialServices.requireScannedCopy,
-          scannedEmails: formData.specialServices.scannedCopyEmails,
-          arabChamber: formData.specialServices.requireUSArabChamber
-        },
-        specialInstructions: formData.specialInstructions
-      };
-
-      const { success, error } = await OrderDraftService.saveDraft(draftData);
-
-      if (success) {
-        setSuccessMessage('Draft saved successfully!');
-        setShowSuccess(true);
-
-        // Hide success message and navigate after 2 seconds
-        setTimeout(() => {
-          setShowSuccess(false);
-          navigate('/');
-        }, 2000);
-      } else {
-        setErrors({ general: error || 'Failed to save draft' });
-      }
-    } catch (error) {
-      console.error('Save draft error:', error);
-      setErrors({ general: 'An unexpected error occurred' });
-    } finally {
-      setIsSavingDraft(false);
-    }
-  };
-
-  const handleCancel = () => {
-    navigate('/');
+  const handleSaveDraft = () => {
+    console.log('Draft saved:', formData);
+    // Implement draft saving logic
   };
 
   const countries = [
     'United States', 'Canada', 'United Kingdom', 'Australia', 'Germany', 
     'France', 'Spain', 'Italy', 'Japan', 'China', 'India', 'Brazil', 'Other'
   ];
-
-  if (isLoadingDraft) {
-    return (
-      <div style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100vh',
-        fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif'
-      }}>
-        <div style={{ textAlign: 'center' }}>
-          <div style={{
-            width: '40px',
-            height: '40px',
-            border: '4px solid #f3f3f3',
-            borderTop: '4px solid #2562EB',
-            borderRadius: '50%',
-            animation: 'spin 1s linear infinite',
-            margin: '0 auto 20px'
-          }}></div>
-          <p style={{ color: '#7f8c8d' }}>Loading form...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="apostille-order-page">
@@ -596,19 +407,7 @@ export default function ApostilleOrderForm({ onBack }: ApostilleOrderFormProps) 
       <div className="form-container">
         {showSuccess && (
           <div className="success-message">
-            {successMessage}
-          </div>
-        )}
-
-        {errors.general && (
-          <div className="error-message" style={{
-            padding: '15px',
-            marginBottom: '20px',
-            backgroundColor: '#fee',
-            borderRadius: '8px',
-            border: '1px solid #e74c3c'
-          }}>
-            {errors.general}
+            Order submitted successfully! We will contact you shortly to confirm your request.
           </div>
         )}
 
@@ -1282,42 +1081,15 @@ export default function ApostilleOrderForm({ onBack }: ApostilleOrderFormProps) 
 
           {/* Form Actions */}
           <div className="form-actions">
-            <button
-              type="button"
-              className="btn btn-tertiary"
-              onClick={handleCancel}
-              disabled={isLoading || isSavingDraft}
-            >
+            <button type="button" onClick={onBack} className="btn btn-tertiary">
               Cancel
             </button>
-            <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={handleSaveDraft}
-              disabled={isLoading || isSavingDraft}
-            >
-              {isSavingDraft ? (
-                <>
-                  <span className="loading-spinner"></span>
-                  Saving...
-                </>
-              ) : (
-                'Save Draft'
-              )}
+            <button type="button" onClick={handleSaveDraft} className="btn btn-secondary">
+              Save Draft
             </button>
-            <button
-              type="submit"
-              className="btn btn-primary"
-              disabled={isLoading || isSavingDraft}
-            >
-              {isLoading ? (
-                <>
-                  <span className="loading-spinner"></span>
-                  Submitting...
-                </>
-              ) : (
-                'Submit Order'
-              )}
+            <button type="submit" className="btn btn-primary" disabled={isLoading}>
+              {isLoading && <span className="loading-spinner"></span>}
+              {isLoading ? 'Submitting...' : 'Submit Order'}
             </button>
           </div>
         </form>
